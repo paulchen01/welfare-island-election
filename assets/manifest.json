@@ -1,6 +1,6 @@
 {
   "version": "0.4.0",
-  "description": "福利島大選素材清單。新增素材時在 assets 陣列加一筆。",
+  "description": "《誰來照顧誰》素材清單。新增素材時在 assets 陣列加一筆。",
   "fields": {
     "file": "相對於 assets/ 的路徑",
     "use": "用途，例如：島民頭像（馬阿嬤，開心）",

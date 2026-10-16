@@ -1,4 +1,4 @@
-<title>福利島大選</title>
+<title>誰來照顧誰｜社會福利政策體驗遊戲</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@900&family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap">
@@ -433,10 +433,14 @@ textarea{width:100%;min-height:88px;font:inherit;font-size:15px;color:var(--ink)
 #fx{position:fixed;inset:0;pointer-events:none;z-index:50}
 @media (max-width:420px){.hstat.pov{display:none}.pips{display:none}.brand b{font-size:15px}.hstats{gap:10px}.brand b{font-size:16px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* 標題副標與製作署名（只出現在標題與結局畫面） */
+.hero .subt{margin:-2px 0 0;font-size:17px;font-weight:700;letter-spacing:.12em;color:var(--ink)}
+.credit{margin:6px 0 0;text-align:center;font-size:12px;letter-spacing:.08em;color:var(--muted,#6b6257);opacity:.85}
 </style>
 
 <header class="hud"><div class="in">
-  <div class="brand"><svg width="30" height="30" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="var(--surface)" stroke="var(--stamp)" stroke-width="3.5"/><text x="20" y="27.5" text-anchor="middle" font-size="20" fill="var(--stamp)" font-family="Noto Sans TC,sans-serif" font-weight="700">卜</text></svg><b>福利島大選</b></div>
+  <div class="brand"><svg width="30" height="30" viewBox="0 0 40 40" aria-hidden="true"><g opacity=".92"><ellipse cx="20" cy="13" rx="7.5" ry="10" fill="var(--teal)"/><ellipse cx="27" cy="20" rx="10" ry="7.5" fill="var(--yellow)"/><ellipse cx="20" cy="27" rx="7.5" ry="10" fill="var(--pink)"/><ellipse cx="13" cy="20" rx="10" ry="7.5" fill="var(--blue)"/></g><circle cx="20" cy="20" r="3.4" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/></svg><b>誰來照顧誰</b></div>
   <div class="pips" id="pips"></div>
   <div class="hstats" id="hstats"></div>
 </div></header>
@@ -1065,7 +1069,7 @@ const ACH=[
 function medal(on,i){return `<svg class="medal" viewBox="0 0 56 56" aria-hidden="true"><path d="M17 2 L28 20 L39 2Z" fill="${on?'var(--pink)':'var(--soft)'}" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/><circle cx="30" cy="35" r="18" fill="var(--ink)"/><circle cx="28" cy="33" r="18" fill="${on?'var(--yellow)':'var(--soft)'}" stroke="var(--ink)" stroke-width="2"/><circle cx="28" cy="33" r="12.5" fill="none" stroke="var(--ink)" stroke-width="1.3" stroke-dasharray="2 2.4"/><text x="28" y="38.5" text-anchor="middle" font-size="15" font-family="IBM Plex Mono,monospace" font-weight="600" fill="#1C2040">${i+1}</text></svg>`}
 const RQ=['你為了拿到選票，放棄了哪些原本的理念？如果重來一次，你會怎麼選？','整場遊戲中，哪一位島民一直被忽略？在真實的台灣，他對應到哪些人？','最後的福利體制跟你的意識形態一致嗎？是哪些決定讓它變成這樣？'];
 function summaryText(){const {k}=regime(),sc=scores(),me=sc[ME],rank=[...sc].sort((a,b)=>b.total-a.total).findIndex(s=>s.g===ME)+1,got=ACH.filter(a=>a.f()).map(a=>a.n);
-  return [`【福利島大選 學習單】`,`我的政黨：${pname(ME)}`,`總分：${me.total}（第 ${rank} 名，執政 ${me.gov} 屆，累計得票 ${me.votes}%）`,
+  return [`【誰來照顧誰 學習單】`,`我的政黨：${pname(ME)}`,`總分：${me.total}（第 ${rank} 名，執政 ${me.gov} 屆，累計得票 ${me.votes}%）`,
    `政黨目標：${PARTIES[key(ME)].miss.map((m,i)=>`${m.t}（${me.ms[i]?'達成':'未達成'}）`).join('；')}`,
    `成就：${got.join('、')||'無'}`,`民怨變化：${S.unrestLog.map(x=>x.unrest).join(' → ')||'無'}`,`全島最後的福利體制：${REG[k].name}${S.bankrupt?'（國家破產）':''}`,'',
    ...S.history.map(r=>`第 ${r.round+1} 屆｜${EVENTS.find(e=>e.id===r.event).name}｜我的政見：${r.platforms[ME].tax}稅，${r.platforms[ME].add.map(id=>P[id].name).join('、')||'無新方案'}｜執政：${pname(r.gov)}`),'',
@@ -1089,16 +1093,18 @@ function citStrip(mood,showDelta,prev){return `<div class="cits">${CIT.map(c=>{c
    ${showDelta?`<div class="dv ${v>0?'up':v<0?'down':'zero'}">${v===0?'±0':sign(r1(v))}</div>`:''}
    ${Wt(c)?`<div class="badge-vote">${Wt(c)}% 選民</div>`:'<span class="novote">無投票權</span>'}</div>`}).join('')}</div>`}
 function islandSVG(){return heroArt()||landscape('hero',true)}
+const CREDIT='<p class="credit">飽螺的社工甘苦便條紙 製作</p>';
 function rTitle(st){
   st.innerHTML=`<div class="stack"><div class="hero"><div class="poster">${islandSVG()}</div><div class="stack" style="gap:12px">
-     <span class="kicker" style="align-self:flex-start">社會政策與立法 · 單人策略遊戲</span><h1><span data-t="福利島大選">福利島大選</span></h1>
-     <p class="sub">帶領一個政黨參選五屆，用有限的預算照顧島上十一位居民。你會打造出什麼樣的福利國家？</p></div></div>
+     <span class="kicker" style="align-self:flex-start">社會政策與立法 · 單人策略遊戲</span><h1><span data-t="誰來照顧誰">誰來照顧誰</span></h1>
+     <p class="subt">社會福利政策體驗遊戲</p>
+     <p class="sub">歡迎來到福利島。帶領一種觀點參選五屆，用有限的預算照顧島上十一位居民。照顧的責任該由國家、市場、家庭還是社區承擔？你會打造出什麼樣的福利國家？</p></div></div>
    <div class="card"><h3 style="margin-bottom:10px">怎麼玩</h3><ul class="how">
      <li><span>選一種福利觀點：社會民主、新右派、第三條路、馬克思主義、女性主義、新社會運動或綠色主義。有的要贏選舉，有的不必。</span></li>
      <li><span>第 1 屆認識你的觀點，第 2 屆用不同觀點解同一個難題。</span></li>
      <li><span>第 3 屆起，你實施過的政策會帶來成果，也會帶來新問題，要在檢討會議上表態。還有公投。</span></li>
      <li><span>第 4 屆可以改革既有政策；第 5 屆選民結構改變。落選了也能提修正案。</span></li>
-     <li><span>貧窮會累積成民怨，太高會抗議、罷工甚至倒閣。最後揭曉你們打造的福利體制。</span></li></ul></div></div>`;
+     <li><span>貧窮會累積成民怨，太高會抗議、罷工甚至倒閣。最後揭曉你們打造的福利體制。</span></li></ul></div>${CREDIT}</div>`;
   bar(`<span class="grow small muted">約 20 分鐘 · 建議直向持手機</span><button class="btn primary" data-a="totitle">開始遊戲</button>`);
 }
 function rSetup(st){const ks=Object.keys(PARTIES);
@@ -1535,11 +1541,11 @@ function rFinal(st){const {k,f}=regime(),R=REG[k],sc=scores(),rank=[...sc].sort(
       <span class="muted small">執政：${who(r.gov)}　你的得票 ${r1(r.pct[ME])}%</span></div>`).join('')}</div>
    <div class="card"><h3 style="margin-bottom:10px">成就徽章　<span class="num muted small">${ACH.filter(a=>a.f()).length}/${ACH.length}</span></h3><div class="badges">${ACH.map((a,i)=>{const on=a.f();return `<div class="ach ${on?'on':'off'}" style="animation-delay:${i*.06}s">${medal(on,i)}<b>${a.n}</b><span>${a.d}</span></div>`}).join('')}</div></div>
    <div class="card"><h3 style="margin-bottom:4px">想一想</h3><p class="small muted" style="margin-bottom:10px">自由填寫，寫幾句就好，複製後可以貼到課程平台。</p><div class="refl">${RQ.map((q,i)=>`<label for="refl${i}">${i+1}. ${q}<textarea id="refl${i}" data-r="${i}">${S.refl[i]}</textarea></label>`).join('')}</div>
-    <textarea id="copybox" hidden readonly style="margin-top:12px;min-height:200px"></textarea></div></div>`;
+    <textarea id="copybox" hidden readonly style="margin-top:12px;min-height:200px"></textarea></div>${CREDIT}</div>`;
   bar(`<button class="btn" data-a="restart">再玩一次</button><span class="grow"></span><button class="btn primary" data-a="copy">複製紀錄</button>`);
 }
 function summaryText(){const {k}=regime(),sc=scores(),me=sc[ME],rank=[...sc].sort((a,b)=>b.total-a.total).findIndex(s=>s.g===ME)+1,got=ACH.filter(a=>a.f()).map(a=>a.n),prof=profile();
-  return [`【福利島大選 紀錄】`,`我扮演的觀點：${pname(ME)}`,
+  return [`【誰來照顧誰：社會福利政策體驗遊戲 紀錄】`,`我扮演的觀點：${pname(ME)}`,
    `A 遊戲表現：第 ${rank} 名，${me.total} 分（執政 ${me.gov} 屆，累計得票 ${me.votes}%），國債 ${r1(S.debt)}，最終民怨 ${S.unrest}`,
    `目標：${PARTIES[key(ME)].miss.map((m,i)=>`${m.t}（${me.ms[i]?'達成':'未達成'}）`).join('；')}`,`成就：${got.join('、')||'無'}`,
    `B 政策回顧：我的政策最常和 ${prof.slice(0,3).map(x=>AP_LABEL[x.k]+' '+x.v+'%').join('、')} 一致；借用其他觀點 ${borrowed().length} 次`,
