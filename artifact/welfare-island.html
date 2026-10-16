@@ -8,7 +8,7 @@
   --paper:#F1F0EA; --surface:#FBFAF6; --soft:#E3E2D9; --ink:#1C2040; --muted:#5A5E77; --line:#1C2040; --hair:#CFCEC3;
   --blue:#2F5DB8; --pink:#EC4F8C; --yellow:#FFC93C; --teal:#0F9A92; --orange:#F2692C; --purple:#7650C4;
   --stamp:#E0393A; --good:#0F8A7F; --bad:#E0393A; --ballot:var(--yellow); --sea:var(--teal);
-  --ochre:#A9741C; --p-co:var(--ochre); --p-nr:var(--blue); --p-tw:var(--purple); --p-ds:var(--orange); --p-fe:var(--pink); --p-gr:var(--teal);
+  --ochre:#A9741C; --crimson:#9E1F2C; --p-ns:var(--ochre); --p-mx:var(--crimson); --p-sd:var(--orange); --p-nr:var(--blue); --p-tw:var(--purple); --p-ds:var(--orange); --p-fe:var(--pink); --p-gr:var(--teal);
   --on-p:#FFFFFF; --hard:3px 3px 0 var(--ink); --hard-sm:2px 2px 0 var(--ink); --grain:.22;
   --f-display:'Noto Serif TC','Songti TC','PMingLiU',serif;
   --f-body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',system-ui,sans-serif;
@@ -17,11 +17,11 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --paper:#14172A; --surface:#1C2036; --soft:#2A2F4B; --ink:#ECEEF6; --muted:#A3A8C4; --line:#ECEEF6; --hair:#363C5C;
-  --blue:#6E95F0; --pink:#FF77A9; --yellow:#FFD45E; --teal:#35C7BC; --orange:#FF8E58; --purple:#A585F0; --ochre:#E2AE55;
+  --blue:#6E95F0; --pink:#FF77A9; --yellow:#FFD45E; --teal:#35C7BC; --orange:#FF8E58; --purple:#A585F0; --ochre:#E2AE55; --crimson:#E2606B;
   --stamp:#FF5A5A; --good:#35C7BC; --bad:#FF5A5A; --on-p:#14172A; --grain:.12; color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#14172A; --surface:#1C2036; --soft:#2A2F4B; --ink:#ECEEF6; --muted:#A3A8C4; --line:#ECEEF6; --hair:#363C5C;
-  --blue:#6E95F0; --pink:#FF77A9; --yellow:#FFD45E; --teal:#35C7BC; --orange:#FF8E58; --purple:#A585F0; --ochre:#E2AE55;
+  --blue:#6E95F0; --pink:#FF77A9; --yellow:#FFD45E; --teal:#35C7BC; --orange:#FF8E58; --purple:#A585F0; --ochre:#E2AE55; --crimson:#E2606B;
   --stamp:#FF5A5A; --good:#35C7BC; --bad:#FF5A5A; --on-p:#14172A; --grain:.12; color-scheme:dark}
 
 *{box-sizing:border-box}
@@ -142,6 +142,126 @@ main{padding-top:20px}
 .refbar i{display:block;height:100%}
 .refbar i.y{background:var(--teal)} .refbar i.n{background:var(--stamp)}
 .refbar .th{position:absolute;top:-6px;bottom:-6px;border-left:2.5px dashed var(--ink)}
+/* painted art (Codex v0.4) */
+.isle-scene{position:relative;width:100%;aspect-ratio:780/430;border-radius:12px;overflow:hidden;border:2px solid var(--ink);background:#ddede6}
+.isle-base{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+.isle-bld{position:absolute;display:block;aspect-ratio:1;overflow:hidden;transform:translate(-50%,-100%)}
+.isle-bld img{position:absolute;inset:0;width:400%;height:200%;max-width:none}
+.isle-pin{position:absolute;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);display:grid;place-items:center;font:700 12px/1 'IBM Plex Mono',monospace;color:var(--ink)}
+.isle-legend{display:grid;gap:6px;margin-top:10px;font-size:14px;line-height:1.5}
+.isle-legend>div{display:flex;gap:8px;align-items:flex-start}
+.isle-legend b{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font:700 12px/1 'IBM Plex Mono',monospace;margin-top:1px}
+.isle-legend .inst b{border-radius:6px;font-family:inherit}
+.isle-note{margin-top:8px}
+@media (prefers-reduced-motion:no-preference){.isle-bld{animation:isle-in .6s ease-out both}}
+@keyframes isle-in{from{opacity:0;transform:translate(-50%,-90%)}to{opacity:1;transform:translate(-50%,-100%)}}
+.hero-isle{position:relative;line-height:0;background:#ddede6}
+.hero-isle>img{width:100%;height:auto;display:block}
+.hero-faces{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:2px;padding:8px 6px;background:#FFF8EC;border-top:2px solid var(--ink)}
+.hero-faces span{display:block;aspect-ratio:1}.hero-faces svg{width:100%;height:100%;display:block}
+/* swipe carousels */
+.carwrap{position:relative;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)))}
+.carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px max(16px,env(safe-area-inset-left,0px)) 12px;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scroll-padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.carousel::-webkit-scrollbar{display:none}
+.carousel>.slide{flex:0 0 86%;max-width:440px;scroll-snap-align:center;scroll-snap-stop:always}
+.carbtn{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:40px;height:40px;border-radius:50%;border:2px solid var(--ink);background:var(--surface);font-size:24px;line-height:1;display:none;place-items:center;box-shadow:var(--hard-sm)}
+.carbtn.prev{left:6px}.carbtn.next{right:6px}
+@media (hover:hover) and (pointer:fine){.carbtn{display:grid}}
+.cdots{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.cd{--pc:var(--ink);width:10px;height:10px;border-radius:50%;border:1.5px solid var(--ink);background:var(--surface);padding:0;transition:transform .15s}
+.cd.got{background:var(--teal)}
+.cd.cur{transform:scale(1.45);background:var(--pc)}
+.cd.cur.got{background:var(--teal);box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px var(--ink)}
+#sdots .cd{background:color-mix(in srgb,var(--pc) 35%,var(--surface))}#sdots .cd.cur{background:var(--pc)}
+.pol.hc{display:flex;flex-direction:column;gap:10px;padding:14px;cursor:default;min-height:100%}
+.pol.hc.on{transform:none;background:color-mix(in srgb,var(--pc) 12%,var(--surface))}
+.pol.hc.dis{opacity:.55}
+.hc-top{display:flex;gap:10px;align-items:flex-start}
+.hc-tt{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.hc-tt .pt{font-size:18px;line-height:1.3}
+.pol.hc .pd{font-size:14px;color:var(--ink);margin:0}
+.pol.hc .cinfo{border-top:1.5px dashed var(--hair)}
+.hc-act{margin-top:auto;display:flex;gap:8px}
+.hc-act .add{flex:1;min-height:48px;font-size:15.5px}
+.hc-act .ghost{min-height:48px}
+#scar .slide{text-align:left}
+#scar .slide.on{transform:none;box-shadow:5px 5px 0 var(--pc),5px 5px 0 2px var(--ink)}
+/* v2 mobile UI pass */
+body[data-phase="budget"] .hud{display:none}
+body[data-phase="budget"] .dock{top:env(safe-area-inset-top,0px);padding-top:12px}
+body[data-phase="budget"] main{padding-top:0}
+.bstack{gap:14px}
+.news.one{grid-template-columns:minmax(0,1fr)}
+.hstat{min-width:max-content}
+.tag,.ic{font-size:12px}
+.spot{display:flex;gap:8px;align-items:baseline;font-size:13px;line-height:1.4;max-width:1080px;margin:0 auto;width:100%;border-radius:8px;padding:4px 8px;animation:pop .4s both}
+.spot b{font-family:var(--f-num);white-space:nowrap}.spot span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.spot.up{background:color-mix(in srgb,var(--teal) 18%,var(--surface))}.spot.dn{background:color-mix(in srgb,var(--stamp) 14%,var(--surface))}
+.seg.tax button{min-height:44px}
+.pol.c2{display:grid;grid-template-columns:36px minmax(0,1fr) auto;grid-template-areas:"ic main coin" "ic act act";gap:6px 10px;padding:12px;cursor:default}
+.pol.c2 .pic{grid-area:ic;align-self:start}
+.pic{width:36px;height:36px;border-radius:10px;border:1.5px solid var(--ink);display:grid;place-items:center;background:color-mix(in srgb,var(--pc) 16%,var(--surface));color:var(--ink)}
+.pic.big{width:46px;height:46px}
+.pol.c2 .pmain{grid-area:main;display:flex;flex-direction:column;gap:4px;min-width:0}
+.pol.c2 .coin{grid-area:coin;width:40px;height:40px;font-size:16px}
+.pol.c2 .pt{font-size:16px}
+.ktags{display:flex;flex-wrap:wrap;gap:4px}.ktags:empty{display:none}
+.pd1{font-size:13px;color:var(--muted);line-height:1.45;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.pol.c2 .imp{margin-top:0}
+.ic.more{background:var(--surface);color:var(--muted)}
+.pact{grid-area:act;display:flex;justify-content:flex-end;gap:8px}
+.pact .btn{min-height:40px;padding:0 14px;font-size:14px}
+.pact .add{min-width:108px}
+.btn.ghost{background:transparent;box-shadow:none;border-color:var(--hair)}
+.pol.c2.dis{opacity:.5}
+.pol.c2.on{transform:none}
+.traybtn{padding:0 12px;min-height:46px;font-size:14px;display:flex;flex-direction:column;line-height:1.1;gap:0}
+.traybtn small{font-size:10.5px}
+.actionbar .wallet .t{font-size:11.5px}
+#sheet{position:fixed;inset:0;z-index:80}
+#sheet .sh-bg{position:absolute;inset:0;background:rgba(20,22,40,.45);animation:fade .2s both}
+#sheet .sh-panel{position:absolute;left:0;right:0;bottom:0;max-height:82vh;overflow:auto;background:var(--surface);border-top:2px solid var(--ink);border-radius:20px 20px 0 0;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:slideup .25s cubic-bezier(.2,.8,.2,1) both;max-width:720px;margin:0 auto}
+.sh-grab{width:44px;height:5px;border-radius:3px;background:var(--hair);margin:0 auto 10px}
+@keyframes slideup{from{transform:translateY(100%)}}@keyframes fade{from{opacity:0}}
+body.noscroll{overflow:hidden}
+.steps{display:flex;gap:4px}.steps span{font-size:11.5px;border:1.5px solid var(--ink);border-radius:999px;padding:1px 8px;color:var(--muted)}
+.steps span.on{background:var(--ink);color:var(--paper)}.steps span.done{background:var(--soft);color:var(--ink)}
+details.card>summary{display:flex;justify-content:space-between;align-items:center;cursor:pointer;list-style:none}
+details.card>summary::-webkit-details-marker{display:none}
+/* v2 sticky dock: mood bar + selected policies */
+.dock{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hudh,58px));z-index:15;background:var(--paper);margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:6px max(16px,env(safe-area-inset-left,0px)) 8px;border-bottom:2px solid var(--ink);display:flex;flex-direction:column;gap:6px;box-shadow:0 6px 10px -8px rgba(0,0,0,.35)}
+.dock .tray{position:static;box-shadow:none;min-height:42px;padding:5px 8px}
+.mood{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:2px;max-width:1080px;margin:0 auto;width:100%}
+.mi{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;border-radius:8px;padding:2px 0}
+.mi .mf{width:100%;max-width:38px;aspect-ratio:1}
+.mi .mf svg{width:100%;height:100%;display:block}
+.mv{font-family:var(--f-num);font-size:10.5px;font-weight:600;line-height:1.2;white-space:nowrap}
+.mv.up{color:var(--good)}.mv.down{color:var(--bad)}.mv.zero{color:var(--muted)}
+.mi.gain{background:color-mix(in srgb,var(--teal) 22%,transparent)}
+.mi.loss{background:color-mix(in srgb,var(--stamp) 18%,transparent)}
+.mdelta{position:absolute;top:-4px;right:-2px;font-family:var(--f-num);font-size:10px;font-weight:700;border-radius:6px;padding:0 3px;border:1.2px solid var(--ink);background:var(--surface);animation:pop .5s both}
+.mi.gain .mdelta{background:var(--teal);color:#fff}.mi.loss .mdelta{background:var(--stamp);color:#fff}
+@keyframes pop{0%{transform:translateY(6px) scale(.6);opacity:0}60%{transform:translateY(-2px) scale(1.1);opacity:1}}
+.mlegend{display:flex;justify-content:space-between;gap:8px;font-size:11.5px;max-width:1080px;margin:0 auto;width:100%}
+@media (min-width:700px){.mi .mf{max-width:48px}.mv{font-size:12px}}
+/* v2 */
+.pk{--pc:var(--ink);display:inline-block;font-size:11px;font-weight:700;border-radius:4px;padding:0 6px;margin:0 3px 3px 0;color:#fff;background:var(--pc);border:1px solid var(--ink)}
+.cinfo{grid-column:1/-1;display:flex;flex-direction:column;gap:2px;border-top:1.5px dashed var(--hair);padding-top:6px;margin-top:2px}
+.pcard .rule{font-size:12.5px;font-weight:700;background:var(--soft);border-radius:6px;padding:3px 8px;align-self:flex-start}
+.pcard .vw{font-size:13px;line-height:1.5}.pcard .vw b{display:block;font-size:11.5px;color:var(--muted);letter-spacing:.06em}
+.vtab{font-size:13px;min-width:720px}.vtab td,.vtab th{text-align:left;vertical-align:top}
+.cheat{border-left:6px solid var(--pc)}
+.issue{background:color-mix(in srgb,var(--yellow) 14%,var(--surface))}
+.pol.isc{box-shadow:4px 4px 0 var(--yellow),4px 4px 0 2px var(--ink)}
+.cqcard{border:2px solid var(--ink);border-radius:16px;overflow:hidden;background:var(--surface);box-shadow:5px 5px 0 var(--purple),5px 5px 0 2px var(--ink)}
+.cqh{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--purple);color:#fff;font-weight:700;letter-spacing:.12em;padding:7px 14px;border-bottom:2px solid var(--ink);font-size:13px}
+.cqh .small{letter-spacing:0;font-weight:500}
+.cqin{padding:16px;display:flex;flex-direction:column;gap:12px}
+.insight.good{background:color-mix(in srgb,var(--teal) 16%,var(--surface))}.insight.bad{background:color-mix(in srgb,var(--stamp) 12%,var(--surface))}
+.qopt.did{border-color:var(--teal);box-shadow:inset 0 0 0 2px var(--teal)}
+.seg.sm button{min-height:44px;font-size:14px}
+.pbar{display:grid;grid-template-columns:76px minmax(0,1fr) 40px;gap:8px;align-items:center;font-size:12.5px}
+.pbar i{display:block;height:12px;border:1.5px solid var(--ink);border-radius:4px;background:linear-gradient(90deg,var(--pc) var(--w),var(--surface) var(--w))}
 /* social thermometer */
 .thermo{border:2px solid var(--ink);border-radius:16px;padding:14px 16px;background:var(--surface);box-shadow:var(--hard);display:flex;flex-direction:column;gap:8px}
 .thermo.lv1{box-shadow:5px 5px 0 var(--orange),5px 5px 0 2px var(--ink)}
@@ -313,19 +433,6 @@ textarea{width:100%;min-height:88px;font:inherit;font-size:15px;color:var(--ink)
 #fx{position:fixed;inset:0;pointer-events:none;z-index:50}
 @media (max-width:420px){.hstat.pov{display:none}.pips{display:none}.brand b{font-size:15px}.hstats{gap:10px}.brand b{font-size:16px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
-/* ---------- 美術 v0.4 整合：福利島現況（新聞頁最上方） ---------- */
-.isle-scene{position:relative;width:100%;aspect-ratio:780/430;border-radius:12px;overflow:hidden;border:2px solid var(--ink);background:#ddede6}
-.isle-base{position:absolute;inset:0;width:100%;height:100%;max-width:none}
-.isle-bld{position:absolute;display:block;aspect-ratio:1;overflow:hidden;transform:translate(-50%,-100%)}
-.isle-bld img{position:absolute;inset:0;width:400%;height:200%;max-width:none}
-.isle-pin{position:absolute;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);display:grid;place-items:center;font:700 12px/1 'IBM Plex Mono',monospace;color:var(--ink)}
-.isle-legend{display:grid;gap:6px;margin-top:10px;font-size:14px;line-height:1.5}
-.isle-legend>div{display:flex;gap:8px;align-items:flex-start}
-.isle-legend b{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font:700 12px/1 'IBM Plex Mono',monospace;margin-top:1px}
-.isle-legend .inst b{border-radius:6px;font-family:inherit}
-.isle-note{margin-top:8px}
-@media (prefers-reduced-motion:no-preference){.isle-bld{animation:isle-in .6s ease-out both}}
-@keyframes isle-in{from{opacity:0;transform:translate(-50%,-90%)}to{opacity:1;transform:translate(-50%,-100%)}}
 </style>
 
 <header class="hud"><div class="in">
@@ -484,8 +591,8 @@ const EVENTS=[
  {id:'e7',pov:1,short:'油價上漲',name:'國際油價飆漲',d:'運輸與電價同步上揚。',rev:1,boost:{green:1.5},cit:{wang:-1,chen:-1,de:-1},fxt:['綠色政策效果 ×1.5','王董、小陳、阿德 −1']},
  {id:'e8',pov:-1,short:'景氣繁榮',name:'科技業接單滿載',d:'經濟成長率創十年新高。',rev:1.2,cit:{kevin:1,wang:1},fxt:['稅收 ×1.2','Kevin、王董 +1']}
 ];
-const TAX={'低':{rev:14,cit:{kevin:1.5,wang:1.5,de:1}},'中':{rev:18,cit:{}},'高':{rev:22,cit:{kevin:-2,wang:-1.5,de:-1.5}}};
-const HAND=10, HAND_AL=5, BASE_UP=1.6, BASE_DN=1.5, RIV_BASE=.5;
+const TAX={'低':{rev:14,cit:{kevin:1,wang:1,de:.5}},'中':{rev:18,cit:{}},'高':{rev:22,cit:{kevin:-2,wang:-1.5,de:-1.5}}};
+const HAND=8, HAND_AL=5, BASE_UP=1.6, BASE_DN=1.5, RIV_BASE=.5;
 const BASE=4, DEBT_LINE=18, ROUNDS=5, MAXADD=4, GROWTH=1;
 const cnt=(h,t)=>h.reduce((n,r)=>n+r.pl.add.filter(id=>P[id].tags.includes(t)).length,0);
 const VULN=['ma','chen','ling','xiang','yuma'];
@@ -495,20 +602,38 @@ const UNREST=[
  {min:60,lv:2,name:'大罷工',d:'工會發動罷工、商家罷市，經濟活動停擺好幾天。',fx:'執政黨弱勢族群支持度 −2.5、全島稅收 ×0.9、經濟動能 −1'},
  {min:80,lv:3,name:'不信任案通過',d:'民怨沸騰，立法院通過不信任案，內閣總辭、提前改選。',fx:'執政黨全體島民支持度 −2、弱勢族群再 −2、稅收 ×0.85、改選成本讓國債 +1'}
 ];
-const BASEC={nr:['kevin','wang'],co:['ma','liu','de'],tw:['chen','zhen','de'],ds:['ling','yuma','chen'],fe:['ling','zhen','ma','liu'],gr:['zhen','xiang','yuma','chen']};
+const BASEC={sd:['ling','ma','chen'],nr:['kevin','wang'],tw:['chen','zhen','de'],mx:['chen','zhen','ling'],fe:['ling','zhen','ma','liu'],ns:['xiang','yuma','zhen'],gr:['zhen','yuma','xiang','chen']};
 const PARTIES={
- nr:{name:'新右派',color:'var(--p-nr)',slogan:'小政府、大市場，把選擇權還給個人。',ability:'市場化與財政改革政策成本 −1',
-   miss:[{t:'至少三屆提案選「低稅」',f:h=>h.filter(r=>r.pl.tax==='低').length>=3},{t:'累計提出 3 項以上市場化或財政改革政策',f:h=>cnt(h,'mkt')+cnt(h,'reform')>=3}]},
- co:{name:'保守主義',color:'var(--p-co)',slogan:'家庭是社會的基石，社區互助先於政府。',ability:'家庭與公私協力政策成本 −1',
-   miss:[{t:'累計提出 3 項以上家庭或公私協力政策',f:h=>cnt(h,'fam')+cnt(h,'civ')>=3},{t:'從未選「高稅」',f:h=>h.length>0&&h.every(r=>r.pl.tax!=='高')}]},
- tw:{name:'第三條路',color:'var(--p-tw)',slogan:'沒有權利就沒有責任，福利是跳板不是吊床。',ability:'工作福利：選擇式政策附加就業條件，成本 −1',
-   miss:[{t:'累計提出 3 項以上社會投資政策',f:h=>cnt(h,'inv')>=3},{t:'每屆提案的赤字都不超過 2',f:h=>h.length>0&&h.every(r=>r.bal>=-2)}]},
- ds:{name:'民主社會主義',color:'var(--p-ds)',slogan:'福利是公民權利，不是施捨。',ability:'普及化：每項普及式政策讓所有島民滿意度 +0.5',
+ sd:{name:'社會民主',color:'var(--p-sd)',slogan:'福利是公民權利，用稅收換來人人都有的保障。',ability:'普及化：每項普及式政策讓所有島民滿意度 +0.5',
+   rule:'選舉型：靠選票執政，把普及服務蓋起來。',
    miss:[{t:'累計提出 4 項以上普及式政策',f:h=>cnt(h,'univ')>=4},{t:'從未提出選擇式（資產調查）政策',f:h=>cnt(h,'sel')===0}]},
+ nr:{name:'新右派',color:'var(--p-nr)',slogan:'小政府、大市場，把選擇權還給個人。',ability:'市場化政策成本 −1',
+   rule:'選舉型：靠選票執政，讓政府變小、市場變大。',
+   miss:[{t:'至少三屆提案選「低稅」',f:h=>h.filter(r=>r.pl.tax==='低').length>=3},{t:'累計提出 3 項以上市場化或財政改革政策',f:h=>cnt(h,'mkt')+cnt(h,'reform')>=3}]},
+ tw:{name:'第三條路',color:'var(--p-tw)',slogan:'沒有權利就沒有責任，福利是跳板不是吊床。',ability:'工作福利：選擇式政策附加就業條件，成本 −1',
+   rule:'選舉型：靠選票執政，用社會投資讓人回到工作。',
+   miss:[{t:'累計提出 3 項以上社會投資政策',f:h=>cnt(h,'inv')>=3},{t:'每屆提案的赤字都不超過 2',f:h=>h.length>0&&h.every(r=>r.bal>=-2)}]},
+ mx:{name:'馬克思主義',color:'var(--p-mx)',slogan:'福利只是讓資本主義喘口氣，真正的改變是讓勞工有力量。',ability:'危機動員：島上出現抗議或罷工時，勞工族群反而更支持你',
+   rule:'運動型：累積「勞工力量」比贏選舉更重要。',
+   miss:[{t:'島上「勞工力量」達到 8',f:h=>(S.labor||0)>=8},{t:'從未提出成長型減稅政策',f:h=>cnt(h,'growth')===0}]},
  fe:{name:'女性主義',color:'var(--p-fe)',slogan:'照顧是公共責任，不該只落在女人身上。',ability:'照顧公共化：照顧類政策成本 −1，效果 ×1.25',
+   rule:'選舉型：靠選票執政，讓照顧從家裡走向公共。',
    miss:[{t:'累計提出 3 項以上照顧類政策',f:h=>cnt(h,'care')>=3},{t:'從未提出家庭類政策（把照顧推回家庭）',f:h=>cnt(h,'fam')===0}]},
+ ns:{name:'新社會運動',color:'var(--p-ns)',slogan:'被看見、被承認、一起參與決定，權利是爭取來的。',ability:'倡議：就算落選，你的權利或公私協力政策仍有機會被執政黨採納',
+   rule:'倡議型：不必執政，政策被實施就算成功。',
+   miss:[{t:'你提出的政策中，有 4 項最後被實施（不論誰執政）',f:h=>(S.nsWins||0)>=4},{t:'回應 3 次島民陳情',f:h=>h.filter(r=>r.pl.add.some(id=>P[id].pet)).length>=3}]},
  gr:{name:'綠色主義',color:'var(--p-gr)',slogan:'沒有永續的地球，就沒有福利國家。',ability:'碳稅：可額外開徵碳稅，收入 +3（王董不滿）；綠色政策成本 −1',
+   rule:'選舉型：靠選票執政，讓福利與生態一起永續。',
    miss:[{t:'至少三屆提案包含綠色政策',f:h=>h.filter(r=>r.pl.add.some(id=>P[id].tags.includes('green'))).length>=3},{t:'從未提出成長型減稅政策',f:h=>cnt(h,'growth')===0}]}
+};
+const VIEWS={
+ sd:{see:'不平等來自市場分配不公，貧窮不是個人的錯。',who:'國家用稅收提供普及的服務和給付，市場要被節制。',how:'人人都有份（普及式），再分配縮小差距。',tension:'稅負高、財政壓力大，公共服務可能缺乏效率。'},
+ nr:{see:'問題常出在政府管太多、福利養成依賴。',who:'市場和家庭優先，政府只保底。',how:'經過資產調查、只幫最需要的人（選擇式），鼓勵自立。',tension:'保障可能不足，弱勢容易被標籤化。'},
+ tw:{see:'全球化下，最大的風險是被排除在工作之外。',who:'國家投資人力，個人有責任工作，公私協力。',how:'權利與責任並重，福利附帶就業條件。',tension:'沒辦法工作或要照顧家人的人，容易被忽略。'},
+ mx:{see:'不平等根源在階級：資本家擁有生產工具，勞工只能出賣勞力。',who:'勞工集體組織起來，福利國家本身也是勞資角力的結果。',how:'強化勞動權益、公共所有權，提升勞工議價力量。',tension:'改革可能只是讓制度更穩定，革命又離現實太遠。'},
+ fe:{see:'福利制度預設男性養家、女性照顧，無酬照顧被看不見。',who:'照顧要公共化，國家、市場、家庭重新分工。',how:'去家庭化的照顧服務、性別平等的勞動條件。',tension:'不同女性（單親、移工、原住民）的處境差很多。'},
+ ns:{see:'壓迫不只來自經濟，也來自身分、文化和不被承認。',who:'公民社會和受影響的人自己發聲、參與決策。',how:'反歧視、權利倡議、社區參與，讓服務貼近不同群體。',tension:'議題分散，倡議成果有時難以轉成穩定的制度。'},
+ gr:{see:'無限成長會耗盡地球，弱勢最先承受環境代價。',who:'在地社區、公共服務，經濟要配合生態限制。',how:'永續、環境正義、世代責任，不靠成長換福利。',tension:'綠色轉型的成本（如電價）可能落在弱勢身上。'}
 };
 const REG={
  lib:{name:'自由主義福利體制',eg:'美國、英國、澳洲',d:'國家只提供最基本的安全網，福利多經過資產調查，鼓勵個人透過市場和工作保障自己。支持者重視效率、選擇自由與工作誘因；批評者擔心保障不足與標籤化。'},
@@ -533,34 +658,7 @@ const AV={
  zhen:{bg:'#A9E0CE',skin:'#F2CBA8',hair:'pony',hc:'#53372A',shirt:'#239A8A'}
 };
 let FID=0;
-// ---------- 美術素材（Codex v0.4 模型水粉插畫）----------
-// 人物：assets/characters/{id}-expressions.webp，780×260，三格依序 happy / neutral / upset。
-// 島嶼：assets/scenes/island-painted.webp（底圖）＋ services-painted.webp（4×2 服務圖集）。
-// 素材載入成功才使用；載入失敗（離線、Artifact 未附檔）時沿用下方原本的 SVG 繪圖。
-const ART={base:'assets/',ok:{}};
-const ART_FILES=()=>[...CIT.map(c=>`characters/${c.id}-expressions.webp`),'scenes/island-painted.webp','scenes/services-painted.webp'];
-function preloadArt(ms=2500){return Promise.race([
-  Promise.all(ART_FILES().map(f=>new Promise(res=>{const im=new Image();im.onload=()=>{ART.ok[f]=1;res()};im.onerror=()=>res();im.src=ART.base+f}))),
-  new Promise(res=>setTimeout(res,ms))])}
-function paintedFace(id,mood,x,y,s){const f=`characters/${id}-expressions.webp`;if(!ART.ok[f])return null;
-  const k=mood>1.5?0:mood<-1?2:1,a=AV[id];
-  const pos=s?`x="${x}" y="${y}" width="${s}" height="${s}"`:'';
-  // 以 viewBox 裁出圖集中的一格；inline overflow:hidden 蓋過 .ava svg{overflow:visible}，避免露出相鄰表情
-  return `<svg ${pos} viewBox="${k*260} 0 260 260" style="overflow:hidden" aria-hidden="true"><circle cx="${k*260+130}" cy="130" r="128" fill="${a.bg}" opacity=".55"/><image href="${ART.base+f}" x="0" y="0" width="780" height="260" preserveAspectRatio="none"/></svg>`}
-// 島嶼服務圖層：政策 id → 圖層（依 docs/data/policy_meta_v0.1.json 的 islandLayer；「制度」類不畫建物）
-const ISLE_ORDER=[['care','照顧服務'],['transport','交通'],['housing','住宅'],['energy','能源'],['community','社區設施'],['health','醫療'],['school','學校'],['industry','產業']];
-const ISLE_LAYERS={care:'p5 p6 p7 p21 p32 q21 x6a t1 t4',transport:'p16 q16 p30 x5a',housing:'p14',energy:'p15 q18 x7a',community:'q15 p27 q10 q4 q9 p22 q17 x5b',health:'q1 q3 t3',school:'q7 q6 q5 x4a',industry:'q19 p17 x2a t7'};
-const ISLE_POS=[[29,58,15],[39,74,12],[55,60,16],[72,42,12],[25,78,15],[73,65,14],[52,83,16],[73,83,14]];// x、地面 y、寬度（場景百分比，取自 Codex art-preview.js）
-function paintedIsland(){if(!ART.ok['scenes/island-painted.webp']||!ART.ok['scenes/services-painted.webp'])return null;
-  const on=ISLE_ORDER.map(([id,name],i)=>({id,name,i,pols:S.enacted.map(x=>x.id).filter(pid=>ISLE_LAYERS[id].split(' ').includes(pid))})).filter(l=>l.pols.length);
-  const inst=S.enacted.filter(x=>!ISLE_ORDER.some(([id])=>ISLE_LAYERS[id].split(' ').includes(x.id)));
-  const b=ART.base+'scenes/';
-  return `<div class="isle"><div class="isle-scene" role="img" aria-label="福利島現況：${on.length?on.map(l=>l.name).join('、'):'尚未設置服務據點'}"><img class="isle-base" src="${b}island-painted.webp" alt="">
-   ${on.map(l=>{const [px,py,w]=ISLE_POS[l.i];return `<span class="isle-bld" style="left:${px}%;top:${py}%;width:${w}%"><img src="${b}services-painted.webp" alt="" style="transform:translate(-${(l.i%4)*25}%,-${Math.floor(l.i/4)*50}%)"></span><span class="isle-pin" style="left:${px}%;top:${py-w*780/430+5}%" aria-hidden="true">${l.i+1}</span>`}).join('')}</div>
-   <div class="isle-legend">${on.length?on.map(l=>`<div><b>${l.i+1}</b><span><strong>${l.name}</strong>　${l.pols.map(pid=>P[pid].name).join('、')}</span></div>`).join(''):`<p class="small muted">島上還沒有實施任何服務方案。你的政見通過後，對應的設施會出現在這裡。</p>`}
-   ${inst.length?`<div class="inst"><b>制</b><span><strong>制度與給付</strong>　${inst.map(x=>P[x.id].name).join('、')}</span></div>`:''}</div>
-   <p class="small muted isle-note">圖示代表島上已有這類服務，不代表由誰經營或成效好壞。</p></div>`}
-function face(id,mood=0,x,y,s){const pf=paintedFace(id,mood,x,y,s);if(pf)return pf;const a=AV[id],K='#3B2B28',u='f'+(FID++);
+function face(id,mood=0,x,y,s){const a=AV[id],K='#3B2B28',u='f'+(FID++);
   const m=mood>1.5?'happy':mood<-1?'sad':'flat';
   const hl=shade(a.hc,.45),hd=shade(a.hc,-.3),st=`stroke="${K}" stroke-width="1.1" stroke-linejoin="round"`;
   let back='',front='';
@@ -666,11 +764,44 @@ const ART_DEFS=`<svg width="0" height="0" style="position:absolute" aria-hidden=
  <filter id="tex" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="8"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .25  0 0 0 0 .15  0 0 0 .35 0"/></filter>
 </defs></svg>`;
 if(typeof document!=='undefined')document.body.insertAdjacentHTML('afterbegin',ART_DEFS);
+// ---------- 美術素材（Codex v0.4 模型水粉插畫）----------
+// 人物：assets/characters/{id}-expressions.webp，780×260，三格依序 happy / neutral / upset。
+// 島嶼：assets/scenes/island-painted.webp（底圖）＋ services-painted.webp（4×2 服務圖集）。
+// 素材載入成功才使用；載入失敗（離線、Artifact 未附檔）時沿用下方原本的 SVG 繪圖。
+const ART={base:'assets/',ok:{}};
+const ART_FILES=()=>[...CIT.map(c=>`characters/${c.id}-expressions.webp`),'scenes/island-painted.webp','scenes/services-painted.webp'];
+function preloadArt(ms=2500){return Promise.race([
+  Promise.all(ART_FILES().map(f=>new Promise(res=>{const im=new Image();im.onload=()=>{ART.ok[f]=1;res()};im.onerror=()=>res();im.src=ART.base+f}))),
+  new Promise(res=>setTimeout(res,ms))])}
+function paintedFace(id,mood,x,y,s){const f=`characters/${id}-expressions.webp`;if(!ART.ok[f])return null;
+  const k=mood>1.5?0:mood<-1?2:1,a=AV[id];
+  const pos=s?`x="${x}" y="${y}" width="${s}" height="${s}"`:'';
+  // 以 viewBox 裁出圖集中的一格；inline overflow:hidden 蓋過 .ava svg{overflow:visible}，避免露出相鄰表情
+  return `<svg ${pos} viewBox="${k*260} 0 260 260" style="overflow:hidden" aria-hidden="true"><circle cx="${k*260+130}" cy="130" r="128" fill="${a.bg}" opacity=".55"/><image href="${ART.base+f}" x="0" y="0" width="780" height="260" preserveAspectRatio="none"/></svg>`}
+// 島嶼服務圖層：政策 id → 圖層（依 docs/data/policy_meta_v0.1.json 的 islandLayer；「制度」類不畫建物）
+const ISLE_ORDER=[['care','照顧服務'],['transport','交通'],['housing','住宅'],['energy','能源'],['community','社區設施'],['health','醫療'],['school','學校'],['industry','產業']];
+const ISLE_LAYERS={care:'p5 p6 p7 p21 p32 q21 x6a t1 t4',transport:'p16 q16 p30 x5a',housing:'p14',energy:'p15 q18 x7a',community:'q15 p27 q10 q4 q9 p22 q17 x5b',health:'q1 q3 t3',school:'q7 q6 q5 x4a',industry:'q19 p17 x2a t7'};
+const ISLE_POS=[[29,58,15],[39,74,12],[55,60,16],[72,42,12],[25,78,15],[73,65,14],[52,83,16],[73,83,14]];// x、地面 y、寬度（場景百分比，取自 Codex art-preview.js）
+function paintedIsland(){if(!ART.ok['scenes/island-painted.webp']||!ART.ok['scenes/services-painted.webp'])return null;
+  const live=S.enacted.filter(x=>P[x.id]&&!P[x.id].custom&&isActive(x)),bld=S.enacted.filter(x=>P[x.id]&&!P[x.id].custom&&!isActive(x));
+  const on=ISLE_ORDER.map(([id,name],i)=>({id,name,i,pols:live.map(x=>x.id).filter(pid=>ISLE_LAYERS[id].split(' ').includes(pid))})).filter(l=>l.pols.length);
+  const inst=live.filter(x=>!ISLE_ORDER.some(([id])=>ISLE_LAYERS[id].split(' ').includes(x.id)));
+  const b=ART.base+'scenes/';
+  return `<div class="isle"><div class="isle-scene" role="img" aria-label="福利島現況：${on.length?on.map(l=>l.name).join('、'):'尚未設置服務據點'}"><img class="isle-base" src="${b}island-painted.webp" alt="">
+   ${on.map(l=>{const [px,py,w]=ISLE_POS[l.i];return `<span class="isle-bld" style="left:${px}%;top:${py}%;width:${w}%"><img src="${b}services-painted.webp" alt="" style="transform:translate(-${(l.i%4)*25}%,-${Math.floor(l.i/4)*50}%)"></span><span class="isle-pin" style="left:${px}%;top:${py-w*780/430+5}%" aria-hidden="true">${l.i+1}</span>`}).join('')}</div>
+   <div class="isle-legend">${on.length?on.map(l=>`<div><b>${l.i+1}</b><span><strong>${l.name}</strong>　${l.pols.map(pid=>P[pid].name).join('、')}</span></div>`).join(''):`<p class="small muted">島上還沒有實施任何服務方案。你的政見通過後，對應的設施會出現在這裡。</p>`}
+   ${bld.length?`<div class="inst"><b>建</b><span><strong>建置中</strong>　${bld.map(x=>P[x.id].name).join('、')}（下屆開始服務）</span></div>`:''}
+   ${inst.length?`<div class="inst"><b>制</b><span><strong>制度與給付</strong>　${inst.map(x=>P[x.id].name).join('、')}</span></div>`:''}</div>
+   <p class="small muted isle-note">圖示代表島上已有這類服務，不代表由誰經營或成效好壞。</p></div>`}
+
+function islandCard(title){const h=paintedIsland();return h?`<div class="card"><h3 style="margin-bottom:8px">${title||'福利島現況'}</h3>${h}</div>`:''}
+function heroArt(){if(!ART.ok['scenes/island-painted.webp'])return null;
+  return `<div class="hero-isle"><img src="${ART.base}scenes/island-painted.webp" alt="福利島"><div class="hero-faces">${CIT.map((c,i)=>`<span>${face(c.id,i%3===1?0:2)}</span>`).join('')}</div></div>`}
 // ---------- STATE ----------
 const ME=0;
-const NP=6,GS=[0,1,2,3,4,5],RIV=[1,2,3,4,5];
+const NP=7,GS=[0,1,2,3,4,5,6],RIV=[1,2,3,4,5,6];
 const blank=(tax='中')=>Array.from({length:NP},()=>({tax,add:[],cut:[],carbon:false}));
-const fresh=()=>({phase:'title',round:0,choice:null,assign:null,event:null,used:[],rot:0,platforms:blank(),adj:GS.map(()=>0),q:null,qPick:null,qDebt:0,history:[],enacted:[],debt:0,govTax:'中',bankrupt:false,refl:['','',''],eco:0,onceUsed:[],hand:[],redrawn:false,unrest:0,povShock:0,crisis:0,unrestLog:[],pets:[],pet:null,lastProbs:null,wmod:{},ref:null,refAlign:{},refSpend:0,demoDone:false,lastGov:null,filter:'all'});
+const fresh=()=>({phase:'title',round:0,choice:null,assign:null,event:null,used:[],rot:0,platforms:blank(),adj:GS.map(()=>0),q:null,qPick:null,qDebt:0,history:[],enacted:[],debt:0,govTax:'中',bankrupt:false,refl:['','',''],eco:0,onceUsed:[],hand:[],redrawn:false,unrest:0,povShock:0,crisis:0,unrestLog:[],pets:[],pet:null,lastProbs:null,wmod:{},ref:null,refAlign:{},refSpend:0,demoDone:false,lastGov:null,filter:'all',labor:0,nsWins:0,nsCounted:[],qUsed:[],cq:null,cqLog:[],cqUsed:[],issue:null,amend:null,storySeen:[],hints:true,reasons:[],reformDone:false,customN:0});
 let S;
 const ev=()=>EVENTS.find(e=>e.id===S.event)||{rev:1,boost:{},cit:{},oneoff:0};
 const key=g=>S.assign[g];
@@ -685,21 +816,24 @@ const fit=(id,k)=>{const v=ideo(id,k);return v>=2?1:v<0?-1:0};
 const evHit=id=>{const b=ev().boost||{};return P[id].tags.some(t=>b[t])};
 const special=p=>p.refOnly||p.ev||p.pet;
 const Wt=c=>S.wmod[c.id]!=null?S.wmod[c.id]:c.w;
-function costOf(id,k){const p=P[id];let c=p.cost;if(c<=0)return c;const t=p.tags;if(k==='nr'&&(t.includes('mkt')||t.includes('reform')))c--;if(k==='tw'&&t.includes('sel'))c--;if(k==='co'&&(t.includes('fam')||t.includes('civ')))c--;if(k==='gr'&&t.includes('green'))c--;if(k==='fe'&&t.includes('care'))c--;return Math.max(1,c)}
+function costOf(id,k){const p=P[id];let c=p.cost;if(c<=0)return c;const t=p.tags;if(k==='nr'&&t.includes('mkt')&&t.length<=2)c--;if(k==='tw'&&t.includes('sel'))c--;if(k==='ns'&&(t.includes('rights')||t.includes('civ')))c--;if(k==='gr'&&t.includes('green'))c--;if(k==='fe'&&t.includes('care'))c--;return Math.max(1,c)}
 function money(g){const pl=S.platforms[g],e=ev(),k=key(g);
   const rev=r1((TAX[pl.tax].rev+GROWTH*S.round+S.eco)*e.rev*[1,1,.9,.85][S.crisis]+(k==='gr'&&pl.carbon?3:0));
-  const exist=S.enacted.filter(x=>!pl.cut.includes(x.id)).reduce((a,x)=>a+x.cost,0);
+  const exist=S.enacted.filter(x=>!pl.cut.includes(x.id)).reduce((a,x)=>a+x.cost*((pl.adj&&pl.adj[x.id])||1),0);
   const adds=pl.add.reduce((a,id)=>a+costOf(id,k),0);
   const spend=BASE+exist+adds+(e.oneoff||0)+(g===ME?S.refSpend:0);
   return {rev,exist,adds,spend,bal:r1(rev-spend)}}
 function mult(p,k){let m=1;const b=ev().boost||{};p.tags.forEach(t=>{if(b[t])m*=b[t]});if(k==='fe'&&p.tags.includes('care'))m*=1.25;return m}
 function sat(g){const pl=S.platforms[g],k=key(g),e=ev(),s={};
   CIT.forEach(c=>s[c.id]=(TAX[pl.tax].cit[c.id]||0)+((e.cit||{})[c.id]||0));
-  pl.add.forEach(id=>{const p=P[id],m=mult(p,k);for(const c in p.cit)s[c]+=p.cit[c]*m;if(k==='ds'&&p.tags.includes('univ'))CIT.forEach(c=>s[c.id]+=.5)});
-  pl.add.forEach(id=>{const f=fit(id,k);const bm=g===ME?1:RIV_BASE;if(f>0)BASEC[k].forEach(c=>s[c]+=BASE_UP*bm);if(f<0)BASEC[k].forEach(c=>s[c]-=BASE_DN*bm)});
+  pl.add.forEach(id=>{const p=P[id],m=mult(p,k);for(const c in p.cit)s[c]+=p.cit[c]*m;if(k==='sd'&&p.tags.includes('univ'))CIT.forEach(c=>s[c.id]+=.5)});
+  pl.add.forEach(id=>{const f=fit(id,k);const bm=(g===ME?1:RIV_BASE)*(k==='nr'?.55:k==='mx'||k==='ns'?1.25:1);if(f>0)BASEC[k].forEach(c=>s[c]+=BASE_UP*bm);if(f<0)BASEC[k].forEach(c=>s[c]-=BASE_DN*bm)});
   pl.cut.forEach(id=>{const p=P[id];for(const c in p.cit)s[c]-=p.cit[c]*.8});
+  if(pl.adj)for(const id in pl.adj){const p=P[id],m=pl.adj[id]-1;for(const c in p.cit)s[c]+=p.cit[c]*m*.9}
+  if(k==='mx'&&S.crisis>=1)['chen','zhen','ling','xiang'].forEach(c=>s[c]+=1.5*S.crisis);
   if(k==='gr'&&pl.carbon)s.wang-=2;
   if(g===ME)for(const c in S.refAlign)s[c]+=S.refAlign[c];
+  if(S.lastGov===g&&S.streak>1)CIT.forEach(c=>s[c.id]-=.7*(S.streak-1));
   if(S.lastGov===g){const pv=island().poverty;VULN.forEach(c=>{s[c]-=Math.max(0,pv-12)*.35+[0,1.5,2.5,4][S.crisis];if(pv<10)s[c]+=.8});if(S.crisis===3)CIT.forEach(c=>s[c.id]-=2)}
   if(g===ME&&S.pet){const t=PETS.find(x=>x.who===S.pet);if(t&&!pl.add.includes(t.card.id))s[S.pet]-=2}
   const bal=money(g).bal;if(bal<-1){const pen=(-bal-1)*.35;CIT.forEach(c=>s[c.id]-=pen*(c.id==='kevin'||c.id==='wang'?1.8:1))}
@@ -708,25 +842,26 @@ function votes(){const sats=GS.map(sat),raw=GS.map(()=>0),voters=CIT.filter(c=>W
   const probs={};voters.forEach(c=>{const ex=sats.map(s=>Math.exp(5*Math.tanh(s[c.id]/5)/2.2)),sum=ex.reduce((a,b)=>a+b,0);probs[c.id]=ex.map(x=>x/sum);ex.forEach((x,g)=>raw[g]+=Wt(c)*x/sum)});
   let pct=raw.map((x,g)=>Math.max(0,x/W*100+S.adj[g]));const t=pct.reduce((a,b)=>a+b,0)||1;pct=pct.map(x=>x/t*100);
   return {sats,pct,probs}}
-function island(){const f={pov:0,dec:0,str:0,def:0,stg:0,env:0,emp:0};S.enacted.forEach(x=>{const p=P[x.id];for(const k in p.fx)f[k]+=p.fx[k]});
+function island(){const f={pov:0,dec:0,str:0,def:0,stg:0,env:0,emp:0};S.enacted.filter(isActive).forEach(x=>{const p=P[x.id],m=x.mul||1;for(const k in p.fx)if(f[k]!=null)f[k]+=p.fx[k]*m});
   f.poverty=Math.min(28,Math.max(3,14+f.pov*.8+S.povShock));return f}
-function islandMood(){const s={};CIT.forEach(c=>s[c.id]=(TAX[S.govTax].cit[c.id]||0));S.enacted.forEach(x=>{const p=P[x.id];for(const c in p.cit)s[c]+=p.cit[c]});return s}
+function islandMood(){const s={};CIT.forEach(c=>s[c.id]=(TAX[S.govTax].cit[c.id]||0));S.enacted.filter(isActive).forEach(x=>{const p=P[x.id],m=x.mul||1;for(const c in p.cit)s[c]+=p.cit[c]*m});return s}
 // ---------- AI RIVALS ----------
 const PREF={
+ sd:{tax:'高',w:{stim:1.5,univ:3,ins:1,care:1,rights:1.5,sel:-4,mkt:-4,growth:-2,reform:-3,fam:-1},tol:2},
  nr:{tax:'低',w:{stim:-1,mkt:3,reform:3.5,growth:3,sel:1,civ:1,univ:-3,rights:-2,green:-1,ins:-1},tol:0},
- co:{tax:'低',w:{stim:1,fam:3.5,civ:3,sel:1,ins:1,old:1,growth:1,univ:-1,rights:-1.5,green:-.5},tol:1},
- tw:{tax:'中',w:{stim:1,inv:3,sel:1.5,mkt:1,civ:1,reform:1,univ:-.5},tol:0},
- ds:{tax:'高',w:{stim:1.5,univ:3,ins:1,care:1,rights:1.5,sel:-4,mkt:-4,growth:-2,reform:-3,fam:-1},tol:2},
+ tw:{tax:'中',w:{stim:1,inv:3,sel:1.5,mkt:2,civ:1,reform:2,growth:1.5,univ:-.5},tol:0},
+ mx:{tax:'高',w:{rights:3.5,ins:2,univ:1.5,growth:-4,mkt:-4,reform:-2,fam:-1,civ:-.5,stim:.5},tol:2},
  fe:{tax:'中',w:{care:3,univ:1.2,rights:2,mkt:-.5,fam:-4},tol:1},
+ ns:{tax:'中',w:{rights:3,civ:3,care:1,green:1,inv:.5,mkt:-1.5,growth:-2,reform:-1},tol:1},
  gr:{tax:'中',w:{stim:-1.5,green:4,univ:1.5,inv:1.5,civ:1,growth:-5},tol:1,carbon:true}
 };
 function aiPlatform(g){const k=key(g),pr=PREF[k],pl={tax:pr.tax,add:[],cut:[],carbon:!!pr.carbon};S.platforms[g]=pl;
-  if(!['nr','co'].includes(k)&&money(g).bal<4)pl.tax='高';
-  if(k==='co'&&money(g).bal<3)pl.tax='中';
+  if(k!=='nr'&&money(g).bal<4)pl.tax='高';
   if((k==='nr'||k==='tw')&&S.enacted.length){const cuts=S.enacted.filter(x=>P[x.id].cost>0&&!P[x.id].tags.some(t=>['mkt','growth','reform'].includes(t))).sort((a,b)=>(P[b.id].tags.includes('univ')-P[a.id].tags.includes('univ'))||b.cost-a.cost);
     for(const x of cuts){if(money(g).bal>=(k==='nr'?3:1)||pl.cut.length>=(k==='nr'?2:1))break;pl.cut.push(x.id)}}
   const cand=POL.filter(p=>(!S.enacted.some(x=>x.id===p.id)&&!S.onceUsed.includes(p.id)&&!special(p)||(p.ev===S.event&&!S.enacted.some(x=>x.id===p.id)&&!S.onceUsed.includes(p.id)))&&!(pr.avoid||[]).includes(p.id))
-    .map(p=>({p,s:p.tags.reduce((a,t)=>a+(pr.w[t]||0),0)+Math.random()*1.5})).filter(c=>c.s>1).sort((a,b)=>b.s-a.s);
+    .map(p=>({p,s:p.tags.reduce((a,t)=>a+(pr.w[t]||0),0)+Math.random()*1.5-(S.round===1&&issueOf(p.id)?9:0)})).filter(c=>c.s>1).sort((a,b)=>b.s-a.s);
+  if(S.round===1&&S.issue){const I=ISSUES.find(i=>i.id===S.issue),os=I.opts.map(o=>o.id).filter(id=>P[id]&&!S.enacted.some(x=>x.id===id)).sort((x,y)=>ideo(y,k)-ideo(x,k));if(os[0])pl.add.push(os[0])}
   for(const c of cand){if(pl.add.length>=MAXADD)break;const left=money(g).bal;if(costOf(c.p.id,k)<=left+pr.tol)pl.add.push(c.p.id)}
 }
 
@@ -770,6 +905,119 @@ const QS=[
 function pickQ(){const pl=S.platforms[ME],m=money(ME),s=sat(ME);const ok=QS.filter(q=>q.id!=='debate'&&q.when(pl,m,s));
   const q=ok.length?ok[Math.floor(Math.random()*ok.length)]:QS.find(q=>q.id==='debate');return {id:q.id,text:q.q(m,pl)}}
 
+// ================= V2: perspectives, dilemmas, consequences, stories =================
+const PK=['sd','nr','tw','mx','fe','ns','gr'];
+const PNAME=k=>PARTIES[k].name;
+// which perspectives back / oppose a card (based on each perspective's value weights)
+function persp(id){const up=[],dn=[];PK.forEach(k=>{const v=ideo(id,k);if(v>=2)up.push(k);else if(v<=-1.5)dn.push(k)});return {up,dn}}
+// delayed effect: services and social investment need a term to build
+const DELAYED=p=>!p.once&&p.tags.some(t=>['care','inv','green'].includes(t))&&!p.tags.includes('stim');
+const isActive=x=>x.start==null||x.start<=S.round;
+
+// ---- Round 2: one shared dilemma, several institutional answers ----
+const ISSUES=[
+ {id:'care',title:'長照需求暴增',d:'失能長輩越來越多，家屬撐不住了。同一個問題，不同觀點會給出不同的答案。',
+  opts:[{id:'p6',ap:'公共服務',who:'社會民主、女性主義'},{id:'p5',ap:'市場購買',who:'新右派'},{id:'p18',ap:'家庭支持',who:'家庭責任傳統'},{id:'p27',ap:'社區互助',who:'新社會運動、綠色主義'},{id:'q21',ap:'社會保險',who:'第三條路、保守統合傳統'},{id:'p13',ap:'改善照顧勞動',who:'馬克思主義、新社會運動'}]},
+ {id:'child',title:'托育缺口',d:'雙薪家庭和單親家長找不到托嬰中心，很多人只能離職。',
+  opts:[{id:'p7',ap:'公共服務',who:'社會民主、女性主義'},{id:'p21',ap:'公私協力',who:'第三條路'},{id:'p1',ap:'現金給付',who:'社會民主'},{id:'p23',ap:'家庭支持',who:'家庭責任傳統'},{id:'t1',ap:'勞動權益',who:'女性主義、馬克思主義'}]},
+ {id:'work',title:'做到死還是窮',d:'有工作卻還是窮的人越來越多，外送、清潔、照顧工作都一樣。',
+  opts:[{id:'q11',ap:'提高基本工資',who:'馬克思主義、社會民主'},{id:'p20',ap:'工作所得補助',who:'第三條路'},{id:'p2',ap:'資產調查救助',who:'新右派'},{id:'q22',ap:'平台勞動規範',who:'馬克思主義、新社會運動'},{id:'p9',ap:'職業訓練',who:'第三條路、新右派'}]}
+];
+const issueOf=id=>{const I=ISSUES.find(i=>i.id===S.issue);return I&&I.opts.find(o=>o.id===id)};
+
+// ---- Rounds 3–5: consequences of policies that were actually implemented ----
+const CONSEQ=[
+ {pid:'p7',title:'公共托育上路之後',good:'美玲把小女兒送進公托，重回職場，家裡收入穩定了。',bad:'偏鄉根本沒有托嬰中心，保母人力也嚴重不足。',
+  opts:[{t:'調高托育人員薪資，留住人力',ap:'勞動改革',k:['mx','fe'],cost:1,cit:{zhen:2,ling:1,yuma:1}},
+        {t:'補助偏鄉社區保母互助',ap:'社區',k:['ns','gr'],cost:1,cit:{yuma:3,ma:1}},
+        {t:'開放私立業者簽約加入',ap:'市場',k:['nr','tw'],cost:0,cit:{kevin:1,ling:1,zhen:-1}}]},
+ {pid:'p6',title:'長照公共服務網滿兩年',good:'秀英阿嬤每天有居服員來，獨居長輩少了很多意外。',bad:'居服員薪水低、工作累，流失率高，新的個案排不進去。',
+  opts:[{t:'居服員加薪並建立職涯階梯',ap:'勞動改革',k:['mx','sd','fe'],cost:1,cit:{zhen:2,ma:2}},
+        {t:'放寬引進外籍看護補人力',ap:'市場',k:['nr'],cost:0,cit:{ma:1,wang:1,ati:-1,zhen:-1}},
+        {t:'加發家屬照顧津貼，分流需求',ap:'家庭',k:[],cost:1,cit:{liu:2,ling:-1}}]},
+ {pid:'p5',title:'長照服務券一年後',good:'都市的家庭可以自己挑業者和時段，選擇變多了。',bad:'山上和部落沒有業者願意去，券拿了也用不到；業者搶單，品質參差不齊。',
+  opts:[{t:'在偏鄉設公辦據點',ap:'公共服務',k:['sd','gr'],cost:1,cit:{yuma:3,ma:1}},
+        {t:'建立評鑑與資訊公開，讓市場自己淘汰',ap:'市場管理',k:['nr','tw'],cost:0,cit:{kevin:1,yuma:-1}},
+        {t:'補助部落文化健康站接手',ap:'社區',k:['ns'],cost:1,cit:{yuma:3}}]},
+ {pid:'p3',title:'國民基礎年金發放之後',good:'沒有勞保的長輩每個月都有一筆錢，老年貧窮明顯下降。',bad:'人口快速老化，年輕世代開始質疑：以後誰來付？',
+  opts:[{t:'向高所得者與資本利得加稅支應',ap:'再分配',k:['sd','mx'],cost:-1,cit:{kevin:-2,wang:-2,zhen:1}},
+        {t:'給付自動隨財政狀況調整',ap:'財政改革',k:['nr','tw'],cost:-1,cit:{zhen:2,ma:-2,de:-1}},
+        {t:'先維持現狀，用舉債支應',ap:'維持',k:[],cost:0,debt:1.5,cit:{ma:1}}]},
+ {pid:'p1',title:'全民兒童津貼發了一陣子',good:'育兒家庭的壓力減輕，兒童貧窮率下降。',bad:'出生率沒有明顯回升，有人批評錢發給了不缺錢的家庭。',
+  opts:[{t:'改為排富，只發給中低所得家庭',ap:'選擇式',k:['nr','tw'],cost:-1,cit:{kevin:-2,ling:0,de:1}},
+        {t:'維持普及，另外加碼托育服務',ap:'普及服務',k:['sd','fe'],cost:1,cit:{ling:2,zhen:1}},
+        {t:'維持現狀',ap:'維持',k:[],cost:0,cit:{}}]},
+ {pid:'p14',title:'社會住宅蓋起來了',good:'小禎抽到社宅，終於搬離四坪的雅房。',bad:'新的基地遇到鄰居抗議，說會影響房價和治安。',
+  opts:[{t:'邀請社區一起參與設計與管理',ap:'參與',k:['ns','gr'],cost:1,cit:{kevin:1,zhen:1}},
+        {t:'改用包租代管，租民間空屋',ap:'市場',k:['nr','tw'],cost:0,cit:{kevin:1,zhen:1}},
+        {t:'依法強行推動',ap:'國家主導',k:['sd'],cost:0,cit:{kevin:-2,zhen:2}}]},
+ {pid:'p12',title:'平台工作者納保之後',good:'小陳車禍時終於有職災給付，不用自己扛醫藥費。',bad:'平台把保費轉嫁給外送員，每趟的報酬反而降低。',
+  opts:[{t:'立法規定每趟最低報酬',ap:'勞動規範',k:['mx','ns'],cost:0,cit:{chen:3,wang:-1,kevin:-1}},
+        {t:'政府補貼部分保費',ap:'國家補貼',k:['sd'],cost:1,cit:{chen:2}},
+        {t:'讓市場自行調整',ap:'市場',k:['nr'],cost:0,cit:{chen:-2,wang:1}}]},
+ {pid:'p24',title:'年金改革實施後',good:'年金基金的破產年限往後延了二十年。',bad:'劉伯伯這些退休族群每週上街抗議，覺得政府背信。',
+  opts:[{t:'保障弱勢長者的最低給付',ap:'保底',k:['sd','tw'],cost:1,cit:{ma:2,liu:1}},
+        {t:'堅持改革，不再讓步',ap:'財政紀律',k:['nr'],cost:0,cit:{liu:-2,zhen:2}},
+        {t:'舉辦世代對話，共同討論',ap:'參與',k:['ns'],cost:0,cit:{liu:1,zhen:1}}]},
+ {pid:'p28',title:'調降營所稅一年後',good:'王董擴廠、阿德多請了一個工讀生。',bad:'稅收減少，減稅好處大多集中在大企業。',
+  opts:[{t:'減稅附加僱用與加薪條件',ap:'權利責任',k:['tw'],cost:0,cit:{chen:1,zhen:1,wang:-1}},
+        {t:'改為只對小商家優惠',ap:'重新分配',k:['sd','ns'],cost:-1,cit:{de:2,wang:-2}},
+        {t:'維持，相信會涓滴下來',ap:'市場',k:['nr'],cost:0,cit:{wang:1,zhen:-1}}]},
+ {pid:'p17',title:'產業升級抵減之後',good:'科技業投資增加，Kevin 的公司加薪。',bad:'工廠擴張造成污染，周邊居民抗議。',
+  opts:[{t:'抵減附加減碳條件',ap:'綠色轉型',k:['gr'],cost:0,cit:{zhen:1,wang:-1}},
+        {t:'成立居民參與的環境監督委員會',ap:'參與',k:['ns'],cost:0,cit:{yuma:1,zhen:1}},
+        {t:'維持現狀，經濟優先',ap:'成長',k:['nr','tw'],cost:0,cit:{wang:1,kevin:1,zhen:-1}}]},
+ {pid:'p15',title:'碳費開徵之後',good:'工廠排碳量下降，綠能產業多了不少工作。',bad:'電價跟著上漲，阿德和秀英阿嬤的負擔變重。',
+  opts:[{t:'把碳費收入平均退還每戶',ap:'環境正義',k:['gr','sd'],cost:0,cit:{ma:2,de:1,ling:1}},
+        {t:'補助企業轉型',ap:'產業',k:['tw'],cost:1,cit:{wang:2}},
+        {t:'降低費率',ap:'讓步',k:['nr'],cost:0,cit:{wang:1,zhen:-2}}]},
+ {pid:'p13',title:'家事移工納入勞基法之後',good:'阿蒂每週有一天休假，終於能去清真寺和朋友聚會。',bad:'很多家庭的照顧費用變高，休假那天也沒人照顧長輩。',
+  opts:[{t:'提供移工休假日的喘息替代服務',ap:'公共服務',k:['sd','fe'],cost:1,cit:{ma:2,liu:1,ati:1}},
+        {t:'政府補貼部分聘僱費用',ap:'補貼',k:['tw'],cost:1,cit:{ma:1,wang:1}},
+        {t:'回到原本的制度',ap:'退回',k:['nr'],cost:0,cit:{ati:-3,ma:1}}]},
+ {pid:'p27',title:'社區互助據點遍地開花',good:'廟口的共餐據點讓秀英阿嬤每天都有伴。',bad:'志工年紀越來越大，很多據點快撐不下去了。',
+  opts:[{t:'補助據點聘用專職人員',ap:'專業化',k:['sd','fe'],cost:1,cit:{zhen:2,ma:1}},
+        {t:'推動青年志工與企業志工',ap:'公民參與',k:['ns','tw'],cost:0,cit:{zhen:1,ma:1}},
+        {t:'讓據點自行募款',ap:'自立',k:['nr'],cost:0,cit:{ma:-1}}]},
+ {pid:'p20',title:'工作所得補助一年後',good:'小陳和阿德這些低薪工作者多了一筆收入。',bad:'零工收入不穩定，很多人因為無法證明收入而申請不到。',
+  opts:[{t:'改用平台資料自動核定',ap:'行政改革',k:['tw'],cost:0,cit:{chen:2,de:1}},
+        {t:'乾脆改成無條件的基本收入',ap:'普及',k:['sd','ns'],cost:2,cit:{chen:2,zhen:2,kevin:-2}},
+        {t:'加強查核，避免溢領',ap:'選擇式',k:['nr'],cost:0,cit:{kevin:1,chen:-2}}]},
+ {pid:'q11',title:'基本工資大漲之後',good:'小禎和阿蒂的薪水明顯提高。',bad:'阿德說工讀生請不起了，有些小店減少人力。',
+  opts:[{t:'補貼小商家的人事成本',ap:'國家補貼',k:['sd','tw'],cost:1,cit:{de:2,zhen:1}},
+        {t:'推動勞工組工會集體協商',ap:'勞工力量',k:['mx'],cost:0,cit:{chen:2,zhen:2,de:-1}},
+        {t:'暫停下一次調漲',ap:'市場',k:['nr'],cost:0,cit:{de:2,zhen:-2}}]}
+];
+
+// ---- Life stories: what residents say once a policy is actually running ----
+const STORY={p7:['ling','小女兒進了公托，我回到原本的工作了。'],p6:['ma','居服員每天來，還會陪我聊天。'],p5:['ling','用長照券幫我媽請到週末的照顧。'],p3:['ma','第一次領到自己的年金，想給孫子買個禮物。'],p1:['ling','兒童津貼拿來付孩子的補習費。'],
+ p14:['zhen','我抽到社宅了！終於有自己的廚房。'],p12:['chen','上個月摔車，這次有職災給付。'],p13:['ati','我第一次有完整的休假日。'],p10:['xiang','我在軟體公司實習了，就服員陪我適應。'],p20:['chen','每個月多了一筆工作補助，比較敢存錢。'],
+ p27:['ma','廟口共餐據點每天都有人陪我吃飯。'],p32:['yuma','文健站開了，部落長輩每天來唱歌。'],q3:['zhen','去諮商了三次，終於睡得著。'],q16:['yuma','預約小巴真的會開到部落口。'],q11:['zhen','起薪漲了，終於付得起房租。'],
+ p9:['chen','上完職訓課，考到了水電證照。'],p19:['zhen','案量降了，我有時間好好陪個案。'],p24:['liu','年金又被砍，我們退休老師很不滿。'],p28:['de','稅少繳一點，多請了一個工讀生。'],t2:['chen','車禍後有職災保險，總算不用借錢。'],t4:['liu','喘息服務讓我終於能睡一整晚。'],t3:['yuma','醫療車每週上山，長輩不用再下山三小時。'],t5:['xiang','面試時公司幫我準備了報讀軟體。']};
+
+// ---- Extra interpellations: value conflicts specific to each perspective ----
+QS.push(
+ {id:'mx1',when:()=>key(ME)==='mx',q:()=>`左派評論員：你的福利只是讓資本主義喘口氣，勞工還是沒有真正的權力，不是嗎？`,
+  opts:[{t:'先改善勞工的生活，力量才能慢慢累積。',vote:1,debt:0,i:'改良主義認為福利是勞工鬥爭的成果，能逐步改變權力關係。'},{t:'所以我們要推動勞工參與企業決策。',vote:0,debt:0,i:'產業民主（如勞工董事）主張把權力帶進職場，而不只是事後補償。'}]},
+ {id:'ns1',when:()=>key(ME)==='ns',q:()=>`政論節目：你們只會街頭倡議，真的有執政能力嗎？`,
+  opts:[{t:'改變不一定要執政，讓政府聽見才是關鍵。',vote:0,debt:0,i:'新社會運動重視公民社會的力量，透過倡議、參與和抗爭影響政策。'},{t:'我們會和其他政黨合作，把議題寫進法律。',vote:1,debt:0,i:'運動與政黨結盟能讓議題制度化，但也可能被收編。'}]},
+ {id:'sd1',when:()=>key(ME)==='sd',q:()=>`年輕人在網路上留言：稅這麼高，我乾脆出國工作好了。`,
+  opts:[{t:'高稅換來的是你生病、失業、老了都有保障。',vote:0,debt:0,i:'社會民主認為普及保障是一種社會契約，人人繳稅、人人受益。'},{t:'我們會讓年輕人先看到托育和住宅的好處。',vote:1,debt:0,i:'普及式福利要讓中產階級也受益，才能維持對高稅負的支持。'}]},
+ {id:'nr1',when:()=>key(ME)==='nr',q:()=>`社工團體質詢：市場化之後，沒錢買服務的人怎麼辦？`,
+  opts:[{t:'政府會保留最基本的安全網。',vote:0,debt:0,i:'新右派主張國家只負責最低保障，其他交給市場和個人。'},{t:'經濟成長會讓大家都買得起。',vote:-1,debt:0,i:'「涓滴效應」常被批評實證支持有限，分配不均可能擴大。'}]},
+ {id:'tw1',when:()=>key(ME)==='tw',q:()=>`婦女團體質詢：要求工作才給福利，那在家照顧失能家人的人怎麼辦？`,
+  opts:[{t:'照顧也是一種貢獻，可以算進參與條件。',vote:1,debt:0,i:'擴大「參與」的定義，是第三條路面對照顧者批評時的修正方向。'},{t:'我們會先讓照顧服務足夠，讓照顧者能回到職場。',vote:0,debt:.5,i:'社會投資觀點認為，公共照顧是讓人能工作的前提。'}]},
+ {id:'fe1',when:()=>key(ME)==='fe',q:()=>`保守派立委：照顧公共化很貴，家人親自照顧不是更溫暖嗎？`,
+  opts:[{t:'溫暖不該建立在女兒和媳婦的犧牲上。',vote:0,debt:0,i:'女性主義指出，「家庭照顧」常常意味著女性的無酬勞動與職涯中斷。'},{t:'我們會讓家庭可以選擇，公共服務是後盾。',vote:1,debt:0,i:'提供選擇權，是降低反彈、同時推動去家庭化的折衷做法。'}]},
+ {id:'gr1',when:()=>key(ME)==='gr',q:()=>`消費者團體：綠色轉型讓電價上漲，弱勢家庭誰來顧？`,
+  opts:[{t:'我們會把碳費收入退還給每個家庭。',vote:1,debt:0,i:'「碳費退還」是環境正義的常見設計，避免轉型成本落在弱勢身上。'},{t:'短期辛苦，是為了下一代的地球。',vote:-1,debt:0,i:'世代正義是綠色主義的核心，但當下的分配問題也需要回應。'}]},
+ {id:'cross',when:pl=>pl.add.some(id=>fit(id,key(ME))<0),q:()=>`記者追問：你們提出的政策跟你們的理念好像不太一樣，是在討好選民嗎？`,
+  opts:[{t:'理念要能解決真實問題，必要時要借用別人的好方法。',vote:1,debt:0,i:'政策學習與跨觀點借用很常見，但要能說明為什麼。'},{t:'我們會回到原本的路線。',vote:-1,debt:0,i:'堅持理念能鞏固基本盤，但可能錯過解決問題的工具。'}]},
+ {id:'debate2',when:()=>true,q:()=>`電視辯論：如果只能選一件事，你們最想改變島上的什麼？`,
+  opts:[{t:'讓每個人生活都有基本保障。',vote:1,debt:0,i:'這是「需要」原則：依照人的需要分配資源。'},{t:'讓努力工作的人得到回報。',vote:1,debt:0,i:'這是「貢獻」原則：依照工作與付出分配資源。'}]},
+ {id:'debate3',when:()=>true,q:()=>`主持人：福利應該由誰來負責，政府、市場、家庭，還是社區？`,
+  opts:[{t:'主要靠政府，這是公民權利。',vote:1,debt:0,i:'國家責任論，接近社會民主的觀點。'},{t:'政府、市場、家庭、社區一起分擔。',vote:1,debt:0,i:'福利多元主義，接近第三條路與公私協力的觀點。'}]}
+);
 function bubble(c,g){const pl=S.platforms[g],k=key(g);let best=null,bv=0;
   pl.add.forEach(id=>{const p=P[id],v=(p.cit[c.id]||0)*mult(p,k);if(p.say[c.id]&&Math.abs(v)>Math.abs(bv)){bv=v;best=p.say[c.id]}});
   if(best)return {t:best,m:bv>0?'happy':'mad'};
@@ -834,28 +1082,27 @@ function render(){
    <div class="hstat"><span class="l">經濟</span><span class="v" style="color:var(--teal)">+${r1(S.eco)}</span></div>
    <div class="hstat pov"><span class="l">貧窮率</span><span class="v">${r1(isl.poverty)}%</span></div>
    <div class="hstat"><span class="l">民怨</span><span class="v ${S.unrest>=60?'hot':''}">${S.unrest}</span><span class="debtmini"><i class="${S.unrest>=60?'hot':''}" style="width:${S.unrest}%;background:${S.unrest>=80?'var(--stamp)':S.unrest>=35?'var(--orange)':'var(--teal)'}"></i></span></div>`;
-  ({title:rTitle,setup:rSetup,news:rNews,ref:rRef,demo:rDemo,budget:rBudget,results:rResults,final:rFinal,imf:rImf})[S.phase]($('stage'));
+  ({title:rTitle,setup:rSetup,news:rNews,ref:rRef,demo:rDemo,reform:rReform,budget:rBudget,results:rResults,final:rFinal,imf:rImf})[S.phase]($('stage'));
 }
 function citStrip(mood,showDelta,prev){return `<div class="cits">${CIT.map(c=>{const v=mood[c.id],ch=prev&&prev[c.id]!==v;
   return `<div class="cit" data-cid="${c.id}" tabindex="0"><div class="ava ${ch?'bump':''}">${face(c.id,v)}</div><div class="nm">${c.name}</div>
    ${showDelta?`<div class="dv ${v>0?'up':v<0?'down':'zero'}">${v===0?'±0':sign(r1(v))}</div>`:''}
    ${Wt(c)?`<div class="badge-vote">${Wt(c)}% 選民</div>`:'<span class="novote">無投票權</span>'}</div>`}).join('')}</div>`}
-function islandSVG(){return landscape('hero',true)}
+function islandSVG(){return heroArt()||landscape('hero',true)}
 function rTitle(st){
   st.innerHTML=`<div class="stack"><div class="hero"><div class="poster">${islandSVG()}</div><div class="stack" style="gap:12px">
      <span class="kicker" style="align-self:flex-start">社會政策與立法 · 單人策略遊戲</span><h1><span data-t="福利島大選">福利島大選</span></h1>
      <p class="sub">帶領一個政黨參選五屆，用有限的預算照顧島上十一位居民。你會打造出什麼樣的福利國家？</p></div></div>
    <div class="card"><h3 style="margin-bottom:10px">怎麼玩</h3><ul class="how">
-     <li><span>選一個政黨。每個政黨有自己的理念、特殊能力和目標。</span></li>
-     <li><span>每屆轉一次新聞輪盤，突發事件會改變稅收和島民需要。</span></li>
-     <li><span>每屆發 10 張政策手牌，包含島民的陳情卡和本屆事件限定政策：一半符合你的理念，一部分能回應當屆事件。提出符合理念的政策能鞏固基本盤，違背理念則會流失他們。</span></li>
-     <li><span>回答質詢、開票。得票最高的政黨執政，政策會真的實施。</span></li>
-     <li><span>貧窮率會累積成民怨：民怨太高會引發抗議、罷工，甚至不信任案倒閣，執政黨要負責。</span></li>
-     <li><span>第 3 屆會舉行公投，第 5 屆選民結構會改變。五屆結束後揭曉福利體制，小心國債超過紅線！</span></li></ul></div></div>`;
+     <li><span>選一種福利觀點：社會民主、新右派、第三條路、馬克思主義、女性主義、新社會運動或綠色主義。有的要贏選舉，有的不必。</span></li>
+     <li><span>第 1 屆認識你的觀點，第 2 屆用不同觀點解同一個難題。</span></li>
+     <li><span>第 3 屆起，你實施過的政策會帶來成果，也會帶來新問題，要在檢討會議上表態。還有公投。</span></li>
+     <li><span>第 4 屆可以改革既有政策；第 5 屆選民結構改變。落選了也能提修正案。</span></li>
+     <li><span>貧窮會累積成民怨，太高會抗議、罷工甚至倒閣。最後揭曉你們打造的福利體制。</span></li></ul></div></div>`;
   bar(`<span class="grow small muted">約 20 分鐘 · 建議直向持手機</span><button class="btn primary" data-a="totitle">開始遊戲</button>`);
 }
 function rSetup(st){const ks=Object.keys(PARTIES);
-  st.innerHTML=`<div class="stack"><div><p class="eyebrow">第一步</p><h2>選擇你的政黨</h2><p class="muted small" style="margin-top:4px">另外五黨由電腦扮演，跟你競爭島民的選票。</p></div>
+  st.innerHTML=`<div class="stack"><div><p class="eyebrow">第一步</p><h2>選擇你的政黨</h2><p class="muted small" style="margin-top:4px">另外六個觀點由電腦扮演，跟你競爭島民的選票。</p></div>
     <div class="plist">${ks.map(k=>{const p=PARTIES[k],on=S.choice===k;return `<button class="pcard ${on?'on':''}" style="--pc:${p.color}" data-a="choose" data-k="${k}" aria-pressed="${on}">
       <span class="band"><span class="pname">${p.name}</span>${on?'<span class="check">✓</span>':''}</span>
       <span class="body"><span class="slogan">${p.slogan}</span><span class="ab"><b>特殊能力</b>　${p.ability}</span>
@@ -876,39 +1123,41 @@ function paper(r){const g=r.gov,pl=r.platforms[g],first=pl.add[0]?P[pl.add[0]].n
   const hl=g===ME?`${pname(g)}勝選！${first?`「${first}」即將上路`:'承諾穩健施政'}`:`${pname(g)}拿下執政權${first?`，「${first}」將上路`:''}`;
   const sub=pl.cut.length?`同時刪減「${P[pl.cut[0]].name}」，受影響民眾揚言抗議。`:r.bals[g]<0?`新政府預算赤字 ${-r.bals[g]}，國債持續攀升。`:'新政府預算收支平衡，財政部鬆一口氣。';
   return `<div class="paper"><div class="mast"><b>福利島日報</b><span class="small muted num">第 ${r.round+1} 屆</span></div><div class="hl">${hl}</div><p class="small muted">${sub}</p></div>`}
-function rNews(st){const e=S.event?ev():null,last=S.history[S.history.length-1],isle=paintedIsland();
+function rNews(st){const e=S.event?ev():null,last=S.history[S.history.length-1];
   st.innerHTML=`<div class="stack"><div><p class="eyebrow">第 ${S.round+1} 屆 · 共 ${ROUNDS} 屆</p><h2>新聞快報</h2></div>
-   ${isle?`<div class="card"><h3 style="margin-bottom:8px">福利島現況</h3>${isle}</div>`:''}
    ${last?paper(last):''}
-   <div class="news"><div class="wheelwrap"><svg class="pointer" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 32 L3 10 Q3 2 15 2 Q27 2 27 10Z" fill="var(--stamp)" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="15" cy="11" r="3.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/></svg>${wheelSVG()}</div>
-   ${S.round>0?thermo():''}
-   <div class="bulletin"><div class="bar"><span>福利島新聞台</span><span class="live">LIVE</span></div>${isle?'':`<div class="vign">${landscape(e?e.id:'hero')}</div>`}<div class="body">
+   ${!e&&S.round>0?islandCard():''}${!e&&S.round>0?thermo():''}${!e?storyFeed():''}
+   <div class="news ${e?'one':''}">${e?'':`<div class="wheelwrap"><svg class="pointer" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 32 L3 10 Q3 2 15 2 Q27 2 27 10Z" fill="var(--stamp)" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="15" cy="11" r="3.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/></svg>${wheelSVG()}</div>`}
+   <div class="bulletin"><div class="bar"><span>福利島新聞台</span><span class="live">LIVE</span></div><div class="vign">${landscape(e?e.id:'hero')}</div><div class="body">
    ${e?`<div class="headline">${e.name}</div><p>${e.d}</p><div class="fx">${e.fxt.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
      <p class="small muted">想一想：這則新聞讓誰的處境變差了？你的政見要怎麼回應？</p>`
      :`<div class="headline muted">今天會發生什麼事？</div><p class="muted">每屆一則重大事件，會改變稅收和島民的需要。轉過的事件不會再出現。</p>`}
    </div><div class="ticker"><span>國債 ${r1(S.debt)}，破產紅線 ${DEBT_LINE}　·　目前實施 ${S.enacted.length} 項福利方案　·　移工阿蒂在島上工作第 6 年，仍沒有投票權</span></div></div></div>
+   ${e?cqPanel()+demoPreview():''}
    <div><h3 style="margin-bottom:8px">島民現況</h3>${citStrip(islandMood(),false)}</div></div>`;
-  bar(e?`<span class="grow small muted">事件：${e.short}</span><button class="btn primary" data-a="tobudget">${S.round===2&&!S.ref?'前往公投':S.round===4&&!S.demoDone?'看人口變遷':'開始編預算'}</button>`:`<span class="grow small muted">輪到你了</span><button class="btn stamp" data-a="spin" id="spinbtn">轉動輪盤</button>`);
+  const cqWait=S.cq&&S.cq.pick==null;
+  bar(e?(cqWait?`<span class="grow small muted">先在上方的政策檢討會議表態</span><button class="btn" disabled>等待表態</button>`:`<span class="grow small muted">事件：${e.short}</span><button class="btn primary" data-a="tobudget">${S.round===2&&!S.ref?'前往公投':S.round===3&&!S.reformDone?'制度改革':S.round===4&&!S.demoDone?'看人口變遷':'開始編預算'}</button>`):`<span class="grow small muted">輪到你了</span><button class="btn stamp" data-a="spin" id="spinbtn">轉動輪盤</button>`);
 }
 const FILTERS=[['all','全部'],['univ','普及式'],['sel','選擇式'],['mkt','市場化'],['care','照顧'],['inv','社會投資'],['fam','家庭'],['civ','公私協力'],['reform','財政改革'],['ins','社會保險'],['green','綠色'],['rights','勞動權益']];
 function rBudget(st){const g=ME,k=key(g),pt=PARTIES[k],pl=S.platforms[g],m=money(g),now=sat(ME);
   const list=S.hand.map(id=>P[id]);
   st.innerHTML=`<div class="stack">
    <div><p class="eyebrow">第 ${S.round+1} 屆 · ${ev().name}</p><h2>編列你的政見</h2></div>
-   <div class="tray" style="--pc:${pt.color}"><span class="lab">政見 <span class="num">${pl.add.length}/${MAXADD}</span></span>${pl.add.length||pl.cut.length?pl.add.map(id=>`<span class="tchip">${P[id].name}<button data-a="rm" data-id="${id}" aria-label="移除${P[id].name}">×</button></span>`).join('')+pl.cut.map(id=>`<span class="tchip cut">刪減 ${P[id].name}<button data-a="cut" data-id="${id}" aria-label="恢復${P[id].name}">×</button></span>`).join(''):'<span class="small muted">還沒選任何政策，往下挑選政策卡</span>'}</div>
-   <details class="card mine" style="--pc:${pt.color}"><summary><span class="pn">${pt.name}</span><span class="small">能力與目標 ▾</span></summary>
+   <div class="dock">${moodBar(now,prevSat)}<div class="tray" style="--pc:${pt.color}"><span class="lab">政見 <span class="num">${pl.add.length}/${MAXADD}</span></span>${pl.add.length||pl.cut.length?pl.add.map(id=>`<span class="tchip">${P[id].name}<button data-a="rm" data-id="${id}" aria-label="移除${P[id].name}">×</button></span>`).join('')+pl.cut.map(id=>`<span class="tchip cut">刪減 ${P[id].name}<button data-a="cut" data-id="${id}" aria-label="恢復${P[id].name}">×</button></span>`).join(''):'<span class="small muted">還沒選任何政策，往下挑選政策卡</span>'}</div></div>
+   ${S.round===0?`<div class="card cheat" style="--pc:${pt.color}"><p class="eyebrow">第 1 屆任務：認識你的觀點</p><div class="stack" style="gap:6px;margin-top:6px"><span><b>怎麼看問題</b>　${VIEWS[k].see}</span><span><b>誰該負責</b>　${VIEWS[k].who}</span><span><b>怎麼做</b>　${VIEWS[k].how}</span><span class="muted"><b>要小心</b>　${VIEWS[k].tension}</span></div><p class="small" style="margin-top:8px">${pt.rule} 卡片上有「會支持」的觀點，可以幫你找到符合理念的政策。</p></div>`:''}
+   ${S.round===1&&S.issue?(()=>{const I=ISSUES.find(i=>i.id===S.issue);return `<div class="card issue"><p class="eyebrow">第 2 屆任務：比較解法</p><h3 style="margin:4px 0">共同難題：${I.title}</h3><p class="small">${I.d}手牌裡有幾張不同的解法，選一張你認為最好的。開票後會看到其他觀點怎麼解。</p><div class="row" style="margin-top:8px">${I.opts.map(o=>`<span class="tag">${o.ap}</span>`).join('')}</div></div>`})():''}
+   <details class="card mine" style="--pc:${pt.color}" ${S.round===0?'open':''}><summary><span class="pn">${pt.name}</span><span class="small">能力與目標 ▾</span></summary>
      <div class="small inside" style="display:flex;flex-direction:column;gap:6px"><span><b>特殊能力</b>　${pt.ability}</span><span><b>基本盤</b>　${BASEC[k].map(id=>CIT.find(c=>c.id===id).name).join('、')}：提出「符合理念」的政策會更支持你，「違背理念」會流失他們。</span><ul style="margin:0;padding-left:18px">${pt.miss.map(x=>`<li>${x.t}</li>`).join('')}</ul></div></details>
-   <div class="card" style="padding:12px 12px 4px"><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:14px">島民即時反應</b><span class="small muted">支持度隨你的選擇變化</span></div>${citStrip(now,true,prevSat)}</div>
    <div class="stack" style="gap:8px"><b style="font-size:14px">稅率</b><div class="seg">${['低','中','高'].map(t=>`<button class="${pl.tax===t?'on':''}" data-a="tax" data-t="${t}" aria-pressed="${pl.tax===t}">${t}稅<small>收入 ${r1((TAX[t].rev+GROWTH*S.round+S.eco)*ev().rev)}</small></button>`).join('')}</div>
     ${k==='gr'?`<label class="row small" style="min-height:40px"><input type="checkbox" id="carbon" ${pl.carbon?'checked':''} style="width:20px;height:20px"> 開徵碳稅（收入 +3，王董不開心）</label>`:''}</div>
    ${S.enacted.length?`<details class="fold" ${pl.cut.length?'open':''}><summary>既有方案 ${S.enacted.length} 項（花費 ${m.exist}，可以刪減）</summary><div class="stack" style="gap:6px;margin-top:6px">${S.enacted.map(x=>`<div class="exi ${pl.cut.includes(x.id)?'cut':''}"><span>${P[x.id].name} <span class="num muted">${x.cost}</span></span><button class="btn sm" data-a="cut" data-id="${x.id}">${pl.cut.includes(x.id)?'恢復':'刪減'}</button></div>`).join('')}</div></details>`:''}
    ${S.pet?(()=>{const c=CIT.find(x=>x.id===S.pet),t=PETS.find(x=>x.who===S.pet),done=pl.add.includes(t.card.id);return `<div class="petition ${done?'ok':''}"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,done?2:-2)}</div><div class="pin"><p class="eyebrow">本屆陳情　${c.grp}</p><b>${c.name}：「${t.story}」</b><span class="small">${done?'你已經把「'+t.card.name+'」放進政見，'+c.name+'很感動。':'回應陳情：把手牌裡的「'+t.card.name+'」放進政見。不回應，'+c.name+'會對你失望。'}</span></div></div>`})():''}
-   <div class="stack" style="gap:8px"><div class="row" style="justify-content:space-between"><b style="font-size:14px">本屆手牌　<span class="num muted">${S.hand.length} 張</span></b><button class="btn sm" data-a="redraw" ${S.redrawn?'disabled':''}>${S.redrawn?'本屆已重抽':'重抽未選的牌'}</button></div>
+   <div class="stack" style="gap:8px"><div class="row" style="justify-content:space-between"><b style="font-size:14px">本屆手牌　<span class="num muted">${S.hand.length} 張</span></b><button class="btn sm" data-a="hints">${S.hints?'隱藏觀點提示':'顯示觀點提示'}</button><button class="btn sm" data-a="redraw" ${S.redrawn?'disabled':''}>${S.redrawn?'本屆已重抽':'重抽未選的牌'}</button></div>
     <div class="cards">${list.map(p=>{const on=pl.add.includes(p.id),en=S.enacted.some(x=>x.id===p.id),c=costOf(p.id,k),used=S.onceUsed.includes(p.id),dis=en||used,full=!on&&pl.add.length>=MAXADD;
-      return `<button class="pol ${on?'on':''} ${full?'full':''} ${p.pet?'petc':''} ${p.ev?'evc':''}" style="--pc:${pt.color}" data-a="pol" data-id="${p.id}" ${dis?'disabled':''} aria-pressed="${on}">
+      return `<button class="pol ${on?'on':''} ${full?'full':''} ${p.pet?'petc':''} ${p.ev?'evc':''} ${issueOf(p.id)&&S.round===1?'isc':''}" style="--pc:${pt.color}" data-a="pol" data-id="${p.id}" ${dis?'disabled':''} aria-pressed="${on}">
        <span class="pt">${p.name}</span><span class="coin ${c<0?'save':''}">${c<0?'省'+(-c):c}${c<p.cost&&c>0||(c===0&&p.cost>0)?`<s>${p.cost}</s>`:''}</span>
        <span class="tags">${p.tags.filter(t=>TAGN[t]).map(t=>`<span class="tag ${t}">${TAGN[t]}</span>`).join('')}${fit(p.id,k)>0?'<span class="tag fit">符合理念</span>':fit(p.id,k)<0?'<span class="tag anti">違背理念</span>':''}${evHit(p.id)?'<span class="tag evb">事件加成</span>':''}${p.pet?'<span class="tag petb">陳情</span>':''}${p.ev?'<span class="tag evx">本屆限定</span>':''}${p.once?'<span class="tag once">一次性</span>':''}${p.fx.eco?`<span class="tag eco">帶動經濟 +${p.fx.eco}</span>`:''}${en?'<span class="tag">已實施</span>':''}${used?'<span class="tag">已發放過</span>':''}</span>
-       <span class="pd">${p.d}</span>${impact(p,k)}</button>`}).join('')}</div></div></div>`;
+       <span class="pd">${p.d}</span>${impact(p,k)}${cardInfo(p)}</button>`}).join('')}</div></div></div>`;
   prevSat=now;
   const over=m.spend>m.rev,w=Math.min(100,m.spend/Math.max(m.rev,m.spend)*100);
   bar(`<div class="grow wallet"><div class="t"><span>收入 <span class="num">${m.rev}</span>・支出 <span class="num">${m.spend}</span></span><span class="bal ${m.bal<0?'neg':'pos'}">${m.bal<0?'赤字 ':'結餘 '}${sign(m.bal)}</span></div><div class="meter"><i class="${over?'over':''}" style="width:${w}%"></i></div></div><button class="btn primary" data-a="count">公布政見</button>`);
@@ -940,7 +1189,7 @@ function runRef(){const R=REFS.find(f=>f.id===S.ref.topic),p=P[R.pid],st=S.ref.s
     if(st!=='none'&&Math.abs(o)<2.5)o+=(st==='yes'?1:-1)*sp*1.1;
     const v=o>=1?'yes':o<=-1?'no':'skip';votes[c.id]=v;if(v==='yes')yes+=w;if(v==='no')no+=w});
   const pass=yes>no&&yes>=tot*.25;S.refSpend=sp;
-  S.refAlign={};if(st!=='none')CIT.forEach(c=>{const v=votes[c.id];if(v==='yes'||v==='no')S.refAlign[c.id]=(v===st?1.5:-1.5)});
+  if(st!=='none')CIT.forEach(c=>{const v=votes[c.id];if(v==='yes'||v==='no')S.refAlign[c.id]=(v===st?1.5:-1.5)});
   if(pass&&!S.enacted.some(x=>x.id===R.pid))S.enacted.push({id:R.pid,cost:p.cost});
   S.ref.result={votes,yes:r1(yes/tot*100),no:r1(no/tot*100),skip:r1(100-(yes+no)/tot*100),pass};buzz(pass?[30,60,30]:40)}
 function rRef(st){const R=REFS.find(f=>f.id===S.ref.topic),res=S.ref.result,p=P[R.pid];
@@ -992,7 +1241,10 @@ function rResults(st){const v=votes();VOTES=v;const lead=v.pct.indexOf(Math.max(
    ${answered?`<div class="reveal" style="--pc:${pcolor(lead)}"><div class="top">${lead===ME?'你的政黨贏得執政！':`${pname(lead)}贏得執政`}</div><div class="bd">
       <p>${lead===ME?'你的政見將會實施。':'你成為在野黨，接下來要看著他們的政見實施。'}</p>
       <p class="small">新增：${S.platforms[lead].add.map(id=>P[id].name).join('、')||'（無）'}${S.platforms[lead].cut.length?`<br>刪減：${S.platforms[lead].cut.map(id=>P[id].name).join('、')}`:''}</p>
-      <p class="small">國債 <span class="num">${r1(S.debt)} → <b style="color:${after>DEBT_LINE?'var(--bad)':'inherit'}">${after}</b></span>${after>DEBT_LINE?'　超過破產紅線！':''}</p></div></div>
+      ${statusNote(lead)}
+      <p class="small">國債 <span class="num">${r1(S.debt)} → <b style="color:${after>DEBT_LINE?'var(--bad)':'inherit'}">${after}</b></span>${after>DEBT_LINE?'　超過破產紅線！':''}</p>
+      <p class="small muted">政見 → 當選 → 通過 → 實施 → 成果。服務類政策要先蓋起來，下屆才看得到成果。</p></div></div>
+    ${issueCompare()}${amendPanel(lead)}
     <div class="card"><h3 style="margin-bottom:4px">選民流向</h3><p class="small muted" style="margin-bottom:10px">每個族群主要投給誰，以及你的支持度和上屆比較</p><div class="flow">${CIT.map(c=>{const pr=v.probs[c.id];if(!pr)return `<div class="frow"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,0)}</div><div class="fin"><b>${c.grp}</b><span class="small muted">${c.name}・無投票權，不計入</span></div></div>`;
       const top=pr.indexOf(Math.max(...pr)),mine=pr[ME]*100,prev=S.lastProbs&&S.lastProbs[c.id]?S.lastProbs[c.id][ME]*100:null,dl=prev==null?null:r1(mine-prev);
       return `<div class="frow"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,mine>=25?2:mine<12?-2:0)}</div><div class="fin"><div class="row" style="justify-content:space-between;gap:6px"><b>${c.grp}<span class="small muted">　${c.name}・${Wt(c)}%</span></b>${dl==null?'':`<span class="dlt ${dl>0?'up':dl<0?'dn':''}">${dl>0?'▲':dl<0?'▼':'—'} ${Math.abs(dl)}</span>`}</div>
@@ -1089,7 +1341,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t
    case'rand':S.choice=shuffle(Object.keys(PARTIES))[0];break;
    case'start':S.assign=[S.choice,...shuffle(Object.keys(PARTIES).filter(k=>k!==S.choice))];S.pets=shuffle(PETS.map(t=>t.who)).slice(0,ROUNDS);return go('news');
    case'spin':spin();return;
-   case'tobudget':prevSat=null;if(S.round===2&&!S.ref){S.ref={topic:pickRef(),stance:'yes',spend:0,result:null};return go('ref')}if(S.round===4&&!S.demoDone)return go('demo');deal();return go('budget');
+   case'tobudget':prevSat=null;if(S.round===2&&!S.ref){S.ref={topic:pickRef(),stance:'yes',spend:0,result:null};return go('ref')}if(S.round===3&&!S.reformDone){S.platforms[ME].adj={};return go('reform')}if(S.round===4&&!S.demoDone)return go('demo');deal();return go('budget');
    case'stance':S.ref.stance=t.dataset.v;break;
    case'spend':S.ref.spend=+t.dataset.v;break;
    case'refvote':runRef();break;
@@ -1117,7 +1369,393 @@ document.addEventListener('input',e=>{if(e.target.dataset&&e.target.dataset.r!==
 
 function start(d){S=(d&&d.S&&d.S.filter)?d.S:fresh();render()}
 window.claude?.hot?.snapshot?.(()=>({S}));
-// 先預載美術素材（最多等 2.5 秒），避免畫面先出現舊圖再跳成新圖
+
+// ================= V2 screens (these declarations override the earlier ones) =================
+const AP_LABEL={sd:'社會民主',nr:'新右派',tw:'第三條路',mx:'馬克思主義',fe:'女性主義',ns:'新社會運動',gr:'綠色主義'};
+const pchip=k=>`<span class="pk" style="--pc:${PARTIES[k].color}">${AP_LABEL[k]}</span>`;
+
+function rSetup(st){const ks=PK;
+  st.innerHTML=`<div class="stack"><div><p class="eyebrow">第一步</p><h2>選擇你的觀點</h2><p class="muted small" style="margin-top:4px">七種福利觀點，另外六個由電腦扮演。有的觀點靠選票執政，有的不一定要贏選舉。</p></div>
+    <div class="plist">${ks.map(k=>{const p=PARTIES[k],v=VIEWS[k],on=S.choice===k;return `<button class="pcard ${on?'on':''}" style="--pc:${p.color}" data-a="choose" data-k="${k}" aria-pressed="${on}">
+      <span class="band"><span class="pname">${p.name}</span>${on?'<span class="check">✓</span>':''}</span>
+      <span class="body"><span class="slogan">${p.slogan}</span><span class="rule">${p.rule}</span>
+      <span class="vw"><b>怎麼看問題</b>${v.see}</span><span class="vw"><b>怎麼解決</b>${v.how}</span>
+      <span class="ab"><b>特殊能力</b>　${p.ability}</span>
+      <ul>${p.miss.map(m=>`<li>${m.t}</li>`).join('')}</ul></span></button>`}).join('')}</div>
+    <details class="card fold"><summary>七種觀點一覽表</summary><div style="overflow-x:auto;margin-top:8px"><table class="vtab"><thead><tr><th>觀點</th><th>怎麼看問題</th><th>誰該負責</th><th>怎麼分配</th><th>內部兩難</th></tr></thead><tbody>
+     ${ks.map(k=>`<tr><td><b style="color:${PARTIES[k].color}">${PARTIES[k].name}</b></td><td>${VIEWS[k].see}</td><td>${VIEWS[k].who}</td><td>${VIEWS[k].how}</td><td>${VIEWS[k].tension}</td></tr>`).join('')}</tbody></table></div>
+     <p class="small muted" style="margin-top:8px">這是遊戲用的簡化版，詳細內容以課本為準。</p></details>
+    <p class="small muted">遊戲分數：五屆累計得票率＋每屆執政 10 分＋每達成一項目標 15 分。國家破產時所有人歸零。</p></div>`;
+  bar(`<button class="btn" data-a="rand">隨機</button><span class="grow small" style="text-align:right">${S.choice?`已選：<b style="color:${PARTIES[S.choice].color}">${PARTIES[S.choice].name}</b>`:'<span class="muted">點一張卡片</span>'}</span><button class="btn primary" data-a="start" ${S.choice?'':'disabled'}>出發</button>`);
+}
+
+// ---- sticky mood bar for the budget screen ----
+function moodBar(now,prev){return `<div class="mood" role="group" aria-label="島民即時支持度">${CIT.map(c=>{const val=now[c.id],old=prev?prev[c.id]:val,d=r1(val-old),w=Wt(c);
+  return `<div class="mi ${d>0?'gain':d<0?'loss':''}" data-cid="${c.id}" tabindex="0"><div class="mf ${d?'bump':''}">${face(c.id,val)}</div>
+   <span class="mv ${val>0?'up':val<0?'down':'zero'}">${w?(val>0?'+':'')+r1(val):'無票'}</span>${d?`<span class="mdelta">${d>0?'+':''}${d}</span>`:''}</div>`}).join('')}</div>
+`}
+try{const hud=document.querySelector('.hud');const setH=()=>document.documentElement.style.setProperty('--hudh',hud.offsetHeight+'px');setH();new ResizeObserver(setH).observe(hud)}catch(e){}
+
+// ---- card extra info: perspectives + timing ----
+function cardInfo(p){const {up,dn}=persp(p.id),io=issueOf(p.id);
+  const timing=p.once?'一次發放':DELAYED(p)?'需要一屆建置，下屆才見效':'通過後立即見效';
+  if(!S.hints)return `<span class="cinfo small muted">${io?`<b>解法：${io.ap}</b>　`:''}${timing}</span>`;
+  return `<span class="cinfo">${io?`<span class="small"><b>這張是「${io.ap}」解法</b></span>`:''}
+   ${up.length?`<span class="small">會支持：${up.map(pchip).join('')}</span>`:''}${dn.length?`<span class="small">會反對：${dn.map(pchip).join('')}</span>`:''}
+   <span class="small muted">見效：${timing}</span></span>`}
+
+// ---- dealing: round 2 guarantees several answers to the shared dilemma ----
+function deal(){const k=key(ME);const pool=POL.filter(p=>!special(p)&&avail(p)).map(p=>p.id);
+  const take=(arr,n,used)=>shuffle(arr.filter(id=>!used.includes(id))).slice(0,n);
+  let fixed=fixedCards();
+  if(S.round===1&&S.issue){const I=ISSUES.find(i=>i.id===S.issue);fixed=fixed.concat(shuffle(I.opts.map(o=>o.id).filter(id=>P[id]&&avail(P[id])&&!fixed.includes(id))).slice(0,4))}
+  const appeal=id=>CIT.reduce((a,c)=>a+Math.max(0,P[id].cit[c.id]||0)*Wt(c),0)/Math.max(1,costOf(id,k));
+  const aligned=pool.filter(id=>fit(id,k)>0&&!fixed.includes(id)).sort((a,b)=>appeal(b)-appeal(a)).slice(0,8);
+  let hand=take(aligned,Math.max(2,4-Math.floor(fixed.length/2)),[]);
+  hand=hand.concat(take(pool.filter(id=>evHit(id)&&fit(id,k)>=0&&!fixed.includes(id)),1,hand));
+  hand=hand.concat(take(pool.filter(id=>!fixed.includes(id)),Math.max(0,HAND-fixed.length-hand.length),hand));
+  S.hand=fixed.concat(shuffle(hand)).slice(0,Math.max(HAND,fixed.length+2));S.platforms[ME].add=[];}
+
+// ---- consequences of implemented policies ----
+function pickCq(){const live=S.enacted.filter(x=>isActive(x)&&P[x.id]&&!P[x.id].custom).map(x=>x.id);
+  const ok=CONSEQ.filter(c=>live.includes(c.pid)&&!S.cqUsed.includes(c.pid));if(!ok.length)return null;
+  const mine=ok.filter(c=>S.history.some(r=>r.gov===ME&&r.platforms[ME].add.includes(c.pid)));
+  const c=(mine.length?mine:ok)[Math.floor(Math.random()*(mine.length?mine:ok).length)];S.cqUsed.push(c.pid);return {pid:c.pid,pick:null,applied:null}}
+function applyCq(i){const C=CONSEQ.find(c=>c.pid===S.cq.pid),gk=S.lastGov==null?null:key(S.lastGov);
+  S.cq.pick=i;const mineOpt=C.opts[i];
+  for(const c in mineOpt.cit){if(CIT.find(x=>x.id===c)&&Wt(CIT.find(x=>x.id===c)))S.refAlign[c]=(S.refAlign[c]||0)+(mineOpt.cit[c]>0?1.2:-1.2)}
+  let ai=i;if(S.lastGov!==ME&&gk){const sc=C.opts.map(o=>(o.k.includes(gk)?3:0)+Object.values(o.cit).reduce((a,b)=>a+b,0)*.1);ai=sc.indexOf(Math.max(...sc))}
+  const o=C.opts[ai],id='cx'+(S.customN++);P[id]={id,name:o.t,tags:[],cost:o.cost,custom:true,d:o.t,fx:{},cit:o.cit,say:{}};POL.length;
+  if(o.cost!==0||Object.keys(o.cit).length)S.enacted.push({id,cost:o.cost,start:S.round});if(o.debt)S.debt=r1(S.debt+o.debt);
+  S.cq.applied=ai;S.cqLog.push({round:S.round,title:C.title,mine:mineOpt.t,mineAp:mineOpt.ap,mineK:mineOpt.k,did:o.t,byMe:ai===i&&S.lastGov===ME,gov:S.lastGov})}
+function cqPanel(){if(!S.cq)return '';const C=CONSEQ.find(c=>c.pid===S.cq.pid),p=P[C.pid],picked=S.cq.pick!=null,gov=S.lastGov;
+  return `<div class="cqcard"><div class="cqh"><span>政策檢討會議</span><span class="small">「${p.name}」實施之後</span></div><div class="cqin">
+   <div class="headline" style="font-size:clamp(20px,5.4vw,26px)">${C.title}</div>
+   <div class="grid2" style="gap:10px"><div class="insight good"><b>成果</b><br>${C.good}</div><div class="insight bad"><b>新問題</b><br>${C.bad}</div></div>
+   <p class="small">${gov===ME?'你是執政黨，你選的方案會直接實施。':`執政黨是 ${who(gov)}，會採用最符合他們理念的方案；你的表態會影響島民怎麼看你。`}</p>
+   <div class="stack" style="gap:8px">${C.opts.map((o,i)=>`<button class="qopt ${S.cq.pick===i?'on':''} ${picked&&S.cq.applied===i?'did':''}" data-a="cq" data-i="${i}" ${picked?'disabled':''}>
+     <span><b>${o.ap}</b>｜${o.t}</span><span class="small">${o.k.length?o.k.map(pchip).join(''):'<span class="muted">沒有特定觀點</span>'}${o.cost?`　<span class="num">成本 ${o.cost>0?'+':''}${o.cost}</span>`:''}${o.debt?`　<span class="num">國債 +${o.debt}</span>`:''}</span>
+     ${S.hints||picked?`<span class="imp">${Object.entries(o.cit).map(([c,v])=>{const n=CIT.find(x=>x.id===c).name;return `<span class="ic ${v>0?'up':'dn'}">${n} ${v>0?'+':''}${v}</span>`}).join('')}</span>`:''}
+     ${picked&&S.cq.applied===i?'<span class="small"><b>✓ 實際採用</b></span>':''}</button>`).join('')}</div>
+   ${picked?`<p class="insight">同一個問題，不同觀點會分配不同的責任：國家、市場、家庭、社區或勞工組織。${S.lastGov!==ME&&S.cq.applied!==S.cq.pick?'這次執政黨沒有採用你的方案，你可以在選戰中拿這件事攻擊他們。':''}</p>`:''}</div></div>`}
+
+// ---- stories: what residents say once policies are actually running ----
+function storyFeed(){const out=[];
+  S.enacted.forEach(x=>{if(!STORY[x.id]||S.storySeen.includes(x.id))return;if(isActive(x))out.push({x,st:'live'})});
+  const building=S.enacted.filter(x=>!isActive(x)&&P[x.id]&&!P[x.id].custom);
+  const last=S.history[S.history.length-1],lost=last&&last.gov!==ME?last.platforms[ME].add.filter(id=>!S.enacted.some(x=>x.id===id)):[];
+  if(!out.length&&!building.length&&!lost.length)return '';
+  return `<div class="card stack" style="gap:10px"><h3>島民近況</h3>
+   ${out.slice(0,3).map(({x})=>{const [c,t]=STORY[x.id],cc=CIT.find(z=>z.id===c);return `<div class="say"><div class="ava" data-cid="${c}" tabindex="0">${face(c,2)}</div><div class="bub happy"><b>${cc.name}・${P[x.id].name}已實施</b>${t}</div></div>`}).join('')}
+   ${building.length?`<p class="small"><span class="tag once">建置中</span>　${building.map(x=>P[x.id].name).join('、')}：已經通過，下屆才會開始服務。</p>`:''}
+   ${lost.length?`<p class="small muted">你上屆提出的 ${lost.slice(0,3).map(id=>P[id].name).join('、')}：因為你沒有執政，沒有實施。政見不等於政策。</p>`:''}</div>`}
+function markStories(){S.enacted.forEach(x=>{if(STORY[x.id]&&isActive(x)&&!S.storySeen.includes(x.id))S.storySeen.push(x.id)})}
+function demoPreview(){if(S.round!==2&&S.round!==3)return '';return `<div class="card small"><b>人口推估：第 5 屆的選民結構會改變</b><br>${DEMO.map(dm=>{const c=CIT.find(x=>x.id===dm.id);return `${c.grp} ${c.w}% → ${dm.to}%`}).join('、')}。現在就可以開始準備。</div>`}
+
+// ---- round 4: reform existing policies ----
+const REASONS=['財政壓力','島民需要','堅持理念','借用其他觀點的做法'];
+function rReform(st){const pl=S.platforms[ME];pl.adj=pl.adj||{};const list=S.enacted.filter(x=>P[x.id]&&!P[x.id].custom).sort((a,b)=>b.cost-a.cost).slice(0,6);
+  const changes=Object.keys(pl.adj).length+pl.cut.length;
+  st.innerHTML=`<div class="stack"><div><p class="eyebrow">第 4 屆 · 制度改革</p><h2>檢查既有政策</h2><p class="small muted" style="margin-top:4px">政策實施幾年後，可以加碼、精簡或退場。列出花費最高的 6 項，最多調整 2 項。改革方案會寫進你的政見，當選才會執行。</p></div>
+   <div class="stack" style="gap:10px">${list.length?list.map(x=>{const p=P[x.id],cur=pl.cut.includes(x.id)?'cut':pl.adj[x.id]===1.5?'up':pl.adj[x.id]===.5?'down':'keep',{up,dn}=persp(x.id);
+     return `<div class="card stack" style="gap:8px;padding:12px"><div class="row" style="justify-content:space-between"><b>${p.name}</b><span class="small muted num">每屆 ${r1(x.cost)}</span></div>
+      <span class="small">${up.length?'支持：'+up.map(pchip).join(''):''}</span>
+      <div class="seg sm">${[['keep','維持'],['up','加碼'],['down','精簡'],['cut','退場']].map(([v,n])=>`<button class="${cur===v?'on':''}" data-a="rf" data-id="${x.id}" data-v="${v}" ${cur!==v&&v!=='keep'&&cur==='keep'&&changes>=2?'disabled':''}>${n}<small>${v==='up'?'成本×1.5 效果×1.5':v==='down'?'成本、效果減半':v==='cut'?'省下全部成本':'不變'}</small></button>`).join('')}</div></div>`}).join(''):'<p class="muted">目前沒有實施中的政策。</p>'}</div>
+   ${changes?`<div class="card stack" style="gap:8px"><b>你主要的考量是？（可以不選）</b><div class="row">${REASONS.map(r=>`<button class="fbtn ${S.reasonNow===r?'on':''}" data-a="reason" data-v="${r}">${r}</button>`).join('')}</div></div>`:''}</div>`;
+  bar(`<span class="grow small muted">已調整 ${changes}/2 項</span><button class="btn primary" data-a="reformdone">開始編預算</button>`)}
+
+// ---- results helpers ----
+function issueCompare(){if(S.round!==1||!S.issue)return '';const I=ISSUES.find(i=>i.id===S.issue);
+  return `<div class="card"><h3 style="margin-bottom:4px">各黨怎麼解「${I.title}」</h3><p class="small muted" style="margin-bottom:10px">同樣關心居民，卻選了不同的制度安排</p><div class="stack" style="gap:8px">
+   ${GS.map(g=>{const ch=S.platforms[g].add.map(id=>I.opts.find(o=>o.id===id)).filter(Boolean);return `<div class="rival" style="--pc:${pcolor(g)}"><b>${who(g)}</b>　${ch.length?ch.map(o=>`<b>${o.ap}</b>（${P[o.id].name}）`).join('、'):'<span class="muted">沒有提出解法</span>'}</div>`}).join('')}</div></div>`}
+function amendPanel(lead){if(lead===ME)return '';const mine=S.platforms[ME].add.filter(id=>!S.platforms[lead].add.includes(id)&&!P[id].once);if(!mine.length)return '';const gk=key(lead),A=S.amend;
+  return `<div class="card stack" style="gap:10px"><h3>在野倡議：提出一項修正案</h3><p class="small muted">雖然沒有執政，你仍然可以推動一項政策。執政黨不反對的話就會通過${key(ME)==='ns'?'；新社會運動的倡議力量比較強，連執政黨稍微反對的也有機會':''}。</p>
+   <div class="row">${mine.map(id=>`<button class="fbtn ${A&&A.id===id?'on':''}" data-a="amend" data-id="${id}" ${A?'disabled':''}>${P[id].name}</button>`).join('')}</div>
+   ${A?`<p class="insight ${A.ok?'good':'bad'}">${A.ok?`修正案通過！「${P[A.id].name}」將會實施。`:`${pname(lead)}反對「${P[A.id].name}」，修正案沒有通過。`}</p>`:''}</div>`}
+function statusNote(lead){const pl=S.platforms[lead];if(!pl.add.length)return '';
+  return `<p class="small">${pl.add.map(id=>`${P[id].name}<span class="tag ${DELAYED(P[id])?'once':'fit'}" style="margin-left:4px">${P[id].once?'一次發放':DELAYED(P[id])?'下屆見效':'立即實施'}</span>`).join('　')}</p>`}
+
+// ---- interpellation: never repeat in one game, respond to this game's choices ----
+function pickQ(){const pl=S.platforms[ME],m=money(ME),s=sat(ME),me=key(ME);
+  const unused=QS.filter(q=>!S.qUsed.includes(q.id));const generic=['debate','debate2','debate3'];
+  let ok=unused.filter(q=>!generic.includes(q.id)&&q.when(pl,m,s));
+  const own=ok.filter(q=>q.id===me+'1');if(own.length&&S.round<=1)ok=own;
+  if(!ok.length)ok=unused.filter(q=>generic.includes(q.id));if(!ok.length)ok=unused.length?unused:QS;
+  const q=ok[Math.floor(Math.random()*ok.length)];S.qUsed.push(q.id);return {id:q.id,text:q.q(m,pl)}}
+
+// ---- government formation with implementation timing, amendments, labor power ----
+function confirmGov(){const v=VOTES||votes(),gov=v.pct.indexOf(Math.max(...v.pct)),ms=GS.map(money),pl=S.platforms[gov];
+  S.lastProbs=v.probs;S.history.push({round:S.round,event:S.event,issue:S.round===1?S.issue:null,platforms:JSON.parse(JSON.stringify(S.platforms)),sats:v.sats,pct:v.pct,bals:ms.map(m=>m.bal),gov});
+  const once=pl.add.filter(id=>P[id].once);S.onceUsed.push(...once);
+  if(gov===ME&&pl.adj)S.enacted.forEach(x=>{const a=pl.adj[x.id];if(a){x.mul=(x.mul||1)*a;x.cost=r1(x.cost*a)}});
+  const newIds=pl.add.filter(id=>!P[id].once);
+  if(S.amend&&S.amend.ok&&!newIds.includes(S.amend.id))newIds.push(S.amend.id);
+  S.enacted=S.enacted.filter(x=>!pl.cut.includes(x.id)).concat(newIds.map(id=>({id,cost:costOf(id,key(gov)),start:S.round+(DELAYED(P[id])?1:0)})));
+  ME===ME&&S.platforms[ME].add.forEach(id=>{if((gov===ME||(S.amend&&S.amend.ok&&S.amend.id===id))&&!S.nsCounted.includes(id)){S.nsCounted.push(id);S.nsWins++}});
+  newIds.forEach(id=>{const t=P[id].tags;S.labor+=(t.includes('rights')?2:0)+(t.includes('ins')?1:0)});if(S.crisis>=1)S.labor+=1;
+  S.lastEco=S.eco;S.eco=r1(S.eco*.4+S.enacted.filter(isActive).reduce((a,x)=>a+(P[x.id].fx.eco||0)*(x.mul||1),0)+once.reduce((a,id)=>a+(P[id].fx.eco||0),0));
+  S.debt=r1(Math.max(0,S.debt-ms[gov].bal+(gov===ME?S.qDebt:0)));
+  {const pv=island().poverty,cuts=pl.cut.length,prev=S.unrest;S.unrest=Math.round(Math.max(0,Math.min(100,prev*.45+Math.max(0,pv-10)*6.5+cuts*9)));
+   const lvl=UNREST.filter(u=>S.unrest>=u.min).pop();S.crisis=lvl.lv;if(lvl.lv===3)S.debt=r1(S.debt+1);if(lvl.lv>=2)S.eco=r1(Math.max(0,S.eco-1));
+   S.unrestLog.push({round:S.round,pov:r1(pv),unrest:S.unrest,lv:lvl.lv,gov,cuts});}
+  if(S.reasonNow){S.reasons.push({round:S.round,r:S.reasonNow,gov});S.reasonNow=null}
+  S.streak=S.lastGov===gov?(S.streak||1)+1:1;S.govTax=pl.tax;S.lastGov=gov;S.adj=GS.map(()=>0);S.q=null;S.qPick=null;S.qDebt=0;S.amend=null;prevSat=null;markStories();
+  if(S.debt>DEBT_LINE){S.bankrupt=true;S.phase='imf'}
+  else if(S.round>=ROUNDS-1){S.phase='final'}
+  else{S.round++;S.platforms=S.platforms.map(p=>({tax:p.tax,add:[],cut:[],carbon:p.carbon}));S.event=null;S.filter='all';S.refAlign={};S.refSpend=0;S.redrawn=false;S.hints=S.round<2;
+    S.cq=S.round>=2?pickCq():null;S.phase='news'}
+  render();window.scrollTo({top:0,behavior:'smooth'})}
+
+// ---- final: game performance and policy review are separate ----
+function borrowed(){return S.history.flatMap(r=>r.platforms[ME].add.filter(id=>P[id]&&!P[id].custom&&fit(id,key(ME))<=0))}
+function profile(){const ids=S.history.flatMap(r=>r.platforms[ME].add).filter(id=>P[id]&&!P[id].custom);const n=ids.length||1;
+  return PK.map(k=>({k,v:Math.round(ids.filter(id=>ideo(id,k)>=2).length/n*100)})).sort((a,b)=>b.v-a.v)}
+function rFinal(st){const {k,f}=regime(),R=REG[k],sc=scores(),rank=[...sc].sort((a,b)=>b.total-a.total),me=sc[ME],myRank=rank.findIndex(s=>s.g===ME)+1;
+  const prof=profile(),bor=borrowed(),pv=r1(island().poverty);
+  st.innerHTML=`<div class="stack">
+   <div class="card stack" style="gap:10px"><p class="eyebrow">${S.bankrupt?'破產後的福利島':'五屆結束'} · 福利島最後變成了</p><div class="regime"><span>${R.name}</span></div>
+     <p><b>現實中的例子：</b>${R.eg}</p><p>${R.d}</p><div class="radar">${radar(f)}</div>
+     <p class="small">實施中的方案：${S.enacted.filter(x=>P[x.id]&&!P[x.id].custom).map(x=>P[x.id].name).join('、')||'（無）'}</p></div>
+   ${islandCard('五屆後的福利島')}
+   <div class="grid2">
+    <div class="card stack" style="gap:10px;border-left:5px solid ${pcolor(ME)}"><span class="kicker" style="align-self:flex-start">A　遊戲表現</span>
+     <div style="display:flex;align-items:baseline;gap:10px"><span class="regime" style="color:${pcolor(ME)}">第 ${myRank} 名</span><span class="num muted">${me.total} 分</span></div>
+     <p class="small">執政 ${me.gov} 屆　·　累計得票 <span class="num">${me.votes}%</span>　·　國債 <span class="num">${r1(S.debt)}</span>　·　貧窮率 <span class="num">${pv}%</span>　·　最終民怨 <span class="num">${S.unrest}</span></p>
+     <ul class="small" style="margin:0;padding-left:18px">${PARTIES[key(ME)].miss.map((m,i)=>`<li>${me.ms[i]?'達成':'未達成'}：${m.t}</li>`).join('')}</ul>
+     <div style="overflow-x:auto"><table><thead><tr><th>名次</th><th>觀點</th><th>執政</th><th>總分</th></tr></thead><tbody>${rank.map((s,i)=>`<tr><td class="num">${i+1}</td><td><b style="color:${pcolor(s.g)}">${who(s.g)}</b></td><td class="num">${s.gov}</td><td class="num">${s.total}</td></tr>`).join('')}</tbody></table></div></div>
+    <div class="card stack" style="gap:10px"><span class="kicker" style="align-self:flex-start;background:var(--teal)">B　政策回顧</span>
+     <p class="small muted">這是你這一局的政策選擇，不代表你的政治立場，也沒有標準答案。</p>
+     <b style="font-size:14px">你的政策最常和哪些觀點一致</b>
+     <div class="stack" style="gap:6px">${prof.map(x=>`<div class="pbar"><span>${AP_LABEL[x.k]}</span><i style="--w:${x.v}%;--pc:${PARTIES[x.k].color}"></i><b class="num">${x.v}%</b></div>`).join('')}</div>
+     <p class="small">你扮演<b style="color:${pcolor(ME)}">${pname(ME)}</b>，有 <b class="num">${bor.length}</b> 項政策借用了其他觀點的做法${bor.length?'：'+[...new Set(bor)].slice(0,5).map(id=>P[id].name).join('、'):''}。借用不是錯，值得想想當時為什麼這樣選。</p>
+     ${S.cqLog.length?`<b style="font-size:14px">兩難時刻</b>${S.cqLog.map(c=>`<div class="tl"><span class="h">${c.title}</span><span>你選：<b>${c.mineAp}</b>｜${c.mine}</span>${c.byMe?'':`<span class="small muted">實際採用：${c.did}</span>`}</div>`).join('')}`:''}
+     ${S.reasons.length?`<p class="small">改革時你的考量：${S.reasons.map(x=>x.r).join('、')}</p>`:''}</div></div>
+   <div class="card stack" style="gap:10px"><p class="eyebrow">五屆紀錄</p>${S.history.map(r=>`<div class="tl" style="border-color:${pcolor(r.gov)}"><span class="h">第 ${r.round+1} 屆　${EVENTS.find(e=>e.id===r.event).name}</span>
+      <span>你：${r.platforms[ME].tax}稅，${r.platforms[ME].add.map(id=>P[id].name).join('、')||'無新方案'}</span>
+      <span class="muted small">執政：${who(r.gov)}　你的得票 ${r1(r.pct[ME])}%</span></div>`).join('')}</div>
+   <div class="card"><h3 style="margin-bottom:10px">成就徽章　<span class="num muted small">${ACH.filter(a=>a.f()).length}/${ACH.length}</span></h3><div class="badges">${ACH.map((a,i)=>{const on=a.f();return `<div class="ach ${on?'on':'off'}" style="animation-delay:${i*.06}s">${medal(on,i)}<b>${a.n}</b><span>${a.d}</span></div>`}).join('')}</div></div>
+   <div class="card"><h3 style="margin-bottom:4px">想一想</h3><p class="small muted" style="margin-bottom:10px">自由填寫，寫幾句就好，複製後可以貼到課程平台。</p><div class="refl">${RQ.map((q,i)=>`<label for="refl${i}">${i+1}. ${q}<textarea id="refl${i}" data-r="${i}">${S.refl[i]}</textarea></label>`).join('')}</div>
+    <textarea id="copybox" hidden readonly style="margin-top:12px;min-height:200px"></textarea></div></div>`;
+  bar(`<button class="btn" data-a="restart">再玩一次</button><span class="grow"></span><button class="btn primary" data-a="copy">複製紀錄</button>`);
+}
+function summaryText(){const {k}=regime(),sc=scores(),me=sc[ME],rank=[...sc].sort((a,b)=>b.total-a.total).findIndex(s=>s.g===ME)+1,got=ACH.filter(a=>a.f()).map(a=>a.n),prof=profile();
+  return [`【福利島大選 紀錄】`,`我扮演的觀點：${pname(ME)}`,
+   `A 遊戲表現：第 ${rank} 名，${me.total} 分（執政 ${me.gov} 屆，累計得票 ${me.votes}%），國債 ${r1(S.debt)}，最終民怨 ${S.unrest}`,
+   `目標：${PARTIES[key(ME)].miss.map((m,i)=>`${m.t}（${me.ms[i]?'達成':'未達成'}）`).join('；')}`,`成就：${got.join('、')||'無'}`,
+   `B 政策回顧：我的政策最常和 ${prof.slice(0,3).map(x=>AP_LABEL[x.k]+' '+x.v+'%').join('、')} 一致；借用其他觀點 ${borrowed().length} 次`,
+   ...S.cqLog.map(c=>`兩難：${c.title}｜我選 ${c.mineAp}：${c.mine}`),
+   `全島最後的福利體制：${REG[k].name}${S.bankrupt?'（國家破產）':''}`,'',
+   ...S.history.map(r=>`第 ${r.round+1} 屆｜${EVENTS.find(e=>e.id===r.event).name}｜我的政見：${r.platforms[ME].tax}稅，${r.platforms[ME].add.map(id=>P[id].name).join('、')||'無新方案'}｜執政：${pname(r.gov)}`),'',
+   ...RQ.map((q,i)=>`${i+1}. ${q}\n${S.refl[i]||'（未填寫）'}`)].join('\n')}
+
+ACH.push({n:'勞工的力量',d:'島上勞工力量達到 8',f:()=>S.labor>=8},{n:'倡議成真',d:'你提出的政策有 4 項被實施',f:()=>S.nsWins>=4},{n:'跨界學習',d:'借用其他觀點的政策 3 次以上',f:()=>borrowed().length>=3});
+RQ.splice(0,RQ.length,'哪一次選擇讓你最掙扎？你最後為什麼這樣選？','同一個問題，其他觀點的解法跟你有什麼不同？各自誰受益、誰付出？','如果重玩一次，你會換一個觀點試試看嗎？你預期會有什麼不同？');
+
+// ---- v2 actions (run after the original handler) ----
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t||t.disabled)return;const a=t.dataset.a,pl=S.platforms[ME];
+  switch(a){
+   case'start':S.issue=ISSUES[Math.floor(Math.random()*ISSUES.length)].id;return;
+   case'hints':S.hints=!S.hints;break;
+   case'cq':applyCq(+t.dataset.i);buzz(15);break;
+   case'rf':{pl.adj=pl.adj||{};const id=t.dataset.id,v=t.dataset.v;delete pl.adj[id];pl.cut=pl.cut.filter(x=>x!==id);if(v==='up')pl.adj[id]=1.5;if(v==='down')pl.adj[id]=.5;if(v==='cut')pl.cut.push(id);break}
+   case'reason':S.reasonNow=t.dataset.v;break;
+   case'reformdone':S.reformDone=true;deal();go('budget');return;
+   case'amend':{const lead=VOTES.pct.indexOf(Math.max(...VOTES.pct)),id=t.dataset.id,v=ideo(id,key(lead));S.amend={id,ok:v>=(key(ME)==='ns'?-2.5:-.5)};buzz(S.amend.ok?[20,40,20]:30);break}
+   default:return}
+  render()});
+// ================= V2 mobile UI pass (overrides) =================
+// ---- category icons (small line glyphs, read faster than text tags) ----
+const ICO={
+ care:'<path d="M12 20s-7-4.4-7-9.5A3.8 3.8 0 0 1 12 8a3.8 3.8 0 0 1 7 2.5C19 15.6 12 20 12 20z"/>',
+ univ:'<circle cx="8" cy="9" r="2.6"/><circle cx="16" cy="9" r="2.6"/><path d="M3.5 19c.6-3 2.4-4.6 4.5-4.6S11.9 16 12.5 19M11.5 19c.6-3 2.4-4.6 4.5-4.6s3.9 1.6 4.5 4.6"/>',
+ sel:'<circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5 5"/>',
+ mkt:'<circle cx="12" cy="12" r="7.5"/><path d="M14.5 9.2c-.6-.8-1.5-1.2-2.6-1.2-1.6 0-2.6.8-2.6 2s1.1 1.6 2.7 2 2.7.9 2.7 2.1-1.1 2-2.7 2c-1.2 0-2.2-.5-2.8-1.3M12 6.5v11"/>',
+ inv:'<path d="M12 20v-8M12 12c0-4 3-6.5 7-6.5 0 4-3 6.5-7 6.5zM12 14c0-3-2.3-5-5.5-5 0 3 2.3 5 5.5 5z"/>',
+ ins:'<path d="M12 3.5l7 2.8v5.2c0 4.3-3 7.4-7 9-4-1.6-7-4.7-7-9V6.3z"/>',
+ rights:'<path d="M8 11V6.5a1.5 1.5 0 0 1 3 0V11M11 10V5.5a1.5 1.5 0 0 1 3 0V10M14 10.5V7a1.5 1.5 0 0 1 3 0v6c0 4-2.5 7-6 7s-6-2.6-6-6v-2.5a1.5 1.5 0 0 1 3 0V12"/>',
+ green:'<path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14zM5 19l7-7"/>',
+ fam:'<path d="M4 11l8-6.5 8 6.5M6.5 9.5V19h11V9.5M10 19v-5h4v5"/>',
+ civ:'<circle cx="12" cy="7" r="2.5"/><circle cx="5.5" cy="11" r="2"/><circle cx="18.5" cy="11" r="2"/><path d="M8 19c.5-3 2-4.6 4-4.6s3.5 1.6 4 4.6M2.5 18c.4-2 1.4-3 3-3M21.5 18c-.4-2-1.4-3-3-3"/>',
+ reform:'<circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M8.8 15.3L18 4M15.2 15.3L6 4"/>',
+ growth:'<path d="M4 18l5.5-5.5 3.5 3.5L20 9M15 9h5v5"/>',
+ stim:'<path d="M13 3L6 13.5h5L10 21l8-11h-5z"/>'};
+const icoOf=p=>{const t=['care','rights','green','fam','civ','reform','stim','growth','mkt','inv','ins','sel','univ'].find(x=>p.tags.includes(x));return t||'univ'};
+const icon=(t,s=18)=>`<svg class="ico" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICO[t]||ICO.univ}</svg>`;
+
+// ---- the two most useful badges for a card (the rest live in the detail sheet) ----
+function keyTags(p,k){const out=[];
+  if(p.pet)out.push('<span class="tag petb">陳情</span>');
+  if(p.ev)out.push('<span class="tag evx">本屆限定</span>');
+  if(issueOf(p.id)&&S.round===1)out.push(`<span class="tag evx">解法：${issueOf(p.id).ap}</span>`);
+  const f=fit(p.id,k);if(f>0)out.push('<span class="tag fit">符合理念</span>');if(f<0)out.push('<span class="tag anti">違背理念</span>');
+  if(evHit(p.id))out.push('<span class="tag evb">事件加成</span>');
+  if(p.once)out.push('<span class="tag once">一次性</span>');
+  return out.slice(0,2).join('')}
+function impactShort(p,k){const xs=CIT.map(c=>({c,v:r1((p.cit[c.id]||0)*mult(p,k))})).filter(x=>x.v!==0);
+  const up=xs.filter(x=>x.v>0).sort((a,b)=>b.v-a.v).slice(0,2),dn=xs.filter(x=>x.v<0).sort((a,b)=>a.v-b.v).slice(0,1),more=xs.length-up.length-dn.length;
+  return `<span class="imp">${up.map(x=>`<span class="ic up">${x.c.name} +${x.v}</span>`).join('')}${dn.map(x=>`<span class="ic dn">${x.c.name} ${x.v}</span>`).join('')}${more>0?`<span class="ic more">+${more}</span>`:''}</span>`}
+
+// ---- spotlight: who reacted most to the last tap ----
+let lastSpot=null;
+const SPOT0='<div class="spot"><span class="muted">點「＋ 加入」看島民反應・點頭像看族群說明</span></div>';
+function spotlight(now,prev){if(!prev)return lastSpot||SPOT0;let best=null,bd=0;CIT.forEach(c=>{const d=r1(now[c.id]-prev[c.id]);if(Math.abs(d)>Math.abs(bd)){bd=d;best=c}});
+  if(!best)return lastSpot||SPOT0;const last=S.platforms[ME].add[S.platforms[ME].add.length-1],q=(last&&P[last]&&P[last].say&&P[last].say[best.id])||(bd>0?'這對我有幫助。':'這樣我的日子更難過了。');
+  lastSpot=`<div class="spot ${bd>0?'up':'dn'}"><b>${best.name} ${bd>0?'+':''}${bd}</b><span>「${q}」</span></div>`;return lastSpot}
+
+// ---- budget screen: compact cards, detail sheet, sticky mood bar ----
+function rBudget(st){const g=ME,k=key(g),pt=PARTIES[k],pl=S.platforms[g],m=money(g),now=sat(ME);
+  const list=S.hand.map(id=>P[id]),I=S.round===1&&S.issue?ISSUES.find(i=>i.id===S.issue):null;
+  const task=S.round===0?`<details class="card cheat" style="--pc:${pt.color}" open><summary><span class="eyebrow">第 1 屆任務：認識你的觀點</span><span class="small">▾</span></summary><div class="stack" style="gap:6px;margin-top:8px"><span><b>怎麼看問題</b>　${VIEWS[k].see}</span><span><b>怎麼做</b>　${VIEWS[k].how}</span><span class="muted"><b>要小心</b>　${VIEWS[k].tension}</span><span class="small">標著「符合理念」的牌，最能鞏固你的基本盤。</span></div></details>`
+   :I?`<details class="card issue" open><summary><span class="eyebrow">第 2 屆任務：比較「${I.title}」的解法</span><span class="small">▾</span></summary><h3 style="margin:6px 0 4px">${I.title}</h3><p class="small">${I.d}挑一張你覺得最好的「解法」牌，開票後比較各黨怎麼解。</p></details>`:'';
+  st.innerHTML=`<div class="stack bstack">
+   <div class="dock">${moodBar(now,prevSat)}${spotlight(now,prevSat)}</div>
+   <div class="row" style="justify-content:space-between;align-items:baseline"><h2 style="font-size:22px">第 ${S.round+1} 屆政見</h2><span class="small muted">${ev().name}</span></div>
+   <div class="row" style="justify-content:space-between"><b style="font-size:15px">手牌 <span class="num muted">${(S.handIdx||0)+1}/${S.hand.length}</span>　<span class="small muted">左右滑動</span></b><div class="row" style="gap:6px"><button class="btn sm" data-a="mine">目標</button><button class="btn sm" data-a="redraw" ${S.redrawn?'disabled':''}>${S.redrawn?'已重抽':'重抽'}</button></div></div>
+   <div class="carwrap"><button class="carbtn prev" data-a="hstep" data-d="-1" aria-label="上一張">‹</button>
+   <div class="carousel" id="hcar">${list.map((p,i)=>{const on=pl.add.includes(p.id),en=S.enacted.some(x=>x.id===p.id),c=costOf(p.id,k),used=S.onceUsed.includes(p.id),dis=en||used,full=!on&&pl.add.length>=MAXADD;
+     return `<div class="slide pol hc ${on?'on':''} ${dis?'dis':''} ${p.pet?'petc':''} ${p.ev?'evc':''} ${I&&issueOf(p.id)?'isc':''}" style="--pc:${pt.color}" data-i="${i}">
+       <div class="hc-top"><span class="pic big">${icon(icoOf(p),26)}</span><div class="hc-tt"><span class="pt">${p.name}</span><span class="ktags">${keyTags(p,k)}</span></div><span class="coin ${c<0?'save':''}">${c<0?'省'+(-c):c}</span></div>
+       <p class="pd">${p.d}</p>
+       <div><b class="small">誰受益、誰承擔</b>${impact(p,k)}</div>
+       ${cardInfo(p)}
+       <div class="hc-act"><button class="btn sm ghost" data-a="det" data-id="${p.id}">詳情</button><button class="btn ${on?'primary':''} add" data-a="pol" data-id="${p.id}" ${dis||full?'disabled':''} aria-pressed="${on}">${dis?(en?'已實施':'已用過'):on?'✓ 已加入政見':full?'政見已滿 4 項':'＋ 加入政見'}</button></div></div>`}).join('')}</div>
+   <button class="carbtn next" data-a="hstep" data-d="1" aria-label="下一張">›</button></div>
+   <div class="cdots" id="hdots">${list.map((p,i)=>`<button class="cd ${i===(S.handIdx||0)?'cur':''} ${pl.add.includes(p.id)?'got':''}" data-a="hgo" data-i="${i}" aria-label="第 ${i+1} 張：${p.name}"></button>`).join('')}</div>
+   <b style="font-size:15px">稅率</b>
+   <div class="seg tax">${['低','中','高'].map(t=>`<button class="${pl.tax===t?'on':''}" data-a="tax" data-t="${t}" aria-pressed="${pl.tax===t}">${t}稅<small>收入 ${r1((TAX[t].rev+GROWTH*S.round+S.eco)*ev().rev)}</small></button>`).join('')}</div>
+   ${k==='gr'?`<label class="row small" style="min-height:40px"><input type="checkbox" id="carbon" ${pl.carbon?'checked':''} style="width:22px;height:22px"> 開徵碳稅（收入 +3，王董不開心）</label>`:''}
+   ${task}
+   ${S.pet?(()=>{const c=CIT.find(x=>x.id===S.pet),t=PETS.find(x=>x.who===S.pet),done=pl.add.includes(t.card.id);return `<div class="petition ${done?'ok':''}"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,done?2:-2)}</div><div class="pin"><p class="eyebrow">陳情・${c.grp}</p><b>${c.name}：「${t.story}」</b><span class="small">${done?'你回應了，'+c.name+'很感動。':'手牌裡的「'+t.card.name+'」可以回應。'}</span></div></div>`})():''}
+
+   ${S.enacted.length?`<details class="fold"><summary>既有方案 ${S.enacted.filter(x=>P[x.id]&&!P[x.id].custom).length} 項・每屆花費 ${m.exist}（可刪減）</summary><div class="stack" style="gap:6px;margin-top:6px">${S.enacted.filter(x=>P[x.id]&&!P[x.id].custom).map(x=>`<div class="exi ${pl.cut.includes(x.id)?'cut':''}"><span>${P[x.id].name} <span class="num muted">${r1(x.cost)}</span></span><button class="btn sm" data-a="cut" data-id="${x.id}">${pl.cut.includes(x.id)?'恢復':'刪減'}</button></div>`).join('')}</div></details>`:''}
+  </div>`;
+  prevSat=now;restoreCar('hcar','handIdx','hdots');
+  const over=m.spend>m.rev,w=Math.min(100,m.spend/Math.max(m.rev,m.spend)*100),n=pl.add.length+pl.cut.length;
+  bar(`<div class="grow wallet"><div class="t"><span class="bal ${m.bal<0?'neg':'pos'}">${m.bal<0?'赤字 ':'結餘 '}${sign(m.bal)}</span><span>收 ${m.rev}・支 ${m.spend}</span></div><div class="meter"><i class="${over?'over':''}" style="width:${w}%"></i></div><div class="t"><span>國債 ${r1(S.debt)}/${DEBT_LINE}</span><span>民怨 ${S.unrest}</span></div></div>
+   <button class="btn traybtn" data-a="tray">政見 <b class="num">${pl.add.length}/${MAXADD}</b>${pl.cut.length?`<small>刪${pl.cut.length}</small>`:''} ▴</button><button class="btn primary" data-a="count" ${n?'':'disabled'}>公布</button>`);
+}
+
+// ---- bottom sheet ----
+function sheet(html){let s=$('sheet');if(!s){s=document.createElement('div');s.id='sheet';document.body.appendChild(s)}
+  s.innerHTML=`<div class="sh-bg" data-a="shclose"></div><div class="sh-panel" role="dialog" aria-modal="true"><div class="sh-grab"></div>${html}</div>`;s.hidden=false;document.body.classList.add('noscroll')}
+function closeSheet(){const s=$('sheet');if(s)s.hidden=true;document.body.classList.remove('noscroll')}
+function detailSheet(id){const p=P[id],k=key(ME),pl=S.platforms[ME],on=pl.add.includes(id),c=costOf(id,k),full=!on&&pl.add.length>=MAXADD,dis=S.enacted.some(x=>x.id===id)||S.onceUsed.includes(id);
+  const {up,dn}=persp(id),io=issueOf(id),timing=p.once?'一次發放':DELAYED(p)?'需要一屆建置，下屆才見效':'通過後立即見效';
+  sheet(`<div class="stack" style="gap:12px"><div class="row" style="gap:10px;align-items:flex-start"><span class="pic big">${icon(icoOf(p),26)}</span><div style="flex:1;min-width:0"><h3>${p.name}</h3><p class="small muted">${p.tags.filter(t=>TAGN[t]).map(t=>TAGN[t]).join('・')}</p></div><span class="coin ${c<0?'save':''}">${c<0?'省'+(-c):c}</span></div>
+   <p>${p.d}</p>${io?`<p class="small"><b>這是「${io.ap}」解法</b>（${io.who}）</p>`:''}
+   <div><b class="small">誰受益、誰承擔</b>${impact(p,k)}</div>
+   ${up.length||dn.length?`<div class="stack" style="gap:4px">${up.length?`<span class="small">會支持：${up.map(pchip).join('')}</span>`:''}${dn.length?`<span class="small">會反對：${dn.map(pchip).join('')}</span>`:''}</div>`:''}
+   <p class="small"><b>見效：</b>${timing}${p.fx.eco?`　<b>帶動經濟</b> +${p.fx.eco}`:''}${evHit(id)?'　<b>本屆事件加成</b>':''}</p>
+   <div class="row" style="gap:8px"><button class="btn" data-a="shclose" style="flex:1">關閉</button><button class="btn ${on?'':'primary'}" data-a="pol" data-id="${id}" data-close="1" style="flex:2" ${dis||full?'disabled':''}>${dis?'無法加入':on?'移出政見':full?'已選滿 4 項':'＋ 加入政見'}</button></div></div>`)}
+function traySheet(){const pl=S.platforms[ME],m=money(ME);
+  sheet(`<div class="stack" style="gap:10px"><h3>你的政見 <span class="num muted">${pl.add.length}/${MAXADD}</span></h3>
+   ${pl.add.length?pl.add.map(id=>`<div class="exi"><span>${icon(icoOf(P[id]),16)} ${P[id].name} <span class="num muted">${costOf(id,key(ME))}</span></span><button class="btn sm" data-a="rm" data-id="${id}">移除</button></div>`).join(''):'<p class="muted small">還沒選任何政策。</p>'}
+   ${pl.cut.length?`<b class="small">刪減的方案</b>${pl.cut.map(id=>`<div class="exi cut"><span>${P[id].name}</span><button class="btn sm" data-a="cut" data-id="${id}">恢復</button></div>`).join('')}`:''}
+   <p class="small">稅率 ${pl.tax}稅・收入 ${m.rev}・支出 ${m.spend}・<b style="color:${m.bal<0?'var(--bad)':'var(--good)'}">${m.bal<0?'赤字':'結餘'} ${sign(m.bal)}</b></p>
+   <button class="btn" data-a="shclose">繼續選牌</button></div>`)}
+function mineSheet(){const k=key(ME),pt=PARTIES[k];
+  sheet(`<div class="stack" style="gap:10px"><h3 style="color:${pt.color}">${pt.name}</h3><p class="small">${pt.rule}</p>
+   <p class="small"><b>怎麼看問題</b>　${VIEWS[k].see}</p><p class="small"><b>怎麼做</b>　${VIEWS[k].how}</p><p class="small muted"><b>要小心</b>　${VIEWS[k].tension}</p>
+   <p class="small"><b>特殊能力</b>　${pt.ability}</p><p class="small"><b>基本盤</b>　${BASEC[k].map(id=>CIT.find(c=>c.id===id).name).join('、')}</p>
+   <ul class="small" style="margin:0;padding-left:18px">${pt.miss.map(x=>`<li>${x.t}</li>`).join('')}</ul><button class="btn" data-a="shclose">關閉</button></div>`)}
+
+// ---- results: one step per screen ----
+function rResults(st){const v=votes();VOTES=v;const lead=v.pct.indexOf(Math.max(...v.pct)),answered=S.qPick!==null;S.rstep=S.rstep||0;if(!answered)S.rstep=0;
+  const ms=GS.map(money),after=r1(Math.max(0,S.debt-ms[lead].bal+(lead===ME?S.qDebt:0))),Q=QS.find(q=>q.id===S.q.id),mine=sat(ME);
+  const order=answered?GS.slice().sort((a,b)=>v.pct[b]-v.pct[a]):GS;const step=S.rstep;
+  const steps=['開票','當選','民意','島民'];
+  let body='';
+  if(step===0)body=`<div class="card"><div class="vlist">${order.map(g=>`<div class="vrow ${g===ME?'me':''}" style="--pc:${pcolor(g)}"><span class="who">${who(g)}</span><span class="pct" data-to="${v.pct[g]}">0.0%</span>
+     <div class="vtrack"><i data-w="${v.pct[g]}"></i>${answered&&g===lead?`<svg class="stampmark" viewBox="0 0 40 40" aria-label="當選"><circle cx="20" cy="20" r="16" fill="var(--surface)" stroke="var(--stamp)" stroke-width="3"/><text x="20" y="27" text-anchor="middle" font-size="19" fill="var(--stamp)" font-weight="700" font-family="Noto Sans TC,sans-serif">卜</text></svg>`:''}</div></div>`).join('')}</div></div>
+   <div class="qcard"><div class="qh">質詢時間</div><div class="qin"><div class="qt">${S.q.text}</div>
+     <div class="stack" style="gap:8px">${Q.opts.map((o,i)=>`<button class="qopt ${S.qPick===i?'on':''}" data-a="answer" data-i="${i}" ${answered?'disabled':''}><span>${o.t}</span>${answered?`<span class="small muted num">得票 ${sign(o.vote)}${o.debt?`　國債 ${sign(o.debt)}`:''}</span>`:''}</button>`).join('')}</div>
+     ${answered?`<p class="insight">${Q.opts[S.qPick].i}</p>`:''}</div></div>`;
+  if(step===1)body=`<div class="reveal" style="--pc:${pcolor(lead)}"><div class="top">${lead===ME?'你的政黨贏得執政！':`${pname(lead)}贏得執政`}</div><div class="bd">
+      <p>${lead===ME?'你的政見將會實施。':'你成為在野黨。'}</p>${statusNote(lead)}
+      <p class="small">國債 <span class="num">${r1(S.debt)} → <b style="color:${after>DEBT_LINE?'var(--bad)':'inherit'}">${after}</b></span>${after>DEBT_LINE?'　超過破產紅線！':''}</p>
+      <p class="small muted">服務類政策要先蓋起來，下屆才看得到成果。</p></div></div>${amendPanel(lead)}${issueCompare()}`;
+  if(step===2){const rows=CIT.filter(c=>v.probs[c.id]).map(c=>{const pr=v.probs[c.id],mi=pr[ME]*100,prev=S.lastProbs&&S.lastProbs[c.id]?S.lastProbs[c.id][ME]*100:null;return {c,pr,mi,dl:prev==null?0:r1(mi-prev)}});
+    const show=S.flowAll?rows:rows.slice().sort((a,b)=>Math.abs(b.dl)-Math.abs(a.dl)||b.mi-a.mi).slice(0,4);
+    body=`<div class="card"><h3 style="margin-bottom:4px">選民流向</h3><p class="small muted" style="margin-bottom:10px">${S.flowAll?'全部族群':'變化最大的族群'}</p><div class="flow">${show.map(({c,pr,mi,dl})=>{const top=pr.indexOf(Math.max(...pr));
+      return `<div class="frow"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,mi>=25?2:mi<12?-2:0)}</div><div class="fin"><div class="row" style="justify-content:space-between;gap:6px"><b>${c.grp}<span class="small muted">　${c.name}</span></b>${dl?`<span class="dlt ${dl>0?'up':'dn'}">${dl>0?'▲':'▼'} ${Math.abs(dl)}</span>`:''}</div>
+       <div class="fbar">${GS.map(g=>`<i style="width:${pr[g]*100}%;background:${pcolor(g)}"></i>`).join('')}</div><span class="small">主要支持 <b style="color:${pcolor(top)}">${pname(top)}</b>・支持你 <b class="num">${r1(mi)}%</b></span></div></div>`}).join('')}</div>
+     <button class="btn sm" data-a="flowall" style="margin-top:10px">${S.flowAll?'只看變化最大的':'看全部族群'}</button></div>`}
+  if(step===3)body=`<div class="card"><h3 style="margin-bottom:10px">島民怎麼看你的政見</h3><div class="feed">${CIT.map((c,i)=>{const b=bubble(c,ME);return `<div class="say" style="animation-delay:${i*.05}s"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,mine[c.id])}</div><div class="bub ${b.m}"><b>${c.name}</b>${b.t}</div></div>`}).join('')}</div></div>
+    <details class="card fold"><summary>對手的政見</summary><div class="stack" style="gap:8px;margin-top:6px">${RIV.map(g=>{const pl=S.platforms[g],m=ms[g];return `<div class="rival" style="--pc:${pcolor(g)}"><b>${pname(g)}</b>　${pl.tax}稅，${m.bal<0?'赤字':'結餘'} ${sign(m.bal)}<br>${pl.add.map(id=>P[id].name).join('、')||'不提新方案'}</div>`}).join('')}</div></details>`;
+  st.innerHTML=`<div class="stack"><div class="row" style="justify-content:space-between;align-items:baseline"><h2 style="font-size:24px">第 ${S.round+1} 屆開票</h2><div class="steps">${steps.map((s,i)=>`<span class="${i===step?'on':i<step?'done':''}">${s}</span>`).join('')}</div></div>${body}</div>`;
+  if(step===0)requestAnimationFrame(()=>requestAnimationFrame(()=>{st.querySelectorAll('.vtrack i').forEach(i=>i.style.width=i.dataset.w+'%');countUp(st)}));
+  const last=step===steps.length-1;
+  bar(!answered?`<span class="grow small muted">先回答質詢</span><button class="btn" disabled>等待質詢</button>`
+   :`${step>0?'<button class="btn" data-a="rback">上一步</button>':''}<span class="grow small muted">${lead===ME?'恭喜當選！':'下屆再接再厲'}</span>${last?`<button class="btn primary" data-a="confirm">${S.round>=ROUNDS-1||after>DEBT_LINE?'看最後結果':'進入下一屆'}</button>`:'<button class="btn primary" data-a="rnext">下一步</button>'}`)}
+
+// ---- render: add a phase class so the budget screen can drop the top HUD ----
+function render(){
+  const R=ROUNDS,done=S.history.length;document.body.dataset.phase=S.phase;
+  $('pips').innerHTML=['title','setup'].includes(S.phase)?'':Array.from({length:R},(_,i)=>`<span class="pip ${i<done?'done':i===S.round&&!['final','imf'].includes(S.phase)?'now':''}" title="第 ${i+1} 屆"></span>`).join('');
+  const isl=island(),dp=Math.min(100,S.debt/DEBT_LINE*100);
+  $('hstats').innerHTML=S.phase==='title'?'':`<div class="hstat"><span class="l">國債</span><span class="v ${dp>66?'hot':''}">${r1(S.debt)}<small class="muted" style="font-size:11px">/${DEBT_LINE}</small></span><span class="debtmini"><i class="${dp>66?'hot':''}" style="width:${dp}%"></i></span></div>
+   <div class="hstat"><span class="l">經濟</span><span class="v" style="color:var(--teal)">+${r1(S.eco)}</span></div>
+   <div class="hstat pov"><span class="l">貧窮率</span><span class="v">${r1(isl.poverty)}%</span></div>
+   <div class="hstat"><span class="l">民怨</span><span class="v ${S.unrest>=60?'hot':''}">${S.unrest}</span><span class="debtmini"><i style="width:${S.unrest}%;background:${S.unrest>=80?'var(--stamp)':S.unrest>=35?'var(--orange)':'var(--teal)'}"></i></span></div>`;
+  ({title:rTitle,setup:rSetup,news:rNews,ref:rRef,demo:rDemo,reform:rReform,budget:rBudget,results:rResults,final:rFinal,imf:rImf})[S.phase]($('stage'));
+}
+
+// ---- actions for the new UI (capture phase so sheet buttons close before re-render) ----
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t||t.disabled)return;const a=t.dataset.a;
+  if(a==='shclose'){closeSheet();e.stopImmediatePropagation();return}
+  if(t.closest('#sheet')&&['pol','rm','cut'].includes(a)){setTimeout(()=>{if(a==='pol'&&t.dataset.close)closeSheet();else if(a==='rm'||a==='cut'){if(!$('sheet').hidden)traySheet()}},0)}
+  if(a==='det'){detailSheet(t.dataset.id);e.stopImmediatePropagation();return}
+  if(a==='tray'){traySheet();e.stopImmediatePropagation();return}
+  if(a==='mine'){mineSheet();e.stopImmediatePropagation();return}
+  if(a==='rnext'){S.rstep=(S.rstep||0)+1;render();window.scrollTo({top:0,behavior:'smooth'});e.stopImmediatePropagation();return}
+  if(a==='rback'){S.rstep=Math.max(0,(S.rstep||0)-1);render();window.scrollTo({top:0});e.stopImmediatePropagation();return}
+  if(a==='flowall'){S.flowAll=!S.flowAll;render();e.stopImmediatePropagation();return}
+  if(a==='confirm'){S.rstep=0;S.flowAll=false;lastSpot=null}
+  if(a==='count'){S.rstep=0;closeSheet()}
+  if(a==='cq'){setTimeout(()=>{const el=document.querySelector('.cqcard .insight');if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},60)}
+},true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
+
+// ================= swipe carousels =================
+function slideW(c){const s=c.children[0];return s?s.getBoundingClientRect().width+parseFloat(getComputedStyle(c).columnGap||getComputedStyle(c).gap||12):1}
+function idxOf(c){return Math.max(0,Math.min(c.children.length-1,Math.round(c.scrollLeft/slideW(c))))}
+function goCar(c,i,smooth=true){i=Math.max(0,Math.min(c.children.length-1,i));const s=c.children[i];if(!s)return;c.scrollTo({left:s.offsetLeft-(c.clientWidth-s.offsetWidth)/2,behavior:smooth&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'})}
+function restoreCar(id,key,dotsId,onSnap){const c=$(id);if(!c)return;requestAnimationFrame(()=>goCar(c,S[key]||0,false));
+  let tm;c.addEventListener('scroll',()=>{clearTimeout(tm);tm=setTimeout(()=>{const i=idxOf(c);if(i!==S[key]){S[key]=i;const d=$(dotsId);if(d)[...d.children].forEach((b,j)=>b.classList.toggle('cur',j===i));
+    const cnt=document.querySelector('[data-carcount="'+id+'"]');if(cnt)cnt.textContent=(i+1)+'/'+c.children.length;
+    const h=c.closest('.stack')&&c.closest('.stack').querySelector('b .num');if(id==='hcar'&&h)h.textContent=(i+1)+'/'+c.children.length;
+    if(onSnap)onSnap(i)}},90)},{passive:true})}
+
+// ---- perspective picker as a swipe carousel; the centred card is the choice ----
+function rSetup(st){const ks=PK;if(S.setIdx==null)S.setIdx=Math.max(0,ks.indexOf(S.choice));if(!S.choice)S.choice=ks[S.setIdx];
+  st.innerHTML=`<div class="stack"><div><p class="eyebrow">第一步</p><h2>選擇你的觀點</h2><p class="muted small" style="margin-top:4px">左右滑動看七種觀點，停在哪張就選哪張。另外六個由電腦扮演。</p></div>
+    <div class="carwrap"><button class="carbtn prev" data-a="sstep" data-d="-1" aria-label="上一個">‹</button>
+    <div class="carousel" id="scar">${ks.map((k,i)=>{const p=PARTIES[k],v=VIEWS[k];return `<div class="slide pcard ${S.choice===k?'on':''}" style="--pc:${p.color}" data-k="${k}">
+      <span class="band"><span class="pname">${p.name}</span><span class="num small" style="position:relative;z-index:1">${i+1}/7</span></span>
+      <span class="body"><span class="slogan">${p.slogan}</span><span class="rule">${p.rule}</span>
+      <span class="vw"><b>怎麼看問題</b>${v.see}</span><span class="vw"><b>怎麼解決</b>${v.how}</span><span class="vw"><b>要小心</b>${v.tension}</span>
+      <span class="ab"><b>特殊能力</b>　${p.ability}</span>
+      <ul>${p.miss.map(m=>`<li>${m.t}</li>`).join('')}</ul></span></div>`}).join('')}</div>
+    <button class="carbtn next" data-a="sstep" data-d="1" aria-label="下一個">›</button></div>
+    <div class="cdots" id="sdots">${ks.map((k,i)=>`<button class="cd ${i===S.setIdx?'cur':''}" style="--pc:${PARTIES[k].color}" data-a="sgo" data-i="${i}" aria-label="${PARTIES[k].name}"></button>`).join('')}</div>
+    <details class="card fold"><summary>七種觀點一覽表</summary><div style="overflow-x:auto;margin-top:8px"><table class="vtab"><thead><tr><th>觀點</th><th>怎麼看問題</th><th>誰該負責</th><th>怎麼分配</th><th>內部兩難</th></tr></thead><tbody>
+     ${ks.map(k=>`<tr><td><b style="color:${PARTIES[k].color}">${PARTIES[k].name}</b></td><td>${VIEWS[k].see}</td><td>${VIEWS[k].who}</td><td>${VIEWS[k].how}</td><td>${VIEWS[k].tension}</td></tr>`).join('')}</tbody></table></div>
+     <p class="small muted" style="margin-top:8px">這是遊戲用的簡化版，詳細內容以課本為準。</p></details></div>`;
+  const setBar=()=>bar(`<button class="btn" data-a="rand">隨機</button><span class="grow small" style="text-align:right">已選：<b style="color:${PARTIES[S.choice].color}">${PARTIES[S.choice].name}</b></span><button class="btn primary" data-a="start">出發</button>`);
+  setBar();
+  restoreCar('scar','setIdx','sdots',i=>{S.choice=ks[i];document.querySelectorAll('#scar .slide').forEach((s,j)=>s.classList.toggle('on',j===i));setBar();buzz(8)});
+}
+
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t||t.disabled)return;const a=t.dataset.a;
+  if(a==='hstep'||a==='hgo'){const c=$('hcar');if(c)goCar(c,a==='hgo'?+t.dataset.i:idxOf(c)+(+t.dataset.d));e.stopImmediatePropagation();return}
+  if(a==='sstep'||a==='sgo'){const c=$('scar');if(c)goCar(c,a==='sgo'?+t.dataset.i:idxOf(c)+(+t.dataset.d));e.stopImmediatePropagation();return}
+  if(a==='rand'&&S.phase==='setup'){const c=$('scar'),i=Math.floor(Math.random()*PK.length);if(c)goCar(c,i);e.stopImmediatePropagation();return}
+  if(a==='redraw'||a==='count'||a==='confirm')S.handIdx=0;
+},true);
+// keep the tapped slide centred: a tap on a peeking neighbour slides it in
+document.addEventListener('click',e=>{const s=e.target.closest('#scar .slide');if(s&&!e.target.closest('[data-a]')){const c=$('scar');goCar(c,[...c.children].indexOf(s))}});
+
+// boot after the painted art has loaded (falls back to drawn SVG after 2.5 s or on error)
 const boot=d=>preloadArt().then(()=>start(d));
 window.claude?.hot?.ready?window.claude.hot.ready(boot):boot(window.claude?.hot?.data??{});
 </script>
