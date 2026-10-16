@@ -194,7 +194,34 @@ const AV={
  zhen:{bg:'#A9E0CE',skin:'#F2CBA8',hair:'pony',hc:'#53372A',shirt:'#239A8A'}
 };
 let FID=0;
-function face(id,mood=0,x,y,s){const a=AV[id],K='#3B2B28',u='f'+(FID++);
+// ---------- 美術素材（Codex v0.4 模型水粉插畫）----------
+// 人物：assets/characters/{id}-expressions.webp，780×260，三格依序 happy / neutral / upset。
+// 島嶼：assets/scenes/island-painted.webp（底圖）＋ services-painted.webp（4×2 服務圖集）。
+// 素材載入成功才使用；載入失敗（離線、Artifact 未附檔）時沿用下方原本的 SVG 繪圖。
+const ART={base:'assets/',ok:{}};
+const ART_FILES=()=>[...CIT.map(c=>`characters/${c.id}-expressions.webp`),'scenes/island-painted.webp','scenes/services-painted.webp'];
+function preloadArt(ms=2500){return Promise.race([
+  Promise.all(ART_FILES().map(f=>new Promise(res=>{const im=new Image();im.onload=()=>{ART.ok[f]=1;res()};im.onerror=()=>res();im.src=ART.base+f}))),
+  new Promise(res=>setTimeout(res,ms))])}
+function paintedFace(id,mood,x,y,s){const f=`characters/${id}-expressions.webp`;if(!ART.ok[f])return null;
+  const k=mood>1.5?0:mood<-1?2:1,a=AV[id];
+  const pos=s?`x="${x}" y="${y}" width="${s}" height="${s}"`:'';
+  // 以 viewBox 裁出圖集中的一格；inline overflow:hidden 蓋過 .ava svg{overflow:visible}，避免露出相鄰表情
+  return `<svg ${pos} viewBox="${k*260} 0 260 260" style="overflow:hidden" aria-hidden="true"><circle cx="${k*260+130}" cy="130" r="128" fill="${a.bg}" opacity=".55"/><image href="${ART.base+f}" x="0" y="0" width="780" height="260" preserveAspectRatio="none"/></svg>`}
+// 島嶼服務圖層：政策 id → 圖層（依 docs/data/policy_meta_v0.1.json 的 islandLayer；「制度」類不畫建物）
+const ISLE_ORDER=[['care','照顧服務'],['transport','交通'],['housing','住宅'],['energy','能源'],['community','社區設施'],['health','醫療'],['school','學校'],['industry','產業']];
+const ISLE_LAYERS={care:'p5 p6 p7 p21 p32 q21 x6a t1 t4',transport:'p16 q16 p30 x5a',housing:'p14',energy:'p15 q18 x7a',community:'q15 p27 q10 q4 q9 p22 q17 x5b',health:'q1 q3 t3',school:'q7 q6 q5 x4a',industry:'q19 p17 x2a t7'};
+const ISLE_POS=[[29,58,15],[39,74,12],[55,60,16],[72,42,12],[25,78,15],[73,65,14],[52,83,16],[73,83,14]];// x、地面 y、寬度（場景百分比，取自 Codex art-preview.js）
+function paintedIsland(){if(!ART.ok['scenes/island-painted.webp']||!ART.ok['scenes/services-painted.webp'])return null;
+  const on=ISLE_ORDER.map(([id,name],i)=>({id,name,i,pols:S.enacted.map(x=>x.id).filter(pid=>ISLE_LAYERS[id].split(' ').includes(pid))})).filter(l=>l.pols.length);
+  const inst=S.enacted.filter(x=>!ISLE_ORDER.some(([id])=>ISLE_LAYERS[id].split(' ').includes(x.id)));
+  const b=ART.base+'scenes/';
+  return `<div class="isle"><div class="isle-scene" role="img" aria-label="福利島現況：${on.length?on.map(l=>l.name).join('、'):'尚未設置服務據點'}"><img class="isle-base" src="${b}island-painted.webp" alt="">
+   ${on.map(l=>{const [px,py,w]=ISLE_POS[l.i];return `<span class="isle-bld" style="left:${px}%;top:${py}%;width:${w}%"><img src="${b}services-painted.webp" alt="" style="transform:translate(-${(l.i%4)*25}%,-${Math.floor(l.i/4)*50}%)"></span><span class="isle-pin" style="left:${px}%;top:${py-w*780/430+5}%" aria-hidden="true">${l.i+1}</span>`}).join('')}</div>
+   <div class="isle-legend">${on.length?on.map(l=>`<div><b>${l.i+1}</b><span><strong>${l.name}</strong>　${l.pols.map(pid=>P[pid].name).join('、')}</span></div>`).join(''):`<p class="small muted">島上還沒有實施任何服務方案。你的政見通過後，對應的設施會出現在這裡。</p>`}
+   ${inst.length?`<div class="inst"><b>制</b><span><strong>制度與給付</strong>　${inst.map(x=>P[x.id].name).join('、')}</span></div>`:''}</div>
+   <p class="small muted isle-note">圖示代表島上已有這類服務，不代表由誰經營或成效好壞。</p></div>`}
+function face(id,mood=0,x,y,s){const pf=paintedFace(id,mood,x,y,s);if(pf)return pf;const a=AV[id],K='#3B2B28',u='f'+(FID++);
   const m=mood>1.5?'happy':mood<-1?'sad':'flat';
   const hl=shade(a.hc,.45),hd=shade(a.hc,-.3),st=`stroke="${K}" stroke-width="1.1" stroke-linejoin="round"`;
   let back='',front='';
@@ -510,12 +537,13 @@ function paper(r){const g=r.gov,pl=r.platforms[g],first=pl.add[0]?P[pl.add[0]].n
   const hl=g===ME?`${pname(g)}勝選！${first?`「${first}」即將上路`:'承諾穩健施政'}`:`${pname(g)}拿下執政權${first?`，「${first}」將上路`:''}`;
   const sub=pl.cut.length?`同時刪減「${P[pl.cut[0]].name}」，受影響民眾揚言抗議。`:r.bals[g]<0?`新政府預算赤字 ${-r.bals[g]}，國債持續攀升。`:'新政府預算收支平衡，財政部鬆一口氣。';
   return `<div class="paper"><div class="mast"><b>福利島日報</b><span class="small muted num">第 ${r.round+1} 屆</span></div><div class="hl">${hl}</div><p class="small muted">${sub}</p></div>`}
-function rNews(st){const e=S.event?ev():null,last=S.history[S.history.length-1];
+function rNews(st){const e=S.event?ev():null,last=S.history[S.history.length-1],isle=paintedIsland();
   st.innerHTML=`<div class="stack"><div><p class="eyebrow">第 ${S.round+1} 屆 · 共 ${ROUNDS} 屆</p><h2>新聞快報</h2></div>
+   ${isle?`<div class="card"><h3 style="margin-bottom:8px">福利島現況</h3>${isle}</div>`:''}
    ${last?paper(last):''}
    <div class="news"><div class="wheelwrap"><svg class="pointer" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 32 L3 10 Q3 2 15 2 Q27 2 27 10Z" fill="var(--stamp)" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="15" cy="11" r="3.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/></svg>${wheelSVG()}</div>
    ${S.round>0?thermo():''}
-   <div class="bulletin"><div class="bar"><span>福利島新聞台</span><span class="live">LIVE</span></div><div class="vign">${landscape(e?e.id:'hero')}</div><div class="body">
+   <div class="bulletin"><div class="bar"><span>福利島新聞台</span><span class="live">LIVE</span></div>${isle?'':`<div class="vign">${landscape(e?e.id:'hero')}</div>`}<div class="body">
    ${e?`<div class="headline">${e.name}</div><p>${e.d}</p><div class="fx">${e.fxt.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
      <p class="small muted">想一想：這則新聞讓誰的處境變差了？你的政見要怎麼回應？</p>`
      :`<div class="headline muted">今天會發生什麼事？</div><p class="muted">每屆一則重大事件，會改變稅收和島民的需要。轉過的事件不會再出現。</p>`}
@@ -750,4 +778,6 @@ document.addEventListener('input',e=>{if(e.target.dataset&&e.target.dataset.r!==
 
 function start(d){S=(d&&d.S&&d.S.filter)?d.S:fresh();render()}
 window.claude?.hot?.snapshot?.(()=>({S}));
-window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
+// 先預載美術素材（最多等 2.5 秒），避免畫面先出現舊圖再跳成新圖
+const boot=d=>preloadArt().then(()=>start(d));
+window.claude?.hot?.ready?window.claude.hot.ready(boot):boot(window.claude?.hot?.data??{});
