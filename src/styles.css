@@ -308,3 +308,16 @@ textarea{width:100%;min-height:88px;font:inherit;font-size:15px;color:var(--ink)
 #fx{position:fixed;inset:0;pointer-events:none;z-index:50}
 @media (max-width:420px){.hstat.pov{display:none}.pips{display:none}.brand b{font-size:15px}.hstats{gap:10px}.brand b{font-size:16px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+/* ---------- 美術 v0.4 整合：福利島現況（新聞頁最上方） ---------- */
+.isle-scene{position:relative;width:100%;aspect-ratio:780/430;border-radius:12px;overflow:hidden;border:2px solid var(--ink);background:#ddede6}
+.isle-base{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+.isle-bld{position:absolute;display:block;aspect-ratio:1;overflow:hidden;transform:translate(-50%,-100%)}
+.isle-bld img{position:absolute;inset:0;width:400%;height:200%;max-width:none}
+.isle-pin{position:absolute;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);display:grid;place-items:center;font:700 12px/1 'IBM Plex Mono',monospace;color:var(--ink)}
+.isle-legend{display:grid;gap:6px;margin-top:10px;font-size:14px;line-height:1.5}
+.isle-legend>div{display:flex;gap:8px;align-items:flex-start}
+.isle-legend b{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font:700 12px/1 'IBM Plex Mono',monospace;margin-top:1px}
+.isle-legend .inst b{border-radius:6px;font-family:inherit}
+.isle-note{margin-top:8px}
+@media (prefers-reduced-motion:no-preference){.isle-bld{animation:isle-in .6s ease-out both}}
+@keyframes isle-in{from{opacity:0;transform:translate(-50%,-90%)}to{opacity:1;transform:translate(-50%,-100%)}}
