@@ -13,6 +13,14 @@
 
 ---
 
+## docs-2026-10-16b — 2026-10-16
+
+- 來源：Claude（分支 `claude/policy-meta-v0.2`）
+- 決定保守主義併入新右派，新增 `docs/collab/DECISION_conservatism_into_new_right.md`
+- 政策觀點資料 v0.2：七觀點出現 26～41 次（v0.1 為 14～60 次），每個觀點都有支持與批評
+- 遊戲程式未修改
+- 測試：v0.2 產生腳本內建檢查（id 完整、無重複觀點）；`node build.mjs --check` 通過
+
 ## docs-2026-10-16a — 2026-10-16
 
 - 來源：Claude（分支 `claude/collab-docs-tests-decisions`）
