@@ -13,6 +13,13 @@
 
 ---
 
+## docs-2026-10-16a — 2026-10-16
+
+- 來源：Claude（分支 `claude/collab-docs-tests-decisions`）
+- 新增架構文件、美術整合清單、自動測試、參考截圖、Codex 提案與往來回覆、老師決定、政策資料初稿 v0.1
+- 遊戲程式未修改
+- 測試：`node build.mjs --check` 通過；`tests/smoke_test.py` 六黨各一局、`tests/bankruptcy_test.py` 皆通過
+
 ## WI-baseline-2026-10-16 — 2026-10-16
 
 - 來源：Claude
