@@ -1,4 +1,4 @@
-/* Layout: riso-printed election leaflet — paper grain, hard ink shadows, misregistered inks; sticky HUD, one stage per phase, thumb-reach action bar */
+/* Layout: riso-printed election leaflet with model-painted island and residents. */
 :root{
   --paper:#F1F0EA; --surface:#FBFAF6; --soft:#E3E2D9; --ink:#1C2040; --muted:#5A5E77; --line:#1C2040; --hair:#CFCEC3;
   --blue:#2F5DB8; --pink:#EC4F8C; --yellow:#FFC93C; --teal:#0F9A92; --orange:#F2692C; --purple:#7650C4;
@@ -133,6 +133,39 @@ main{padding-top:20px}
 
 .vign{border-bottom:2px solid var(--ink);line-height:0;background:var(--soft)}
 .vign svg{width:100%;height:auto;display:block}
+
+/* Painted news camera: all labels remain selectable HTML. */
+.news-scene{margin:0;min-width:0;line-height:1.5;background:#f4eddd;color:#263b44}
+.scene-frame{position:relative;aspect-ratio:1200/662;overflow:hidden;isolation:isolate}
+.news-image{display:block;width:100%;height:100%;max-width:none;object-fit:cover;transform-origin:var(--focus-x) var(--focus-y);transition:transform .65s cubic-bezier(.2,.7,.2,1)}
+.is-closeup .news-image{transform:scale(2.2)}
+.scene-caption{position:absolute;inset:auto 0 0;padding:30px 16px 12px;background:linear-gradient(transparent,rgba(19,40,48,.86));color:#fff;display:flex;flex-direction:column;gap:3px;pointer-events:none;text-shadow:0 1px 3px #172d35}
+.scene-caption span{font-size:10px;letter-spacing:.18em;font-weight:700}
+.scene-caption b{font-size:clamp(16px,4.5vw,24px);font-family:var(--f-display);line-height:1.3}
+.scene-tools{padding:5px 10px;display:flex;gap:8px;align-items:center;justify-content:space-between;background:var(--surface);color:var(--muted);border-top:1px solid var(--hair);font-size:11px}
+.scene-tools>div{display:flex;gap:4px;flex:none}
+.scene-tools button{font:700 12px var(--f-body);min-height:44px;padding:6px 10px;background:transparent;border:1px solid transparent;border-radius:7px;color:var(--muted);cursor:pointer}
+.scene-tools button[aria-pressed=true]{background:var(--soft);color:var(--ink);border-color:var(--hair)}
+.scene-tools button:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.event-scene{animation:news-arrival .55s ease-out both}
+@keyframes news-arrival{from{opacity:.45;filter:saturate(.5)}to{opacity:1;filter:saturate(1)}}
+#news-bulletin{scroll-margin-top:130px}
+.bulletin .bar small{font-weight:500;letter-spacing:0;margin-left:5px;opacity:.95}
+.broadcast-status{letter-spacing:.06em;white-space:nowrap;font-size:11px;background:#632c29;color:#fff;padding:3px 8px;border-radius:3px}
+.broadcast-status::before{content:'●';margin-right:5px;font-size:9px}
+.news-image-error{position:absolute;inset:15% 8% 28%;display:grid;place-items:center;margin:0;padding:14px;background:#f4eddd;color:#263b44;font-size:14px;line-height:1.7;text-align:center}
+.news-image-error[hidden]{display:none}
+.image-unavailable .news-image{visibility:hidden}
+.painted-face{position:relative;display:inline-block;width:100%;height:100%;aspect-ratio:1;overflow:hidden;border-radius:50%;background:#f4eddd;vertical-align:middle;isolation:isolate}
+.painted-face img{position:absolute;inset:0;width:300%;height:100%;max-width:none;object-fit:fill}
+.portrait-fallback{position:absolute;inset:0;display:grid;place-items:center;font-size:11px;color:#263b44;z-index:-1}
+.island-residents{padding:10px 12px 12px;background:#f4eddd;color:#263b44;text-align:center;font-size:11px;border-top:1px solid #c9c3b7}
+.portrait-line{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:3px;margin-top:8px}
+.portrait-line .painted-face{height:auto;border-radius:8px}
+.poster .scene-caption b{font-size:clamp(18px,4.5vw,28px)}
+.poster .scene-caption{padding-bottom:14px}
+.bulletin .ticker{white-space:normal;padding:8px 14px}
+.bulletin .ticker span{padding-left:0;animation:none;display:block}
 .refbar{position:relative;height:30px;border:2px solid var(--ink);border-radius:8px;display:flex;overflow:visible;background:var(--surface)}
 .refbar i{display:block;height:100%}
 .refbar i.y{background:var(--teal)} .refbar i.n{background:var(--stamp)}

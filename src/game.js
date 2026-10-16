@@ -178,128 +178,48 @@ const REG={
  eap:{name:'東亞生產主義福利體制',eg:'台灣、日本、南韓',d:'社會政策服務經濟發展，重視就業與產業，照顧責任大多由家庭承擔。這是 Holliday 在 Esping-Andersen 三分法之外補充的類型，常用來討論台灣。'}
 };
 // ---------- ART (picture-book gouache style) ----------
-function shade(hex,amt){const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;
-  const f=v=>Math.round(amt>=0?v+(255-v)*amt:v*(1+amt));return '#'+[f(r),f(g),f(b)].map(v=>Math.max(0,Math.min(255,v)).toString(16).padStart(2,'0')).join('')}
-const AV={
- ma:{bg:'#F6C99A',skin:'#F2C6A0',hair:'bun',hc:'#D9D4CE',shirt:'#8B6BB8'},
- chen:{bg:'#9FD3CF',skin:'#DDA77E',hair:'helmet',hc:'#23A08F',shirt:'#2A8F80'},
- ling:{bg:'#F5B5C8',skin:'#F3C9A5',hair:'long',hc:'#4A2E25',shirt:'#D9577F'},
- xiang:{bg:'#C9DE9C',skin:'#E8B990',hair:'short',hc:'#2A2522',shirt:'#3E6CB5',acc:'shades'},
- kevin:{bg:'#B8C7EE',skin:'#EFC39C',hair:'side',hc:'#2E2724',shirt:'#36406A',acc:'glasses'},
- wang:{bg:'#F4D98A',skin:'#DFAE86',hair:'bald',hc:'#6A625A',shirt:'#D9702F',acc:'glasses'},
- de:{bg:'#F8BFA0',skin:'#D29C72',hair:'cap',hc:'#3567B5',shirt:'#E2803A'},
- yuma:{bg:'#F7C3B4',skin:'#C99068',hair:'braid',hc:'#2A1F1C',shirt:'#B7353A'},
- liu:{bg:'#D8D2C0',skin:'#EBC29E',hair:'gray',hc:'#C9C6C0',shirt:'#7A5C44',acc:'glasses'},
- ati:{bg:'#D9C5F0',skin:'#BF8A64',hair:'hijab',hc:'#7D5CC2',shirt:'#6C4FB0'},
- zhen:{bg:'#A9E0CE',skin:'#F2CBA8',hair:'pony',hc:'#53372A',shirt:'#239A8A'}
+// Model-generated raster artwork. build.mjs embeds these assets in the Artifact edition.
+const ART_EMBEDDED = null;
+const artURL = file => ART_EMBEDDED?.[file] || `assets/${file}`;
+const NEWS_ART = {
+ e1:{place:'幼兒園與遊戲場',x:36,y:68,alt:'少子化情境：遊戲場空盪，一家人推著嬰兒車經過。'},
+ e2:{place:'工廠與商街',x:61,y:51,alt:'經濟衰退情境：工廠鐵門關閉，貨車與港口作業停歇。'},
+ e3:{place:'社區醫療站',x:80,y:49,alt:'疫情情境：診所外設臨時檢診棚，居民間隔排隊。'},
+ e4:{place:'工廠自動化現場',x:64,y:52,alt:'AI 失業潮情境：工廠內出現機械手臂，勞工在外討論。'},
+ e5:{place:'沿海道路',x:69,y:65,alt:'颱風情境：島上風雨強烈，沿海道路局部受損。'},
+ e6:{place:'社區據點與交通',x:51,y:57,alt:'超高齡情境：長者在社區據點相聚並等候公車。'},
+ e7:{place:'運輸與加油站',x:70,y:55,alt:'油價上漲情境：貨車與機車在加油站排隊。'},
+ e8:{place:'工廠與港口',x:75,y:51,alt:'景氣繁榮情境：工廠出貨增加，港口貨運與市集忙碌。'}
 };
-let FID=0;
-function face(id,mood=0,x,y,s){const a=AV[id],K='#3B2B28',u='f'+(FID++);
-  const m=mood>1.5?'happy':mood<-1?'sad':'flat';
-  const hl=shade(a.hc,.45),hd=shade(a.hc,-.3),st=`stroke="${K}" stroke-width="1.1" stroke-linejoin="round"`;
-  let back='',front='';
-  switch(a.hair){
-   case'bun':back=`<circle cx="32" cy="11" r="6.6" fill="url(#hr${u})" ${st}/>`;front=`<path d="M16.5 29 Q17 14 32 14.5 Q47 14 47.5 29 Q44 20 32 20.5 Q20 20 16.5 29Z" fill="url(#hr${u})" ${st}/><path d="M21 22 Q25 16.5 32 16 M34 16.2 Q41 17 44 22" stroke="${hl}" stroke-width="1" fill="none" opacity=".8"/>`;break;
-   case'helmet':front=`<path d="M14.5 29 Q14.5 9.5 32 9.5 Q49.5 9.5 49.5 29 L46 27.5 Q45 18 32 18 Q19 18 18 27.5Z" fill="url(#hr${u})" ${st}/><path d="M14 27 Q32 24 50 27" stroke="${hd}" stroke-width="3.4" stroke-linecap="round" fill="none"/><path d="M21 15 Q26 11.5 33 11.8" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".55"/>`;break;
-   case'long':back=`<path d="M14.5 30 Q13.5 12.5 32 12 Q50.5 12.5 49.5 30 L51 50 Q44 52 42 45 L22 45 Q20 52 13 50Z" fill="url(#hr${u})" ${st}/>`;front=`<path d="M17 29 Q18.5 14.5 32 14.5 Q45.5 14.5 47 29 Q40 18.5 28.5 21 Q21.5 23 17 29Z" fill="url(#hr${u})" ${st}/><path d="M22 21 Q28 16 36 16.5 M38 18 Q43 21 45 26" stroke="${hl}" stroke-width="1" fill="none" opacity=".7"/>`;break;
-   case'short':front=`<path d="M16.5 28 Q16.5 12 32 12 Q47.5 12 47.5 28 Q45 19 38 19.5 Q30 21.5 22 19.5 Q18 21 16.5 28Z" fill="url(#hr${u})" ${st}/><path d="M22 16 Q28 13.5 35 14" stroke="${hl}" stroke-width="1" fill="none" opacity=".7"/>`;break;
-   case'side':front=`<path d="M16.5 29 Q15.5 12 32 12 Q48.5 12 47.5 29 Q46 19 40 18 Q28 16.5 24 21 Q19 22 16.5 29Z" fill="url(#hr${u})" ${st}/><path d="M25 15.5 Q33 13 41 15.5" stroke="${hl}" stroke-width="1" fill="none" opacity=".7"/>`;break;
-   case'bald':front=`<path d="M16.5 32 Q16 22 20 19.5 L21.5 31Z M47.5 32 Q48 22 44 19.5 L42.5 31Z" fill="url(#hr${u})" ${st}/><ellipse cx="30" cy="17" rx="5" ry="2" fill="#fff" opacity=".35"/>`;break;
-   case'hijab':back=`<path d="M11 52 Q10.5 10 32 9.5 Q53.5 10 53 52 Q42 47 32 47 Q22 47 11 52Z" fill="url(#hr${u})" ${st}/>`;front=`<path d="M16.5 31 Q16.5 14.5 32 14.5 Q47.5 14.5 47.5 31 Q47 18.5 32 18.5 Q17 18.5 16.5 31Z" fill="url(#hr${u})" ${st}/><path d="M15 34 Q14 20 24 13" stroke="${hl}" stroke-width="1.4" fill="none" opacity=".6"/>`;break;
-   case'pony':back=`<path d="M44.5 17 Q57 21 53 40 Q49.5 31 45 27.5Z" fill="url(#hr${u})" ${st}/>`;front=`<path d="M16.5 28 Q16.5 12 32 12 Q47.5 12 47.5 28 Q44 18 32 19 Q22 19 16.5 28Z" fill="url(#hr${u})" ${st}/><path d="M22 17 Q28 13.5 36 14" stroke="${hl}" stroke-width="1" fill="none" opacity=".7"/><circle cx="45.5" cy="18.5" r="2.3" fill="#F5A3B8" ${st}/>`;break;
-   case'braid':back=`<path d="M17 30 Q15 13 32 12.5 Q49 13 47 30 L48 38 Q44 34 44 30 L20 30 Q20 34 16 38Z" fill="url(#hr${u})" ${st}/><path d="M46 30 Q52 40 49 54" stroke="${a.hc}" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M47 36 l3 1 M47.5 42 l3 1 M48 48 l3 1" stroke="${hl}" stroke-width="1"/>`;front=`<path d="M17 28 Q18 15 32 14.5 Q46 15 47 28 Q42 20 32 20.5 Q22 20 17 28Z" fill="url(#hr${u})" ${st}/><path d="M16.2 23.5 Q32 18.5 47.8 23.5 L47.6 27 Q32 22 16.4 27Z" fill="#C9363B" ${st}/><path d="M20 24.4 l3 -1.6 l3 1.6 l3 -1.6 l3 1.6 l3 -1.6 l3 1.6 l3 -1.6 l3 1.6" stroke="#F6E3B4" stroke-width="1" fill="none"/>`;break;
-   case'gray':front=`<path d="M16.5 30 Q15.5 13 32 12.5 Q48.5 13 47.5 30 Q47 21 42 18.5 Q34 15.5 26 17.5 Q19 20 16.5 30Z" fill="url(#hr${u})" ${st}/><path d="M24 16.5 Q32 13.8 41 16.4 M26 19 Q33 17 40 18.6" stroke="#fff" stroke-width="1" fill="none" opacity=".7"/><path d="M24 40 Q32 44 40 40" stroke="${shade(a.skin,-.3)}" stroke-width=".9" fill="none" opacity=".6"/><path d="M20 33 q2 2 4 1 M44 33 q-2 2 -4 1" stroke="${shade(a.skin,-.3)}" stroke-width=".8" fill="none" opacity=".6"/>`;break;
-   case'cap':front=`<path d="M16 27 Q16 11 32 11 Q48 11 48 27 Z" fill="url(#hr${u})" ${st}/><path d="M14 26 Q32 21 54 25 Q55 29 50 29 Q32 26 14 30Z" fill="${hd}" ${st}/><path d="M22 15.5 Q27 12.8 32 13" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".5"/>`;break;
-  }
-  const eyeW=`fill="#2B1E1C"`;
-  let eyes=`<ellipse cx="26.5" cy="30.5" rx="1.9" ry="2.5" ${eyeW}/><ellipse cx="37.5" cy="30.5" rx="1.9" ry="2.5" ${eyeW}/><circle cx="27.1" cy="29.6" r=".7" fill="#fff"/><circle cx="38.1" cy="29.6" r=".7" fill="#fff"/>`;
-  if(m==='happy')eyes=`<path d="M24.2 31 Q26.5 28 28.8 31 M35.2 31 Q37.5 28 39.8 31" stroke="#2B1E1C" stroke-width="1.8" fill="none" stroke-linecap="round"/>`;
-  if(m==='sad')eyes=`<ellipse cx="26.5" cy="31" rx="1.7" ry="2" ${eyeW}/><ellipse cx="37.5" cy="31" rx="1.7" ry="2" ${eyeW}/><circle cx="27" cy="30.4" r=".6" fill="#fff"/><circle cx="38" cy="30.4" r=".6" fill="#fff"/>`;
-  if(a.acc==='shades')eyes=`<rect x="21" y="27" width="10" height="7" rx="3" fill="#222"/><rect x="33" y="27" width="10" height="7" rx="3" fill="#222"/><path d="M31 29.5 H33" stroke="#222" stroke-width="1.6"/><path d="M22.5 28.6 l3 -0.6 M34.5 28.6 l3 -0.6" stroke="#fff" stroke-width="1" opacity=".55"/>`;
-  if(a.acc==='glasses')eyes+=`<rect x="21.4" y="26" width="10.2" height="8.6" rx="3.6" fill="#E8F2FF" fill-opacity=".22" stroke="#4A3A36" stroke-width="1.3"/><rect x="32.4" y="26" width="10.2" height="8.6" rx="3.6" fill="#E8F2FF" fill-opacity=".22" stroke="#4A3A36" stroke-width="1.3"/><path d="M31.6 29.6 H32.4" stroke="#4A3A36" stroke-width="1.3"/>`;
-  const brow=m==='sad'?`<path d="M23 25.2 L28.5 26.8 M41 25.2 L35.5 26.8" stroke="${shade(a.hc,-.2)}" stroke-width="1.6" stroke-linecap="round"/>`:`<path d="M23.5 25.4 Q26.5 24 29 25.4 M35 25.4 Q37.5 24 40.5 25.4" stroke="${shade(a.hc==='#D9D4CE'?'#9A928A':a.hc,0)}" stroke-width="1.4" fill="none" stroke-linecap="round" opacity=".85"/>`;
-  const mouth=m==='happy'?`<path d="M26.8 36.6 Q32 43.2 37.2 36.6 Q32 38.4 26.8 36.6Z" fill="#A8433F" stroke="#5A2A26" stroke-width=".9"/><path d="M29.5 39.8 Q32 41.2 34.5 39.8" stroke="#F2928C" stroke-width="1.3" fill="none"/>`:m==='sad'?`<path d="M28 40.4 Q32 36.8 36 40.4" stroke="#5A2A26" stroke-width="1.6" fill="none" stroke-linecap="round"/>`:`<path d="M28.6 38.3 Q32 39.8 35.4 38.3" stroke="#5A2A26" stroke-width="1.6" fill="none" stroke-linecap="round"/>`;
-  const sweat=m==='sad'?`<path d="M47.3 19 Q50 24 47.3 26.6 Q44.6 24 47.3 19Z" fill="#8FD0F2" stroke="#4A8FB8" stroke-width=".8"/>`:'';
-  const pos=s?`x="${x}" y="${y}" width="${s}" height="${s}"`:'';
-  return `<svg ${pos} viewBox="-1 -1 66 66" aria-hidden="true"><defs>
-   <radialGradient id="bg${u}" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="${shade(a.bg,.55)}"/><stop offset="1" stop-color="${a.bg}"/></radialGradient>
-   <radialGradient id="sk${u}" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="${shade(a.skin,.25)}"/><stop offset=".7" stop-color="${a.skin}"/><stop offset="1" stop-color="${shade(a.skin,-.18)}"/></radialGradient>
-   <linearGradient id="hr${u}" x1="0" y1="0" x2=".3" y2="1"><stop offset="0" stop-color="${shade(a.hc,.25)}"/><stop offset=".6" stop-color="${a.hc}"/><stop offset="1" stop-color="${hd}"/></linearGradient>
-   <linearGradient id="sh${u}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${shade(a.shirt,.25)}"/><stop offset="1" stop-color="${shade(a.shirt,-.25)}"/></linearGradient>
-   <radialGradient id="bl${u}"><stop offset="0" stop-color="#F28C9A" stop-opacity="${m==='happy'?.7:.4}"/><stop offset="1" stop-color="#F28C9A" stop-opacity="0"/></radialGradient>
-   <clipPath id="c${u}"><circle cx="32" cy="32" r="31"/></clipPath></defs>
-   <g clip-path="url(#c${u})"><circle cx="32" cy="32" r="31" fill="url(#bg${u})"/>
-    <g filter="url(#rough)" opacity=".5"><circle cx="12" cy="14" r="9" fill="#fff" opacity=".35"/><circle cx="54" cy="44" r="12" fill="${shade(a.bg,-.12)}" opacity=".6"/></g>
-    ${back}<path d="M8 68 Q10 48 32 47 Q54 48 56 68Z" fill="url(#sh${u})" ${st}/><path d="M26 47.5 L32 54 L38 47.5" fill="${shade(a.shirt,.35)}" stroke="${K}" stroke-width="1" stroke-linejoin="round"/>
-    <path d="M27.5 40 H36.5 V49 Q32 51.5 27.5 49Z" fill="${shade(a.skin,-.08)}" ${st}/><path d="M27.5 41 Q32 46 36.5 41 V40 H27.5Z" fill="${shade(a.skin,-.3)}" opacity=".45"/>
-    <ellipse cx="16.8" cy="31.5" rx="2.6" ry="3.6" fill="${shade(a.skin,-.05)}" ${st}/><ellipse cx="47.2" cy="31.5" rx="2.6" ry="3.6" fill="${shade(a.skin,-.05)}" ${st}/>
-    <ellipse cx="32" cy="30.5" rx="15" ry="16.5" fill="url(#sk${u})" ${st}/>
-    <ellipse cx="22.6" cy="35.4" rx="4" ry="2.8" fill="url(#bl${u})"/><ellipse cx="41.4" cy="35.4" rx="4" ry="2.8" fill="url(#bl${u})"/>
-    ${front}${brow}${eyes}<path d="M32.4 31.8 Q31 34.6 32.8 35.1" stroke="${shade(a.skin,-.35)}" stroke-width="1.3" fill="none" stroke-linecap="round"/>${mouth}${sweat}</g>
-   <circle cx="32" cy="32" r="31" fill="none" stroke="${K}" stroke-width="1.6"/></svg>`}
+function face(id,mood=0){
+ const c=CIT.find(c=>c.id===id);if(!c)return '';
+ const frame=mood>1.5?0:mood<-1?2:1,label=['開心','平靜','擔憂'][frame];
+ return `<span class="painted-face" role="img" aria-label="${c.name}，${label}"><span class="portrait-fallback" aria-hidden="true">${c.name.slice(0,2)}</span><img src="${artURL(`characters/${id}-expressions.webp`)}" alt="" width="780" height="260" style="transform:translateX(-${frame*100/3}%)"></span>`;
+}
+function landscape(key='hero',withFaces=false){
+ const a=NEWS_ART[key],id=a?key:'hero';
+ return `<figure class="news-scene ${a?'is-closeup event-scene':''}" data-event="${id}" style="--focus-x:${a?.x||50}%;--focus-y:${a?.y||50}%">
+  <div class="scene-frame"><img class="news-image" src="${artURL(`scenes/news/${id}.webp`)}" width="1200" height="662" alt="${a?a.alt:'水粉插畫福利島：山丘、聚落、社區據點與海灣。'}">
+   <p class="news-image-error" hidden>場景圖片暫時無法載入，請閱讀下方新聞內容。</p>
+   <div class="scene-caption"><span>${a?'現場焦點':'WELFARE ISLAND'}</span><b>${a?a.place:'生活在同一座島上'}</b></div>
+  </div>
+  ${a?`<figcaption class="scene-tools"><span>事件情境示意</span><div role="group" aria-label="新聞鏡頭"><button type="button" data-news-view="close" aria-pressed="true">現場特寫</button><button type="button" data-news-view="wide" aria-pressed="false">全島</button></div></figcaption>`:''}
+  ${withFaces?`<figcaption class="island-residents"><span>11 位島民 · 11 種生活處境</span><div class="portrait-line">${CIT.map(c=>face(c.id,0)).join('')}</div></figcaption>`:''}
+ </figure>`;
+}
+if(typeof document!=='undefined'){
+ document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-news-view]');if(!b)return;
+  const scene=b.closest('.news-scene');scene.classList.toggle('is-closeup',b.dataset.newsView==='close');
+  scene.querySelectorAll('[data-news-view]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+ });
+ document.addEventListener('error',e=>{
+  const img=e.target;if(!(img instanceof HTMLImageElement))return;
+  if(img.classList.contains('news-image')){const scene=img.closest('.news-scene');scene.classList.add('image-unavailable');scene.querySelector('.news-image-error').hidden=false;}
+  else if(img.closest('.painted-face'))img.hidden=true;
+ },true);
+}
 
-const SCENE={
- hero:{sky:['#9ED3EC','#FCE7C8'],sun:'#FFD27A',weather:''},
- e1:{sky:['#BFE0F2','#FDF0DC'],sun:'#FFDB8A',weather:'kites'},
- e2:{sky:['#9AA6B5','#D7D9DA'],sun:null,weather:'gloom'},
- e3:{sky:['#C9D9DC','#EEF1E6'],sun:'#F3E4B8',weather:'haze'},
- e4:{sky:['#1E2550','#5B4A8A'],sun:null,weather:'night'},
- e5:{sky:['#4A5868','#8D99A3'],sun:null,weather:'storm'},
- e6:{sky:['#F2A877','#FCE0B8'],sun:'#FF9D5C',weather:''},
- e7:{sky:['#C9A97E','#EAD9B8'],sun:'#E8A54E',weather:'smog'},
- e8:{sky:['#7FC8EE','#FFF1C9'],sun:'#FFD24D',weather:'fireworks'},
- ref:{sky:['#A9D8F0','#FFF0D6'],sun:'#FFD27A',weather:'flags'},
- demo:{sky:['#F7B985','#FDE6C6'],sun:'#FF9F64',weather:''}
-};
-function landscape(key='hero',withFaces=false){const sc=SCENE[key]||SCENE.hero,u='ls'+(FID++),H=withFaces?310:230,night=sc.weather==='night';
-  const dark=['gloom','storm','night'].includes(sc.weather);
-  const win=night?'#FFD66B':'#FFE7A3';
-  const clouds=(c,o)=>`<g filter="url(#rough)" fill="${c}" opacity="${o}"><ellipse cx="70" cy="52" rx="34" ry="12"/><ellipse cx="92" cy="44" rx="22" ry="12"/><ellipse cx="54" cy="46" rx="16" ry="9"/><ellipse cx="236" cy="34" rx="30" ry="10"/><ellipse cx="256" cy="28" rx="18" ry="10"/></g>`;
-  let wx='';
-  if(sc.weather==='storm')wx=`${clouds('#3B4552',.85)}<g stroke="#D7E3EE" stroke-width="1.2" opacity=".55">${Array.from({length:46},(_,i)=>{const x=(i*37)%400,y=(i*53)%190;return `<path d="M${x} ${y} l-6 14"/>`}).join('')}</g><path d="M300 30 l-12 26 h10 l-14 30" stroke="#FFF2A8" stroke-width="3" fill="none" stroke-linejoin="round"/>`;
-  else if(sc.weather==='gloom')wx=clouds('#7B8794',.8);
-  else if(sc.weather==='haze')wx=`<rect width="400" height="${H}" fill="#E8F0E8" opacity=".35"/>${clouds('#fff',.6)}`;
-  else if(sc.weather==='smog')wx=`<rect y="60" width="400" height="120" fill="#B48A5A" opacity=".22" filter="url(#rough)"/><g fill="#7A6450" opacity=".5"><ellipse cx="330" cy="96" rx="18" ry="9"/><ellipse cx="342" cy="80" rx="13" ry="8"/></g><rect x="322" y="104" width="10" height="34" fill="#6E6258"/>`;
-  else if(sc.weather==='night')wx=`<g fill="#fff">${Array.from({length:28},(_,i)=>`<circle cx="${(i*71)%400}" cy="${(i*29)%90+8}" r="${i%4===0?1.4:.8}" opacity="${.5+(i%3)*.2}"/>`).join('')}</g><circle cx="320" cy="44" r="16" fill="#F4EBC8"/><circle cx="327" cy="40" r="14" fill="${sc.sky[0]}"/><g fill="#8FE3FF" opacity=".7"><rect x="48" y="96" width="5" height="40"/><rect x="58" y="86" width="6" height="50"/><rect x="69" y="100" width="5" height="36"/></g>`;
-  else if(sc.weather==='fireworks')wx=`<g stroke-width="2" stroke-linecap="round">${[[90,46,'#FF6B8B'],[300,40,'#FFB13D'],[200,26,'#5BC0EB']].map(([cx,cy,c])=>Array.from({length:12},(_,i)=>{const a=i/12*6.283;return `<path d="M${cx+Math.cos(a)*6} ${cy+Math.sin(a)*6} L${cx+Math.cos(a)*16} ${cy+Math.sin(a)*16}" stroke="${c}"/>`}).join('')).join('')}</g>${clouds('#fff',.5)}`;
-  else if(sc.weather==='kites')wx=`${clouds('#fff',.75)}<g stroke="#3B2B28" stroke-width="1"><path d="M110 40 l10 -10 l10 10 l-10 14z" fill="#FF8FA3"/><path d="M120 54 q-6 30 10 60" fill="none" opacity=".5"/><path d="M286 56 l8 -8 l8 8 l-8 11z" fill="#7CC4F0"/><path d="M294 67 q8 24 -4 50" fill="none" opacity=".5"/></g>`;
-  else if(sc.weather==='flags')wx=`${clouds('#fff',.75)}<path d="M0 30 Q100 50 200 34 T400 40" stroke="#3B2B28" stroke-width="1" fill="none"/>${Array.from({length:14},(_,i)=>{const x=10+i*29,y=33+Math.sin(i)*6;return `<path d="M${x} ${y} l9 0 l-4.5 12z" fill="${['#FF6B8B','#FFC24A','#4FB3A9','#5B8DEF'][i%4]}"/>`}).join('')}`;
-  else wx=clouds('#fff',.8);
-  const faces=withFaces?`<rect x="0" y="232" width="400" height="78" fill="#FFF8EC"/><path d="M0 232 Q200 222 400 232" stroke="#3B2B28" stroke-width="1.6" fill="#FFF8EC"/>${CIT.map((c,i)=>face(c.id,i%3===1?0:2,4+i*35.6,246,34)).join('')}`:'';
-  return `<svg viewBox="0 0 400 ${H}" role="img" aria-label="福利島風景插畫" preserveAspectRatio="xMidYMid slice"><defs>
-   <linearGradient id="sky${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sc.sky[0]}"/><stop offset="1" stop-color="${sc.sky[1]}"/></linearGradient>
-   <linearGradient id="sea${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark?'#5A7E92':'#6FBFD9'}"/><stop offset="1" stop-color="${dark?'#2A4456':'#2E7FA8'}"/></linearGradient>
-   <linearGradient id="gr${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark?'#7FA57A':'#A6D67E'}"/><stop offset="1" stop-color="${dark?'#456E50':'#4E9C5C'}"/></linearGradient>
-   <radialGradient id="glow${u}"><stop offset="0" stop-color="${sc.sun||'#fff'}" stop-opacity=".9"/><stop offset="1" stop-color="${sc.sun||'#fff'}" stop-opacity="0"/></radialGradient>
-   <radialGradient id="tree${u}" cx=".35" cy=".3"><stop offset="0" stop-color="${dark?'#7FAE76':'#9BD27A'}"/><stop offset="1" stop-color="${dark?'#2F5A3E':'#3E8A4E'}"/></radialGradient></defs>
-   <rect width="400" height="${H}" fill="url(#sky${u})"/>
-   ${sc.sun?`<circle cx="312" cy="70" r="70" fill="url(#glow${u})"/><circle cx="312" cy="70" r="24" fill="${sc.sun}"/>`:''}
-   ${wx}
-   <path d="M0 132 Q40 104 86 118 Q120 96 160 116 Q210 98 250 120 Q300 104 340 118 Q372 108 400 120 V150 H0Z" fill="${dark?'#6C7E8C':'#9DBFD3'}" opacity=".75" filter="url(#rough)"/>
-   <rect y="136" width="400" height="${H-136}" fill="url(#sea${u})"/>
-   <g stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity="${dark?.25:.55}"><path d="M20 168 h18 M70 196 h24 M330 180 h20 M360 206 h16 M280 214 h22 M40 220 h14"/></g>
-   <g transform="translate(330 150)"><path d="M0 14 h34 l-6 8 h-22z" fill="#C9583F" stroke="#3B2B28" stroke-width="1.2"/><path d="M16 14 V-14 L32 10Z" fill="#FFF6E6" stroke="#3B2B28" stroke-width="1.2"/></g>
-   <path d="M40 186 Q70 120 140 124 Q176 86 236 104 Q300 96 346 160 Q360 184 320 190 Q200 202 62 196Z" fill="url(#gr${u})" stroke="#3B2B28" stroke-width="1.4" filter="url(#rough)"/>
-   <path d="M48 190 Q200 204 334 186 Q336 196 300 200 Q200 210 70 202Z" fill="#F2DDB0" stroke="#3B2B28" stroke-width="1.1"/>
-   <path d="M236 104 Q300 96 346 160 Q300 150 260 132Z" fill="#2E6B45" opacity=".22"/>
-   ${[[78,170,13],[96,160,10],[300,150,12],[318,162,9],[220,120,11]].map(([x,y,r])=>`<rect x="${x-1.5}" y="${y}" width="3" height="${r}" fill="#6B4A32"/><circle cx="${x}" cy="${y-r*.4}" r="${r}" fill="url(#tree${u})" stroke="#3B2B28" stroke-width="1"/>`).join('')}
-   <g stroke="#3B2B28" stroke-width="1.2" stroke-linejoin="round">
-    <path d="M118 150 h26 v22 h-26z" fill="#FFF3DF"/><path d="M114 151 l17 -14 l17 14z" fill="#E0704A"/><rect x="124" y="156" width="6" height="6" fill="${win}"/><rect x="134" y="156" width="6" height="6" fill="${win}"/>
-    <path d="M152 140 h22 v32 h-22z" fill="#FFF8EC"/><path d="M149 141 l14 -12 l14 12z" fill="#4E7BC4"/><rect x="158" y="148" width="5" height="6" fill="${win}"/><rect x="166" y="148" width="5" height="6" fill="${win}"/><rect x="161" y="160" width="6" height="12" fill="#8A5A3A"/>
-    <path d="M250 146 h30 v26 h-30z" fill="#FFF3DF"/><path d="M245 147 l20 -16 l20 16z" fill="#8E6CC9"/><rect x="258" y="157" width="8" height="15" fill="#8A5A3A"/>
-    <path d="M200 132 h28 v40 h-28z" fill="#FFFDF6"/><path d="M196 133 h36 v-8 h-36z" fill="#F2B544"/><text x="214" y="153" text-anchor="middle" font-size="9" font-weight="900" fill="#3B2B28" stroke="none" font-family="Noto Serif TC,serif">投票所</text><rect x="209" y="160" width="10" height="12" fill="#8A5A3A"/>
-    <path d="M226 96 V126" /><g transform="translate(240 102) rotate(-8)"><circle r="11" fill="#FFFDF6" stroke="#D23B3B" stroke-width="2.6"/><text y="5" text-anchor="middle" font-size="13" fill="#D23B3B" stroke="none" font-weight="900" font-family="Noto Sans TC,sans-serif">卜</text></g>
-    <path d="M344 120 l6 -40 h8 l6 40z" fill="#FFF8EC"/><path d="M346 108 h16 M348 94 h12" stroke="#D84A4A" stroke-width="5"/><rect x="348" y="72" width="12" height="9" fill="#FFE59A"/>
-   </g>
-   <g stroke="#3B2B28" stroke-width="1.1" fill="none" opacity=".7"><path d="M120 70 q4 -4 8 0 q4 -4 8 0"/><path d="M150 84 q3 -3 6 0 q3 -3 6 0"/></g>
-   ${faces}
-   <rect width="400" height="${H}" filter="url(#tex)" opacity=".5" style="mix-blend-mode:multiply"/>
-  </svg>`}
-const ART_DEFS=`<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
- <filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter>
- <filter id="tex" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="8"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .25  0 0 0 0 .15  0 0 0 .35 0"/></filter>
-</defs></svg>`;
-if(typeof document!=='undefined')document.body.insertAdjacentHTML('afterbegin',ART_DEFS);
 // ---------- STATE ----------
 const ME=0;
 const NP=6,GS=[0,1,2,3,4,5],RIV=[1,2,3,4,5];
@@ -515,8 +435,8 @@ function rNews(st){const e=S.event?ev():null,last=S.history[S.history.length-1];
    ${last?paper(last):''}
    <div class="news"><div class="wheelwrap"><svg class="pointer" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 32 L3 10 Q3 2 15 2 Q27 2 27 10Z" fill="var(--stamp)" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="15" cy="11" r="3.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/></svg>${wheelSVG()}</div>
    ${S.round>0?thermo():''}
-   <div class="bulletin"><div class="bar"><span>福利島新聞台</span><span class="live">LIVE</span></div><div class="vign">${landscape(e?e.id:'hero')}</div><div class="body">
-   ${e?`<div class="headline">${e.name}</div><p>${e.d}</p><div class="fx">${e.fxt.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
+   <div class="bulletin" id="news-bulletin"><div class="bar"><span>福利島新聞台 <small>第 ${S.round+1} 屆</small></span><span class="broadcast-status">${e?'事件快報':'待播'}</span></div><div class="vign">${landscape(e?e.id:'hero')}</div><div class="body">
+   ${e?`<div class="headline" role="status" aria-live="polite">${e.name}</div><p>${e.d}</p><div class="fx">${e.fxt.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
      <p class="small muted">想一想：這則新聞讓誰的處境變差了？你的政見要怎麼回應？</p>`
      :`<div class="headline muted">今天會發生什麼事？</div><p class="muted">每屆一則重大事件，會改變稅收和島民的需要。轉過的事件不會再出現。</p>`}
    </div><div class="ticker"><span>國債 ${r1(S.debt)}，破產紅線 ${DEBT_LINE}　·　目前實施 ${S.enacted.length} 項福利方案　·　移工阿蒂在島上工作第 6 年，仍沒有投票權</span></div></div></div>
@@ -694,12 +614,22 @@ addEventListener('scroll',()=>hideTip(),{passive:true,capture:true});
 
 // ---------- ACTIONS ----------
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function spin(){const pool=EVENTS.filter(e=>!S.used.includes(e.id)),src=pool.length?pool:EVENTS,pick=src[Math.floor(Math.random()*src.length)],i=EVENTS.indexOf(pick);
-  const c=i*45+22.5,cur=((S.rot%360)+360)%360,target=S.rot+360*5+((360-c)-cur+720)%360;
-  const g=$('wheelg'),btn=$('spinbtn');if(btn)btn.disabled=true;
-  S.rot=target;const done=()=>{S.event=pick.id;S.used.push(pick.id);S.povShock=r1(S.povShock*.5+(pick.pov||0));buzz(25);render()};
-  if(!g||matchMedia('(prefers-reduced-motion: reduce)').matches){done();return}
-  g.style.transform=`rotate(${target}deg)`;setTimeout(done,3500)}
+let newsSpinning=false;
+function spin(){
+ if(newsSpinning||S.phase!=='news'||S.event)return;
+ const pool=EVENTS.filter(e=>!S.used.includes(e.id)),src=pool.length?pool:EVENTS,pick=src[Math.floor(Math.random()*src.length)],i=EVENTS.indexOf(pick);
+ const c=i*45+22.5,cur=((S.rot%360)+360)%360,target=S.rot+360*5+((360-c)-cur+720)%360;
+ const g=$('wheelg'),btn=$('spinbtn'),round=S.round;newsSpinning=true;if(btn)btn.disabled=true;
+ const status=document.querySelector('.broadcast-status');if(status)status.textContent='連線中';
+ const preload=new Image();preload.src=artURL('scenes/news/'+pick.id+'.webp');
+ S.rot=target;
+ const done=()=>{newsSpinning=false;if(S.phase!=='news'||S.round!==round)return;
+  S.event=pick.id;S.used.push(pick.id);S.povShock=r1(S.povShock*.5+(pick.pov||0));buzz(25);render();
+  $('news-bulletin')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
+ };
+ if(!g||matchMedia('(prefers-reduced-motion: reduce)').matches){done();return}
+ g.style.transform=`rotate(${target}deg)`;setTimeout(done,3500);
+}
 function confirmGov(){const v=VOTES||votes(),gov=v.pct.indexOf(Math.max(...v.pct)),ms=GS.map(money),pl=S.platforms[gov];
   S.lastProbs=v.probs;S.history.push({round:S.round,event:S.event,platforms:JSON.parse(JSON.stringify(S.platforms)),sats:v.sats,pct:v.pct,bals:ms.map(m=>m.bal),gov});
   const once=pl.add.filter(id=>P[id].once);S.onceUsed.push(...once);

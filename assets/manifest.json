@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "福利島大選素材清單。新增素材時在 assets 陣列加一筆。",
   "fields": {
     "file": "相對於 assets/ 的路徑",
@@ -273,7 +273,7 @@
     {
       "file": "characters/ma-expressions.webp",
       "use": "模型繪製角色三表情圖集",
-      "replaces": "v0.3 art-preview only; formal game integration pending",
+      "replaces": "face() in game plus art-preview",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -284,7 +284,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-branch-pending-merge",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v03.md; export only resized/encoded",
       "bytes": 66618,
       "frames": {
@@ -302,7 +302,7 @@
     {
       "file": "characters/ati-expressions.webp",
       "use": "模型繪製角色三表情圖集",
-      "replaces": "v0.3 art-preview only; formal game integration pending",
+      "replaces": "face() in game plus art-preview",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -313,7 +313,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-branch-pending-merge",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v03.md; export only resized/encoded",
       "bytes": 59346,
       "frames": {
@@ -365,7 +365,7 @@
     {
       "file": "characters/chen-expressions.webp",
       "use": "小陳三表情模型插畫",
-      "replaces": "face('chen', score) integration pending; art-preview only",
+      "replaces": "face() in game plus art-preview",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -376,7 +376,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-branch-pending-merge",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 71288,
       "frames": {
@@ -394,7 +394,7 @@
     {
       "file": "characters/ling-expressions.webp",
       "use": "美玲三表情模型插畫",
-      "replaces": "face('ling', score) integration pending; art-preview only",
+      "replaces": "face() in game plus art-preview",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -405,7 +405,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-branch-pending-merge",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 62676,
       "frames": {
@@ -423,7 +423,7 @@
     {
       "file": "characters/xiang-expressions.webp",
       "use": "宇翔三表情模型插畫",
-      "replaces": "face('xiang', score) integration pending; art-preview only",
+      "replaces": "face() in game plus art-preview",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -434,7 +434,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-branch-pending-merge",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 67020,
       "frames": {
@@ -452,7 +452,7 @@
     {
       "file": "characters/kevin-expressions.webp",
       "use": "Kevin三表情模型插畫",
-      "replaces": "face('kevin', score) integration pending; art-preview only",
+      "replaces": "face() in game plus art-preview",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -463,7 +463,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-branch-pending-merge",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 61608,
       "frames": {
@@ -481,7 +481,7 @@
     {
       "file": "characters/wang-expressions.webp",
       "use": "王董三表情模型插畫",
-      "replaces": "face('wang', score) integration pending; art-preview only",
+      "replaces": "face() in game plus art-preview",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -492,7 +492,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-branch-pending-merge",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 71116,
       "frames": {
@@ -510,7 +510,7 @@
     {
       "file": "characters/de-expressions.webp",
       "use": "阿德三表情模型插畫",
-      "replaces": "face('de', score) integration pending; art-preview only",
+      "replaces": "face() in game plus art-preview",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -521,7 +521,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-branch-pending-merge",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 66208,
       "frames": {
@@ -539,7 +539,7 @@
     {
       "file": "characters/yuma-expressions.webp",
       "use": "尤瑪三表情模型插畫",
-      "replaces": "face('yuma', score) integration pending; art-preview only",
+      "replaces": "face() in game plus art-preview",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -550,7 +550,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-branch-pending-merge",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 66168,
       "frames": {
@@ -568,7 +568,7 @@
     {
       "file": "characters/liu-expressions.webp",
       "use": "劉伯伯三表情模型插畫",
-      "replaces": "face('liu', score) integration pending; art-preview only",
+      "replaces": "face() in game plus art-preview",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -579,7 +579,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-branch-pending-merge",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 74560,
       "frames": {
@@ -597,7 +597,7 @@
     {
       "file": "characters/zhen-expressions.webp",
       "use": "小禎三表情模型插畫",
-      "replaces": "face('zhen', score) integration pending; art-preview only",
+      "replaces": "face() in game plus art-preview",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -608,7 +608,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-branch-pending-merge",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 80028,
       "frames": {
@@ -622,6 +622,132 @@
           "upset"
         ]
       }
+    },
+    {
+      "id": "news-hero",
+      "file": "scenes/news/hero.webp",
+      "use": "日常福利島新聞場景",
+      "replaces": "landscape / rNews",
+      "size": "1200x662",
+      "format": "webp",
+      "transparent": false,
+      "author": "Codex / built-in imagegen",
+      "version": "0.5.0",
+      "status": "integrated-branch-pending-merge",
+      "source": "Built-in imagegen edit from same island reference; docs/art-prompts-v05.md; resize/encode only",
+      "bytes": 232368
+    },
+    {
+      "id": "news-e1",
+      "file": "scenes/news/e1.webp",
+      "use": "少子化新聞場景",
+      "replaces": "landscape / rNews",
+      "size": "1200x662",
+      "format": "webp",
+      "transparent": false,
+      "author": "Codex / built-in imagegen",
+      "version": "0.5.0",
+      "status": "integrated-branch-pending-merge",
+      "source": "Built-in imagegen edit from same island reference; docs/art-prompts-v05.md; resize/encode only",
+      "bytes": 225562
+    },
+    {
+      "id": "news-e2",
+      "file": "scenes/news/e2.webp",
+      "use": "經濟衰退新聞場景",
+      "replaces": "landscape / rNews",
+      "size": "1200x662",
+      "format": "webp",
+      "transparent": false,
+      "author": "Codex / built-in imagegen",
+      "version": "0.5.0",
+      "status": "integrated-branch-pending-merge",
+      "source": "Built-in imagegen edit from same island reference; docs/art-prompts-v05.md; resize/encode only",
+      "bytes": 232098
+    },
+    {
+      "id": "news-e3",
+      "file": "scenes/news/e3.webp",
+      "use": "疫情新聞場景",
+      "replaces": "landscape / rNews",
+      "size": "1200x662",
+      "format": "webp",
+      "transparent": false,
+      "author": "Codex / built-in imagegen",
+      "version": "0.5.0",
+      "status": "integrated-branch-pending-merge",
+      "source": "Built-in imagegen edit from same island reference; docs/art-prompts-v05.md; resize/encode only",
+      "bytes": 229452
+    },
+    {
+      "id": "news-e4",
+      "file": "scenes/news/e4.webp",
+      "use": "AI 失業潮新聞場景",
+      "replaces": "landscape / rNews",
+      "size": "1200x662",
+      "format": "webp",
+      "transparent": false,
+      "author": "Codex / built-in imagegen",
+      "version": "0.5.0",
+      "status": "integrated-branch-pending-merge",
+      "source": "Built-in imagegen edit from same island reference; docs/art-prompts-v05.md; resize/encode only",
+      "bytes": 256610
+    },
+    {
+      "id": "news-e5",
+      "file": "scenes/news/e5.webp",
+      "use": "颱風新聞場景",
+      "replaces": "landscape / rNews",
+      "size": "1200x662",
+      "format": "webp",
+      "transparent": false,
+      "author": "Codex / built-in imagegen",
+      "version": "0.5.0",
+      "status": "integrated-branch-pending-merge",
+      "source": "Built-in imagegen edit from same island reference; docs/art-prompts-v05.md; resize/encode only",
+      "bytes": 319360
+    },
+    {
+      "id": "news-e6",
+      "file": "scenes/news/e6.webp",
+      "use": "超高齡新聞場景",
+      "replaces": "landscape / rNews",
+      "size": "1200x662",
+      "format": "webp",
+      "transparent": false,
+      "author": "Codex / built-in imagegen",
+      "version": "0.5.0",
+      "status": "integrated-branch-pending-merge",
+      "source": "Built-in imagegen edit from same island reference; docs/art-prompts-v05.md; resize/encode only",
+      "bytes": 274440
+    },
+    {
+      "id": "news-e7",
+      "file": "scenes/news/e7.webp",
+      "use": "油價上漲新聞場景",
+      "replaces": "landscape / rNews",
+      "size": "1200x662",
+      "format": "webp",
+      "transparent": false,
+      "author": "Codex / built-in imagegen",
+      "version": "0.5.0",
+      "status": "integrated-branch-pending-merge",
+      "source": "Built-in imagegen edit from same island reference; docs/art-prompts-v05.md; resize/encode only",
+      "bytes": 215878
+    },
+    {
+      "id": "news-e8",
+      "file": "scenes/news/e8.webp",
+      "use": "景氣繁榮新聞場景",
+      "replaces": "landscape / rNews",
+      "size": "1200x662",
+      "format": "webp",
+      "transparent": false,
+      "author": "Codex / built-in imagegen",
+      "version": "0.5.0",
+      "status": "integrated-branch-pending-merge",
+      "source": "Built-in imagegen edit from same island reference; docs/art-prompts-v05.md; resize/encode only",
+      "bytes": 252322
     }
   ]
 }

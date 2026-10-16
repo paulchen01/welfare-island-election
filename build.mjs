@@ -18,6 +18,13 @@ const css = read('src/styles.css');
 const js = read('src/game.js');
 const body = read('src/body.html');
 
+// Artifact is distributed as one HTML fragment; embed only the raster assets used by game.js.
+const artFiles = JSON.parse(read('assets/manifest.json')).assets
+  .filter(a => a.file.startsWith('characters/') || a.file.startsWith('scenes/news/'));
+const embeddedArt = Object.fromEntries(artFiles.map(a => [a.file,
+  `data:image/webp;base64,${readFileSync(join(root, 'assets', a.file)).toString('base64')}`]));
+const artifactJS = js.replace('const ART_EMBEDDED = null;', `const ART_EMBEDDED = ${JSON.stringify(embeddedArt)};`);
+
 const FONTS = 'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@900&family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap';
 
 const artifact =
@@ -29,7 +36,7 @@ const artifact =
 ${css}</style>
 
 ${body}<script>
-${js}</script>
+${artifactJS}</script>
 `;
 
 const browser =
