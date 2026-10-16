@@ -428,3 +428,7 @@ textarea{width:100%;min-height:88px;font:inherit;font-size:15px;color:var(--ink)
 #fx{position:fixed;inset:0;pointer-events:none;z-index:50}
 @media (max-width:420px){.hstat.pov{display:none}.pips{display:none}.brand b{font-size:15px}.hstats{gap:10px}.brand b{font-size:16px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* 標題副標與製作署名（只出現在標題與結局畫面） */
+.hero .subt{margin:-2px 0 0;font-size:17px;font-weight:700;letter-spacing:.12em;color:var(--ink)}
+.credit{margin:6px 0 0;text-align:center;font-size:12px;letter-spacing:.08em;color:var(--muted,#6b6257);opacity:.85}

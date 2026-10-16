@@ -1,4 +1,4 @@
-// 福利島大選 build script
+// 誰來照顧誰：社會福利政策體驗遊戲 build script
 // 用法：node build.mjs          產生 index.html 與 artifact/welfare-island.html
 //       node build.mjs --check  只檢查產出檔是否與 src/ 一致（CI 使用），不寫檔
 //
@@ -21,7 +21,7 @@ const body = read('src/body.html');
 const FONTS = 'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@900&family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap';
 
 const artifact =
-`<title>福利島大選</title>
+`<title>誰來照顧誰｜社會福利政策體驗遊戲</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="${FONTS}">
@@ -38,7 +38,11 @@ const browser =
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>福利島大選</title>
+<title>誰來照顧誰｜社會福利政策體驗遊戲</title>
+<meta name="description" content="社會政策與立法課堂遊戲：用七種福利觀點在福利島執政五屆，看看誰來照顧誰。">
+<meta name="author" content="飽螺的社工甘苦便條紙">
+<meta property="og:title" content="誰來照顧誰｜社會福利政策體驗遊戲">
+<meta property="og:description" content="用七種福利觀點在福利島執政五屆，看看誰來照顧誰。飽螺的社工甘苦便條紙 製作。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="${FONTS}">
 <style>
