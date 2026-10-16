@@ -1,0 +1,21 @@
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Syntax check
+        run: node --check src/game.js
+      - name: Build output matches src
+        run: node build.mjs --check
+      - name: manifest.json is valid
+        run: node -e "JSON.parse(require('fs').readFileSync('assets/manifest.json','utf8'))"

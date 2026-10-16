@@ -1,0 +1,1083 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>福利島大選</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@900&family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: riso-printed election leaflet — paper grain, hard ink shadows, misregistered inks; sticky HUD, one stage per phase, thumb-reach action bar */
+:root{
+  --paper:#F1F0EA; --surface:#FBFAF6; --soft:#E3E2D9; --ink:#1C2040; --muted:#5A5E77; --line:#1C2040; --hair:#CFCEC3;
+  --blue:#2F5DB8; --pink:#EC4F8C; --yellow:#FFC93C; --teal:#0F9A92; --orange:#F2692C; --purple:#7650C4;
+  --stamp:#E0393A; --good:#0F8A7F; --bad:#E0393A; --ballot:var(--yellow); --sea:var(--teal);
+  --ochre:#A9741C; --p-co:var(--ochre); --p-nr:var(--blue); --p-tw:var(--purple); --p-ds:var(--orange); --p-fe:var(--pink); --p-gr:var(--teal);
+  --on-p:#FFFFFF; --hard:3px 3px 0 var(--ink); --hard-sm:2px 2px 0 var(--ink); --grain:.22;
+  --f-display:'Noto Serif TC','Songti TC','PMingLiU',serif;
+  --f-body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',system-ui,sans-serif;
+  --f-num:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --barh:84px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#14172A; --surface:#1C2036; --soft:#2A2F4B; --ink:#ECEEF6; --muted:#A3A8C4; --line:#ECEEF6; --hair:#363C5C;
+  --blue:#6E95F0; --pink:#FF77A9; --yellow:#FFD45E; --teal:#35C7BC; --orange:#FF8E58; --purple:#A585F0; --ochre:#E2AE55;
+  --stamp:#FF5A5A; --good:#35C7BC; --bad:#FF5A5A; --on-p:#14172A; --grain:.12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#14172A; --surface:#1C2036; --soft:#2A2F4B; --ink:#ECEEF6; --muted:#A3A8C4; --line:#ECEEF6; --hair:#363C5C;
+  --blue:#6E95F0; --pink:#FF77A9; --yellow:#FFD45E; --teal:#35C7BC; --orange:#FF8E58; --purple:#A585F0; --ochre:#E2AE55;
+  --stamp:#FF5A5A; --good:#35C7BC; --bad:#FF5A5A; --on-p:#14172A; --grain:.12; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 calc(var(--barh) + 28px + env(safe-area-inset-bottom,0px))}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:60;opacity:var(--grain);mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:1080px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);font-weight:900;margin:0;text-wrap:balance;line-height:1.2;letter-spacing:.02em}
+h2{font-size:clamp(26px,7vw,36px)} h3{font-size:19px}
+p{margin:0}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)} .small{font-size:13px}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,summary:focus-visible,textarea:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.btn{border:2px solid var(--ink);background:var(--surface);border-radius:12px;padding:0 20px;min-height:48px;font-weight:700;font-size:15.5px;display:inline-flex;align-items:center;justify-content:center;gap:6px;box-shadow:var(--hard);transition:transform .08s,box-shadow .08s}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.stamp{background:var(--stamp);color:#fff}
+.btn:active:not(:disabled){transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.btn.sm{min-height:34px;padding:0 12px;font-size:13px;box-shadow:var(--hard-sm);border-radius:9px}
+.stack{display:flex;flex-direction:column;gap:18px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.card{background:var(--surface);border:2px solid var(--ink);border-radius:16px;padding:16px;box-shadow:var(--hard);min-width:0}
+.eyebrow{font-size:12px;letter-spacing:.18em;color:var(--muted);font-weight:700}
+.kicker{display:inline-block;background:var(--ink);color:var(--paper);font-size:12px;font-weight:700;letter-spacing:.16em;padding:2px 10px;border-radius:4px}
+
+/* HUD */
+.hud{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:10px max(16px,env(safe-area-inset-left,0px));border-bottom:2px solid var(--ink)}
+.hud .in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:12px;min-width:0;overflow:hidden}
+.brand{display:flex;align-items:center;gap:8px;flex:none}
+.brand b{font-family:var(--f-display);font-weight:900;font-size:18px;letter-spacing:.06em}
+.pips{display:flex;gap:4px;align-items:center}
+.pip{width:20px;height:8px;border-radius:2px;border:1.5px solid var(--ink);background:transparent}
+.pip.done{background:var(--ink)} .pip.now{background:var(--yellow)}
+.hstats{margin-left:auto;display:flex;gap:14px;align-items:center}
+.hstat{display:flex;flex-direction:column;align-items:flex-end;line-height:1.15}
+.hstat .l{white-space:nowrap;font-size:10.5px;color:var(--muted);letter-spacing:.06em;font-weight:500}
+.hstat .v{font-family:var(--f-num);font-size:16px;font-weight:600}
+.hstat .v.hot{color:var(--stamp)}
+.debtmini{width:64px;height:6px;border-radius:2px;border:1.5px solid var(--ink);overflow:hidden;margin-top:3px;box-sizing:content-box}
+.debtmini i{display:block;height:100%;background:var(--teal);transition:width .6s}
+.debtmini i.hot{background:var(--stamp)}
+
+/* bottom action bar */
+.actionbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--paper);border-top:2px solid var(--ink);
+  padding:10px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.actionbar .in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:12px;min-height:calc(var(--barh) - 22px)}
+.actionbar .grow{flex:1;min-width:0}
+.actionbar .btn{flex:none}
+.wallet{display:flex;flex-direction:column;gap:5px;min-width:0}
+.wallet .t{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:12.5px;color:var(--muted)}
+.wallet .bal{font-family:var(--f-num);font-weight:600;font-size:18px}
+.wallet .bal.neg{color:var(--bad)} .wallet .bal.pos{color:var(--good)}
+.meter{height:10px;border-radius:3px;border:1.5px solid var(--ink);overflow:hidden;position:relative;background:var(--surface)}
+.meter i{position:absolute;inset:0 auto 0 0;background:var(--teal);transition:width .3s}
+.meter i.over{background:var(--stamp)}
+
+main{padding-top:20px}
+
+/* title */
+.hero{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:center}
+.poster{border:2px solid var(--ink);border-radius:18px;overflow:hidden;box-shadow:var(--hard);background:var(--surface)}
+.poster>svg{width:100%;height:auto;display:block}
+.hero h1{white-space:nowrap;font-size:clamp(44px,14vw,84px);letter-spacing:.04em;line-height:1;position:relative}
+.hero h1 span{position:relative;display:inline-block}
+.hero h1 span::before{content:attr(data-t);position:absolute;left:4px;top:4px;color:var(--pink);z-index:-1;mix-blend-mode:multiply}
+.hero .sub{font-size:16.5px;max-width:34ch}
+.how{display:flex;flex-direction:column;gap:12px;counter-reset:s;margin:0;padding:0;list-style:none}
+.how li{display:flex;gap:12px;align-items:flex-start}
+.how li::before{counter-increment:s;content:counter(s);flex:none;width:30px;height:30px;border-radius:8px;border:2px solid var(--ink);background:var(--yellow);color:#1C2040;display:grid;place-items:center;font-family:var(--f-num);font-size:14px;font-weight:600}
+@media (min-width:760px){.hero{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
+
+/* party cards */
+.plist{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+@media (min-width:640px){.plist{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:960px){.plist{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.pcard{--pc:var(--ink);text-align:left;border:2px solid var(--ink);background:var(--surface);border-radius:16px;padding:0;display:flex;flex-direction:column;position:relative;overflow:hidden;box-shadow:var(--hard);transition:transform .1s}
+.pcard .band{background:var(--pc);color:var(--on-p);padding:12px 16px 10px;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
+.pcard .band::after{content:"";position:absolute;inset:0;background:radial-gradient(currentColor 1.1px,transparent 1.3px) 0 0/7px 7px;opacity:.22;-webkit-mask:linear-gradient(110deg,transparent 45%,#000);mask:linear-gradient(110deg,transparent 45%,#000)}
+.pcard .pname{font-family:var(--f-display);font-weight:900;font-size:26px;line-height:1.1;position:relative;z-index:1}
+.pcard .body{padding:12px 16px 14px;display:flex;flex-direction:column;gap:8px}
+.pcard .slogan{font-size:14px;font-weight:500}
+.pcard .ab{font-size:13px;background:var(--soft);border-radius:8px;padding:6px 10px}
+.pcard ul{margin:0;padding-left:18px;font-size:13px;color:var(--muted)}
+.pcard.on{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--pc),5px 5px 0 2px var(--ink)}
+.check{position:relative;z-index:1;width:30px;height:30px;border-radius:50%;background:var(--paper);color:var(--ink);border:2px solid var(--ink);display:grid;place-items:center;font-weight:900;font-size:15px}
+
+/* wheel + news */
+.news{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:center}
+@media (min-width:760px){.news{grid-template-columns:minmax(0,320px) minmax(0,1fr)}}
+.wheelwrap{position:relative;width:min(78vw,300px);aspect-ratio:1;margin:6px auto 0}
+.wheelwrap>svg:not(.pointer){width:100%;height:100%;display:block}
+#wheelg{transform-origin:150px 150px;transition:transform 3.4s cubic-bezier(.15,.85,.2,1)}
+.wheelwrap .pointer{position:absolute;left:50%;top:-14px;transform:translateX(-50%);z-index:2;width:22px;height:26px;display:block;filter:drop-shadow(1px 2px 0 rgba(0,0,0,.25))}
+.bulletin{border:2px solid var(--ink);border-radius:16px;overflow:hidden;min-width:0;background:var(--surface);box-shadow:var(--hard)}
+.bulletin .bar{background:var(--stamp);color:#fff;font-weight:700;letter-spacing:.2em;padding:6px 14px;font-size:12px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--ink)}
+.live{display:inline-flex;align-items:center;gap:6px}
+.live::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.2}}
+.bulletin .body{padding:16px;display:flex;flex-direction:column;gap:10px}
+.bulletin .headline{font-family:var(--f-display);font-weight:900;font-size:clamp(28px,8vw,40px);line-height:1.15}
+.fx{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12.5px;border-radius:6px;padding:2px 9px;border:1.5px solid var(--ink);background:var(--yellow);color:#1C2040;font-weight:500}
+.ticker{overflow:hidden;white-space:nowrap;border-top:2px solid var(--ink);font-size:12.5px;padding:7px 0;background:var(--soft)}
+.ticker span{display:inline-block;padding-left:100%;animation:tick 26s linear infinite}
+@keyframes tick{to{transform:translateX(-100%)}}
+.paper{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;background:var(--surface);display:flex;flex-direction:column;gap:4px;box-shadow:var(--hard);transform:rotate(-.6deg)}
+.paper .mast{display:flex;justify-content:space-between;align-items:baseline;border-bottom:4px double var(--ink);padding-bottom:4px;margin-bottom:6px}
+.paper .mast b{font-family:var(--f-display);font-weight:900;font-size:20px;letter-spacing:.3em}
+.paper .hl{font-family:var(--f-display);font-weight:900;font-size:clamp(22px,6vw,28px);line-height:1.2}
+
+.vign{border-bottom:2px solid var(--ink);line-height:0;background:var(--soft)}
+.vign svg{width:100%;height:auto;display:block}
+.refbar{position:relative;height:30px;border:2px solid var(--ink);border-radius:8px;display:flex;overflow:visible;background:var(--surface)}
+.refbar i{display:block;height:100%}
+.refbar i.y{background:var(--teal)} .refbar i.n{background:var(--stamp)}
+.refbar .th{position:absolute;top:-6px;bottom:-6px;border-left:2.5px dashed var(--ink)}
+/* social thermometer */
+.thermo{border:2px solid var(--ink);border-radius:16px;padding:14px 16px;background:var(--surface);box-shadow:var(--hard);display:flex;flex-direction:column;gap:8px}
+.thermo.lv1{box-shadow:5px 5px 0 var(--orange),5px 5px 0 2px var(--ink)}
+.thermo.lv2,.thermo.lv3{box-shadow:5px 5px 0 var(--stamp),5px 5px 0 2px var(--ink);background:color-mix(in srgb,var(--stamp) 7%,var(--surface))}
+.th-top{display:flex;justify-content:space-between;align-items:center}
+.th-bar{position:relative;height:16px;border:2px solid var(--ink);border-radius:8px;background:linear-gradient(90deg,var(--teal) 0 35%,var(--yellow) 35% 60%,var(--orange) 60% 80%,var(--stamp) 80%);overflow:hidden}
+.th-bar i{position:absolute;right:0;top:0;bottom:0;left:auto;background:var(--surface);opacity:.82}
+.th-bar span{position:absolute;top:0;bottom:0;border-left:2px solid var(--ink)}
+.th-scale{display:flex;justify-content:space-between}
+/* citizen tooltip */
+[data-cid]{cursor:help}
+#ctip{position:fixed;z-index:70;max-width:min(280px,calc(100vw - 24px));background:var(--surface);color:var(--ink);border:2px solid var(--ink);border-radius:12px;padding:10px 12px;box-shadow:var(--hard);font-size:13px;line-height:1.55;pointer-events:none}
+#ctip .tg{display:inline-block;background:var(--ink);color:var(--paper);font-size:11.5px;font-weight:700;border-radius:4px;padding:0 7px;margin-bottom:4px;letter-spacing:.06em}
+#ctip b{font-size:14.5px}
+#ctip .need{display:block;margin-top:4px}
+#ctip .wt{display:block;margin-top:6px;padding-top:6px;border-top:1.5px dashed var(--hair);color:var(--muted)}
+/* citizens */
+.cits{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 12px;margin-inline:-2px;scrollbar-width:thin}
+.cit{scroll-snap-align:start;flex:none;width:92px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+.cit .ava{width:68px;height:68px;position:relative}
+.cit .ava svg{width:100%;height:100%;display:block;overflow:visible}
+.cit .nm{font-size:13px;font-weight:700;line-height:1.2}
+.cit .dv{font-family:var(--f-num);font-size:12px;font-weight:600;border:1.5px solid var(--ink);border-radius:5px;padding:0 6px;background:var(--surface)}
+.dv.up{background:var(--teal);color:#fff} .dv.down{background:var(--stamp);color:#fff} .dv.zero{color:var(--muted)}
+.bump{animation:bump .45s cubic-bezier(.3,1.8,.5,1)}
+@keyframes bump{40%{transform:translateY(-9px) rotate(-4deg) scale(1.08)}}
+.novote{font-size:10.5px;border:1.5px solid var(--stamp);color:var(--stamp);border-radius:4px;padding:0 4px;line-height:1.5;font-weight:700}
+.badge-vote{font-size:10.5px;color:var(--muted)}
+
+/* budget */
+.mine{--pc:var(--ink);padding:0;overflow:hidden}
+.mine summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer;background:var(--pc);color:var(--on-p);padding:10px 16px}
+.mine summary::-webkit-details-marker{display:none}
+.mine .pn{font-family:var(--f-display);font-weight:900;font-size:21px}
+.mine[open] summary{border-bottom:2px solid var(--ink)}
+.mine .inside{padding:12px 16px}
+.seg{display:flex;border:2px solid var(--ink);border-radius:12px;overflow:hidden;box-shadow:var(--hard)}
+.seg button{flex:1;border:0;background:var(--surface);min-height:50px;font-size:16px;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15}
+.seg button small{font-family:var(--f-num);font-size:11px;font-weight:500;opacity:.75}
+.seg button.on{background:var(--yellow);color:#1C2040}
+.seg button+button{border-left:2px solid var(--ink)}
+.exi{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px;padding:8px 10px;border:1.5px solid var(--ink);border-radius:10px;background:var(--surface)}
+.exi.cut{text-decoration:line-through;color:var(--muted);border-style:dashed}
+.filters{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.fbtn{flex:none;border:1.5px solid var(--ink);background:var(--surface);border-radius:8px;padding:0 12px;min-height:36px;font-size:13.5px;font-weight:500}
+.fbtn.on{background:var(--ink);color:var(--paper)}
+.cards{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media (min-width:640px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:960px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.pol{--pc:var(--teal);border:2px solid var(--ink);background:var(--surface);border-radius:14px;padding:12px 12px 12px 14px;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;min-width:0;position:relative;box-shadow:var(--hard-sm);transition:transform .08s,box-shadow .08s}
+.pol.on{background:color-mix(in srgb,var(--pc) 16%,var(--surface));transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--pc),4px 4px 0 2px var(--ink)}
+.pol.full{opacity:.55}
+.tag.eco{background:var(--teal);color:#fff;border-color:var(--ink)}
+.tag.fit{background:var(--ink);color:var(--paper)}
+.tag.anti{background:var(--surface);color:var(--stamp);border-color:var(--stamp);border-style:dashed}
+.tag.evb{background:var(--stamp);color:#fff}
+.tag.petb{background:var(--pink);color:#fff}
+.tag.evx{background:var(--yellow);color:#1C2040;border-style:dashed}
+.pol.petc{border-color:var(--pink);border-width:2.5px}
+.pol.evc{background:color-mix(in srgb,var(--yellow) 12%,var(--surface))}
+.imp{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.ic{font-size:11.5px;border-radius:999px;padding:1px 8px;font-weight:500;border:1.2px solid var(--ink)}
+.ic.up{background:color-mix(in srgb,var(--teal) 22%,var(--surface))}
+.ic.dn{background:color-mix(in srgb,var(--stamp) 16%,var(--surface));color:var(--stamp)}
+.petition{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--ink);border-radius:16px;padding:12px;background:color-mix(in srgb,var(--pink) 12%,var(--surface));box-shadow:5px 5px 0 var(--pink),5px 5px 0 2px var(--ink)}
+.petition.ok{background:color-mix(in srgb,var(--teal) 14%,var(--surface));box-shadow:var(--hard)}
+.petition .ava{width:58px;height:58px;flex:none}.petition .ava svg{width:100%;height:100%}
+.petition .pin{display:flex;flex-direction:column;gap:4px;min-width:0}
+.petition b{font-size:15px;line-height:1.5}
+.flow{display:flex;flex-direction:column;gap:12px}
+.frow{display:flex;gap:10px;align-items:flex-start}
+.frow .ava{width:42px;height:42px;flex:none}.frow .ava svg{width:100%;height:100%}
+.fin{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.fin b{font-size:14px}
+.fbar{display:flex;height:12px;border:1.5px solid var(--ink);border-radius:4px;overflow:hidden}
+.fbar i{display:block;height:100%}
+.fbar i+i{border-left:1px solid var(--surface)}
+.dlt{font-family:var(--f-num);font-size:12px;font-weight:600;border:1.5px solid var(--ink);border-radius:5px;padding:0 6px;white-space:nowrap}
+.dlt.up{background:var(--teal);color:#fff}.dlt.dn{background:var(--stamp);color:#fff}
+.tag.once{background:var(--yellow);color:#1C2040}
+.tag.stim{background:color-mix(in srgb,var(--yellow) 55%,var(--surface))}
+.tray{position:sticky;top:calc(env(safe-area-inset-top,0px) + 60px);z-index:15;background:var(--paper);border:2px solid var(--ink);border-radius:12px;padding:8px 10px;display:flex;gap:6px;align-items:center;overflow-x:auto;box-shadow:var(--hard-sm);scrollbar-width:none;min-height:50px}
+.tray::-webkit-scrollbar{display:none}
+.tray .lab{flex:none;font-size:12.5px;font-weight:900;margin-right:2px}
+.tchip{--pc:var(--teal);flex:none;display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--ink);border-radius:999px;padding:2px 3px 2px 11px;font-size:13px;font-weight:500;background:color-mix(in srgb,var(--pc) 16%,var(--surface));white-space:nowrap}
+.tchip button{width:28px;height:28px;border-radius:50%;border:0;background:var(--ink);color:var(--paper);font-size:15px;line-height:1;display:grid;place-items:center}
+.tchip.cut{background:color-mix(in srgb,var(--stamp) 14%,var(--surface))}
+.pol:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.pol .pt{font-weight:900;font-size:16px;line-height:1.35}
+.coin{grid-row:1/3;grid-column:2;align-self:start;width:44px;height:44px;border-radius:50%;background:var(--yellow);color:#1C2040;border:2px solid var(--ink);display:grid;place-items:center;font-family:var(--f-num);font-weight:600;font-size:17px;position:relative;box-shadow:inset -4px -4px 0 rgba(0,0,0,.12)}
+.coin.save{background:var(--teal);color:#fff;font-size:13px}
+.coin s{position:absolute;top:-8px;right:-8px;font-size:10px;background:var(--surface);color:var(--muted);border:1.5px solid var(--ink);border-radius:5px;padding:0 3px}
+.pol.on .coin::after{content:"✓";position:absolute;bottom:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--pc);color:#fff;border:1.5px solid var(--ink);font-size:11px;display:grid;place-items:center;font-family:var(--f-body)}
+.pol .pd{grid-column:1/-1;font-size:13px;color:var(--muted);line-height:1.5}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{font-size:11px;border-radius:4px;padding:0 6px;border:1.2px solid var(--ink);font-weight:500;background:var(--surface)}
+.tag.univ{background:color-mix(in srgb,var(--teal) 25%,var(--surface))}
+.tag.sel{background:color-mix(in srgb,var(--yellow) 45%,var(--surface))}
+.tag.mkt,.tag.growth{background:color-mix(in srgb,var(--blue) 22%,var(--surface))}
+.tag.care{background:color-mix(in srgb,var(--pink) 25%,var(--surface))}
+.tag.green{background:color-mix(in srgb,var(--teal) 40%,var(--surface))}
+.tag.inv{background:color-mix(in srgb,var(--purple) 20%,var(--surface))}
+.tag.ins,.tag.rights{background:color-mix(in srgb,var(--orange) 22%,var(--surface))}
+
+/* results */
+.vlist{display:flex;flex-direction:column;gap:14px}
+.vrow{--pc:var(--ink);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center}
+.vrow .who{font-family:var(--f-display);font-weight:900;font-size:17px}
+.vrow .pct{font-family:var(--f-num);font-weight:600;font-size:16px}
+.vtrack{grid-column:1/-1;height:26px;border:2px solid var(--ink);border-radius:6px;position:relative;background:var(--surface)}
+.vtrack i{position:absolute;inset:0 auto 0 0;background:var(--pc);width:0;transition:width 1.3s cubic-bezier(.2,.8,.2,1);border-right:2px solid var(--ink);border-radius:3px 0 0 3px}
+.vrow.me .vtrack{box-shadow:var(--hard-sm)}
+.you{font-size:11px;background:var(--yellow);color:#1C2040;border:1.5px solid var(--ink);border-radius:4px;padding:0 6px;margin-left:6px;font-family:var(--f-body);font-weight:700;vertical-align:3px}
+.stampmark{position:absolute;right:4px;top:50%;width:52px;height:52px;transform:translateY(-50%) rotate(-12deg);animation:stamp .5s .2s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes stamp{from{opacity:0;transform:translateY(-50%) scale(2.6) rotate(-12deg)}to{opacity:1;transform:translateY(-50%) scale(1) rotate(-12deg)}}
+.qcard{border:2px solid var(--ink);border-radius:16px;overflow:hidden;background:var(--surface);box-shadow:var(--hard)}
+.qcard .qh{display:flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.18em;color:#fff;font-weight:700;background:var(--stamp);padding:7px 14px;border-bottom:2px solid var(--ink)}
+.qcard .qin{padding:16px;display:flex;flex-direction:column;gap:12px}
+.qcard .qt{font-family:var(--f-display);font-weight:900;font-size:clamp(20px,5.4vw,24px);line-height:1.4}
+.qopt{border:2px solid var(--ink);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px;font-weight:500;min-height:54px;display:flex;flex-direction:column;gap:2px;box-shadow:var(--hard-sm)}
+.qopt.on{background:var(--yellow);color:#1C2040}
+.qopt:disabled{box-shadow:none}
+.qopt:disabled:not(.on){opacity:.5}
+.insight{font-size:14px;background:var(--soft);border-radius:10px;padding:10px 12px;line-height:1.65}
+.reveal{--pc:var(--ink);border:2px solid var(--ink);border-radius:16px;overflow:hidden;background:var(--surface);animation:rise .5s both;box-shadow:var(--hard)}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}}
+.reveal .top{background:var(--pc);color:var(--on-p);padding:12px 16px;font-family:var(--f-display);font-weight:900;font-size:22px;border-bottom:2px solid var(--ink)}
+.reveal .bd{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.feed{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media (min-width:760px){.feed{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.say{display:flex;gap:10px;align-items:flex-start;animation:rise .4s both}
+.say .ava{width:52px;height:52px;flex:none}
+.say .ava svg{width:100%;height:100%;overflow:visible}
+.bub{position:relative;background:var(--surface);border:1.5px solid var(--ink);border-radius:4px 14px 14px 14px;padding:8px 12px;font-size:14px;line-height:1.5;min-width:0}
+.bub b{display:block;font-size:12px;color:var(--muted);font-weight:700}
+.bub.happy{background:color-mix(in srgb,var(--teal) 16%,var(--surface))}
+.bub.mad{background:color-mix(in srgb,var(--pink) 18%,var(--surface))}
+.rival{--pc:var(--ink);border-left:5px solid var(--pc);padding:6px 0 6px 12px;font-size:13.5px}
+.rival b{font-family:var(--f-display);font-weight:900;font-size:16px}
+details.fold>summary{cursor:pointer;font-weight:700;padding:4px 0}
+
+/* final */
+.regime{font-family:var(--f-display);font-weight:900;font-size:clamp(32px,9vw,52px);line-height:1.1}
+.regime span{background:linear-gradient(transparent 58%,color-mix(in srgb,var(--yellow) 80%,transparent) 58%);padding:0 2px}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+@media (min-width:760px){.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.radar svg{width:100%;max-width:360px;display:block;margin:0 auto}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(136px,1fr));gap:10px}
+.ach{border:2px solid var(--ink);border-radius:14px;padding:12px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;background:var(--surface)}
+.ach .medal{width:56px;height:56px}
+.ach b{font-size:14px;line-height:1.3}
+.ach span{font-size:12px;color:var(--muted);line-height:1.4}
+.ach.off{opacity:.4;border-style:dashed}
+.ach.on{box-shadow:var(--hard-sm);animation:rise .5s both}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:7px 8px;border-bottom:1.5px solid var(--hair);text-align:right}
+th:first-child,td:first-child{text-align:left}
+th{font-weight:700;color:var(--muted);font-size:12.5px;border-bottom:2px solid var(--ink)}
+.tl{border-left:5px solid var(--ink);padding:2px 0 2px 12px;font-size:14px;display:flex;flex-direction:column;gap:2px}
+.tl .h{font-weight:900}
+textarea{width:100%;min-height:88px;font:inherit;font-size:15px;color:var(--ink);background:var(--paper);border:2px solid var(--ink);border-radius:10px;padding:10px 12px;resize:vertical}
+.refl{display:flex;flex-direction:column;gap:16px}
+.refl label{font-weight:700;font-size:14.5px;display:flex;flex-direction:column;gap:6px}
+.imf{border:2px solid var(--ink);border-radius:18px;padding:28px 18px;text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;background:var(--surface);box-shadow:5px 5px 0 var(--stamp),5px 5px 0 2px var(--ink)}
+.imf .big{font-family:var(--f-display);font-weight:900;font-size:clamp(34px,10vw,56px);color:var(--stamp);line-height:1.1}
+.toast{position:fixed;left:50%;bottom:calc(var(--barh) + 20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:8px 16px;border-radius:10px;font-size:13.5px;font-weight:500;z-index:40;animation:toast 2s both;pointer-events:none;max-width:calc(100% - 32px);text-align:center}
+@keyframes toast{0%{opacity:0;transform:translate(-50%,8px)}12%,80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0}}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
+@media (max-width:420px){.hstat.pov{display:none}.pips{display:none}.brand b{font-size:15px}.hstats{gap:10px}.brand b{font-size:16px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
+<header class="hud"><div class="in">
+  <div class="brand"><svg width="30" height="30" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="var(--surface)" stroke="var(--stamp)" stroke-width="3.5"/><text x="20" y="27.5" text-anchor="middle" font-size="20" fill="var(--stamp)" font-family="Noto Sans TC,sans-serif" font-weight="700">卜</text></svg><b>福利島大選</b></div>
+  <div class="pips" id="pips"></div>
+  <div class="hstats" id="hstats"></div>
+</div></header>
+<main class="wrap" id="stage"></main>
+<nav class="actionbar" aria-label="遊戲操作"><div class="in" id="bar"></div></nav>
+<canvas id="fx" hidden></canvas>
+<script>
+// ---------- DATA ----------
+const CIT=[
+ {id:'ma',need:'最在意長照服務、看病方便和老年經濟安全。',grp:'高齡長者',name:'秀英阿嬤',age:81,role:'獨居長者，住在山邊的老社區',w:18},
+ {id:'chen',need:'沒有雇主幫忙投保，最怕受傷或收入不穩，在意勞保與職災保障。',grp:'零工勞工',name:'小陳',age:28,role:'外送員，沒有雇主幫忙保勞保',w:12},
+ {id:'ling',need:'一個人工作又帶小孩，最需要托育、課後照顧和彈性工時。',grp:'單親家庭',name:'美玲',age:35,role:'單親媽媽，兩個孩子 1 歲和 7 歲',w:12},
+ {id:'xiang',need:'有能力也想工作，需要職場合理調整與反歧視保障。',grp:'身心障礙者',name:'宇翔',age:24,role:'視障青年，資工系畢業找工作中',w:7},
+ {id:'kevin',need:'收入高、繳稅多，重視稅負與政策效率，也擔心房價和育兒成本。',grp:'高所得受僱者',name:'Kevin',age:40,role:'半導體工程師，年薪 300 萬，房貸壓力大',w:11},
+ {id:'wang',need:'在意人事成本、缺工與企業稅負，景氣好壞影響很大。',grp:'雇主',name:'王董',age:56,role:'中小企業老闆，員工 40 人',w:11},
+ {id:'de',need:'自己當老闆、沒有勞保，怕規定繁瑣和成本上漲，支持「有做事才有」的補助。',grp:'自營作業者',name:'阿德',age:47,role:'夜市攤商，自己當老闆，最怕繁瑣規定',w:12},
+ {id:'yuma',need:'部落交通不便、服務資源少，在意在地照顧、醫療可近性和傳統領域。',grp:'原住民族',name:'尤瑪',age:52,role:'泰雅族，部落文化健康站照服員，住在山上部落',w:5},
+ {id:'liu',need:'靠退休金生活，對年金改革最敏感，也需要長照與社區活動。',grp:'外省退休族群',name:'劉伯伯',age:78,role:'外省第二代，退休公立學校老師，住眷村改建國宅',w:8},
+ {id:'ati',need:'照顧島上的長輩，卻沒有休假保障，也沒有投票權。',grp:'移工',name:'阿蒂',age:30,role:'印尼籍看護移工，在台第 6 年',w:0},
+ {id:'zhen',need:'剛出社會，關心起薪、租屋、學貸，以及社工的勞動條件。',grp:'青年',name:'小禎',age:22,role:'社工系應屆畢業生，正在找工作',w:10}
+];
+const TAGN={univ:'普及式',sel:'選擇式',mkt:'市場化',ins:'社會保險',inv:'社會投資',care:'照顧',fam:'家庭',civ:'公私協力',reform:'財政改革',stim:'振興',green:'綠色',growth:'成長',rights:'勞動權益'};
+const POL=[
+ {id:'p1',name:'全民兒童津貼',tags:['univ'],cost:4,d:'每位 0–17 歲兒童每月固定津貼，不看家庭收入。',fx:{pov:-1,dec:1,def:1},cit:{ling:3,zhen:1,kevin:1,chen:1,de:-1},say:{ling:'每月多一筆錢，孩子的午餐費不用再煩惱了。',kevin:'我其實不需要，這筆錢給更需要的家庭比較合理吧？',de:'有錢人家也發，稅金這樣花很可惜。'}},
+ {id:'p2',name:'低收入戶生活扶助加碼',tags:['sel'],cost:2,d:'提高低收入戶生活扶助金額，須通過資產調查。',fx:{pov:-3,stg:2,str:1},cit:{ma:2,chen:1,ling:2,xiang:1,kevin:1,de:1},say:{ling:'錢是多了，可是審查時被問得好難堪。',kevin:'錢花在最需要的人身上，這樣才有效率。',ma:'里長幫我申請到了，可是我兒子有房子，差點不過。'}},
+ {id:'p3',name:'國民基礎年金',tags:['univ','old'],cost:5,d:'65 歲以上國民每月一筆基本年金，財源來自稅收。',fx:{pov:-2,dec:3},cit:{ma:4,chen:2,de:2,zhen:-1,kevin:-1,wang:-1},say:{ma:'老了終於有一筆自己的錢，不用跟孩子開口。',de:'我們攤商沒有勞保，老了總算有個底。',zhen:'人口這麼老，這筆錢以後是我們這一代在付耶。'}},
+ {id:'p4',name:'受僱者社會保險擴大',tags:['ins'],cost:3,d:'提高勞保與職業保險給付，由勞雇雙方分攤保費。',fx:{dec:1,str:3},cit:{kevin:2,wang:-2,zhen:1,chen:-1},say:{chen:'又是有雇主的人才有，我沒份。',wang:'雇主負擔的保費又增加了。',kevin:'繳多少領多少，這種制度我能接受。'}},
+ {id:'p5',name:'長照服務券',tags:['mkt','care','old'],cost:2,d:'發給長照服務券，由民間業者提供服務，民眾自由選擇。',fx:{def:1,str:1},cit:{ma:1,ling:2,kevin:1,zhen:-1},say:{ling:'可以自己挑服務時段和業者，比排公家的隊彈性多了。',ma:'拿到券了，可是我們山邊業者很少。',zhen:'服務都外包出去，社工的薪水會不會更低？'}},
+ {id:'p6',name:'長照公共服務網',tags:['univ','care','old'],cost:5,d:'政府直接設置居家服務、日照中心與社區據點。',fx:{def:3,dec:2,emp:1},cit:{ma:4,ling:2,zhen:2,wang:-1,de:-1},say:{ma:'居服員每天都來，我不用一個人撐了。',zhen:'公部門開缺了，可以安心投履歷。',de:'公家蓋的據點，聽說排隊要排半年。'}},
+ {id:'p7',name:'0–2 歲公共托育',tags:['univ','care','inv'],cost:4,d:'廣設公立托嬰中心，收費平價。',fx:{def:3,emp:2},cit:{ling:5,zhen:1,kevin:1},say:{ling:'小的有地方托，我終於可以回去上班了！',kevin:'公幼抽籤抽不到，還不如補助我們自己選。'}},
+ {id:'p8',name:'商業長照險保費抵稅',tags:['mkt','old'],cost:1,d:'購買商業長照保險的保費可以抵扣所得稅。',fx:{dec:-1,str:2},cit:{kevin:3,wang:1,de:1,chen:-1},say:{kevin:'自己的老後自己準備，政府鼓勵一下很合理。',chen:'我連保費都繳不起，抵什麼稅？',de:'能抵稅的話，我願意自己買一張。'}},
+ {id:'p9',name:'就業促進與職業訓練',tags:['inv'],cost:2,d:'失業與轉職者的職業訓練、就業媒合與訓練津貼。',fx:{emp:2,pov:-1},cit:{chen:2,xiang:1,wang:1,de:1},say:{chen:'想轉行的話，終於有課可以上。',wang:'有受過訓的人，我比較敢錄用。'}},
+ {id:'p10',name:'身障支持性就業',tags:['inv'],cost:3,d:'就業服務員陪同身障者進入一般職場，並持續支持。',fx:{emp:1,pov:-1,stg:-1},cit:{xiang:5,zhen:1},say:{xiang:'有就服員陪我跟主管溝通，我做到了想做的工作。'}},
+ {id:'p11',name:'僱用身障者企業減稅',tags:['mkt'],cost:1,d:'企業每僱用一名身障員工可以減稅。',fx:{emp:1},cit:{wang:3,xiang:1},say:{wang:'有誘因，我就願意多開兩個職缺試試看。',xiang:'職缺變多是好事，但希望不只是清潔工作。'}},
+ {id:'p12',name:'平台工作者強制納保',tags:['ins','rights'],cost:2,d:'外送、網約車等平台工作者強制納入勞保與職災保險。',fx:{dec:1,str:-1},cit:{chen:3,wang:-1,de:-2},say:{chen:'有保障是好，但保費會不會從我的收入扣？',de:'今天管外送，下一個是不是輪到我們攤商要繳？'}},
+ {id:'p13',name:'移工勞動保障',tags:['rights'],cost:1,d:'家事移工納入勞基法的休假與最低工資保障。',fx:{stg:-1},cit:{ati:5,wang:-1,ma:-2},say:{ati:'我終於有休假了。可惜我不能投票告訴你們我很開心。',ma:'請看護變貴了，我負擔不起怎麼辦？'}},
+ {id:'p14',name:'社會住宅',tags:['univ'],cost:4,d:'興建只租不售的公共住宅，租金低於市價。',fx:{pov:-1,dec:1},cit:{zhen:3,chen:2,ling:2,kevin:-1,de:-1},say:{zhen:'租金合理，終於可以搬出分租雅房。',kevin:'蓋在我家旁邊？社區的人都在連署反對。'}},
+ {id:'p15',name:'碳費投入綠能轉型',tags:['green','inv'],cost:2,d:'開徵碳費，收入投入綠能產業與勞工轉職。',fx:{env:3,emp:1},cit:{wang:-2,zhen:2,chen:1,xiang:1,ling:1,de:-1},say:{wang:'電費和原料又要漲了。',zhen:'夏天越來越熱，這件事總要有人做。'}},
+ {id:'p16',name:'大眾運輸月票',tags:['univ','green'],cost:2,d:'公車、捷運、火車無限搭乘月票，由政府補貼。',fx:{env:2,pov:-1},cit:{chen:2,zhen:2,ma:2,xiang:2,ling:1,ati:1},say:{zhen:'通勤費省了一半。',xiang:'不能開車的我，出門終於方便多了。',ati:'放假出門方便多了。'}},
+ {id:'p17',name:'產業升級投資抵減',tags:['growth','mkt'],cost:2,d:'製造業與科技業研發、設備投資可抵減營所稅。',fx:{emp:2,env:-2,str:1},cit:{wang:4,kevin:2,xiang:1},say:{wang:'這才叫拚經濟！明年可以加薪了。',kevin:'公司擴廠，工作機會跟分紅都會多一點。'}},
+ {id:'p18',name:'家庭照顧者津貼',tags:['sel','care','fam'],cost:2,d:'在家照顧失能家人的家屬每月領津貼，須通過資產調查。',fx:{def:-2,pov:-1},cit:{ling:1,ma:2,de:1},say:{ma:'媳婦照顧我這麼辛苦，總算有一點補貼。',ling:'錢不多，等於叫我待在家照顧就好。'}},
+ {id:'p19',name:'社工人力與薪資方案',tags:['inv'],cost:2,d:'補助社工人力，降低每人案量並調升薪資。',fx:{stg:-1},cit:{zhen:5,ma:1},say:{zhen:'案量降了，終於有時間好好跟個案會談。'}},
+ {id:'p20',name:'工作所得補助',tags:['sel','inv'],cost:2,d:'有工作但收入偏低的人，政府按所得補貼，鼓勵持續就業。',fx:{pov:-2,emp:2},cit:{chen:3,ling:2,de:2,zhen:1,kevin:1},say:{chen:'有在工作就多一筆補貼，感覺被肯定。',de:'這種「有做事才有」的補助我支持。',kevin:'補助有在努力的人，我覺得公平。'}},
+ {id:'p21',name:'托育準公共化',tags:['mkt','care','civ'],cost:2,d:'政府與私立托嬰中心簽約，家長用平價收費，業者自主經營。',fx:{def:2,emp:1},cit:{ling:3,kevin:2,wang:1},say:{ling:'家附近的私立托嬰也能平價送，選擇變多了。',kevin:'不用等公幼抽籤，自己挑合約園所就好。'}},
+ {id:'p22',name:'公益捐款與社會企業抵稅',tags:['civ','mkt'],cost:1,d:'捐款給社福團體或投資社會企業，可以抵稅。',fx:{stg:-1},cit:{wang:2,kevin:2,zhen:1},say:{zhen:'協會募款變容易了。',wang:'與其繳稅，我寧願自己捐給信得過的團體。'}},
+ {id:'p23',name:'三代同堂租稅優惠',tags:['fam'],cost:1,d:'與父母同住奉養的家庭，可以享有所得稅減免。',fx:{def:-1,pov:-1},cit:{ma:2,kevin:1,de:2,ling:-1},say:{ma:'兒子一家搬回來住，家裡熱鬧多了。',de:'孝順爸媽還能減稅，我很支持。',ling:'單親又沒跟長輩住的，就被排除在外了。'}},
+ {id:'p24',name:'年金改革：延後請領',tags:['reform'],cost:-2,d:'請領年齡延後、給付公式調整，讓年金制度可以撐得更久。',fx:{pov:1},cit:{ma:-3,chen:-1,kevin:2,zhen:2,wang:1},say:{zhen:'至少我們這一代退休時還領得到。',ma:'我等這筆錢等了一輩子，怎麼說改就改？',kevin:'早點改，痛比較少。'}},
+ {id:'p25',name:'福利行政數位化與稽查',tags:['reform'],cost:-1,d:'申請全面線上化，並查核重複請領與詐領。',fx:{stg:1},cit:{kevin:2,de:1,wang:1,ma:-2,zhen:1},say:{kevin:'終於不用跑三個窗口，稅金也不會被亂領。',ma:'要用手機申請，我不會啊。',zhen:'行政時間省下來，可以多陪個案。'}},
+ {id:'p26',name:'放寬家庭看護移工聘僱',tags:['mkt','fam'],cost:0,d:'放寬申請家庭看護移工的資格，減少等待時間。',fx:{def:1},cit:{ma:3,wang:1,ling:1,ati:-1,zhen:-1},say:{ma:'請看護比較容易了，女兒不用辭職回來照顧我。',ati:'同鄉可以來工作，但我們的休假還是沒人管。',zhen:'照顧都交給移工，本國照顧人力怎麼辦？'}},
+ {id:'p27',name:'社區互助據點',tags:['civ','care','fam'],cost:1,d:'補助廟宇、教會與社區發展協會，辦理共餐、關懷訪視與志工服務。',fx:{def:1,stg:-1},cit:{ma:3,zhen:1,de:1,ling:1},say:{ma:'廟口的共餐據點，每天都有伴。',de:'鄰里互相照顧，比政府直接做更有人情味。'}},
+ {id:'p28',name:'調降營所稅與小店免稅額',tags:['growth','mkt'],cost:2,d:'調降營利事業所得稅率，並提高小規模營業人的免稅門檻。',fx:{emp:1,str:1},cit:{wang:3,de:3,kevin:1,zhen:-1},say:{de:'小本生意少繳點稅，我就能多請一個工讀生。',wang:'稅負輕一點，我才不會想把工廠移到國外。'}}
+ ,{id:'p29',name:'全民消費券',tags:['univ','stim'],once:true,cost:4,d:'每人發放消費券，限期在國內消費，帶動商家生意。只能發一次，不會變成常態支出。',fx:{eco:2.5},cit:{de:4,wang:2,chen:1,ma:1,ling:1,zhen:1,kevin:-1},say:{de:'券發下來，夜市人潮整個回來了！',kevin:'短期刺激可以，但別變成常態，債最後還是我們在還。',wang:'店裡生意好轉，我暫時不用裁員了。'}},
+ {id:'p30',name:'擴大公共建設',tags:['growth','stim'],once:true,cost:3,d:'加速推動道路、軌道與社會住宅工程，創造營建業工作機會。只執行一次。',fx:{eco:2,emp:1,env:-1},cit:{wang:2,chen:2,de:1,xiang:1},say:{chen:'工地缺人，日薪比跑外送還高。',wang:'訂單排到明年，總算能喘口氣。'}},
+ {id:'p31',name:'全民基本收入',tags:['univ'],refOnly:true,cost:6,d:'每位國民每月領取一筆無條件的基本收入，不需審查。',fx:{pov:-3,dec:3,eco:.5},cit:{ma:2,chen:3,ling:3,xiang:3,zhen:3,de:1,kevin:-2,wang:-3},say:{chen:'跑單收入不穩，有個底真的安心很多。',wang:'稅要加到多高才養得起？大家還會想工作嗎？',kevin:'我也領得到，但這帳怎麼算都不太對。'}}
+];
+const REFS=[
+ {id:'pension',pid:'p24',title:'年金改革公投',q:'你是否同意延後年金請領年齡、調整給付公式，以維持年金制度永續？',pro:'人口老化，不改革年金就會破產，年輕世代將繳了卻領不到。',con:'政府應信守承諾，長者早已規劃好退休生活，改革應從其他財源著手。'},
+ {id:'migrant',pid:'p13',title:'家事移工保障公投',q:'你是否同意將家事移工納入勞動基準法，保障休假與最低工資？',pro:'家事移工長時間工作卻沒有休假，這是基本人權與勞動正義。',con:'照顧費用會大幅上升，許多失能家庭將負擔不起，應先建立替代照顧人力。'},
+ {id:'ubi',pid:'p31',title:'全民基本收入公投',q:'你是否同意每位國民每月領取一筆無條件的基本收入？',pro:'AI 與零工經濟讓工作越來越不穩定，基本收入給每個人底線保障，也沒有資格審查的汙名。',con:'財政負擔極重，可能削弱工作意願，錢也會發給不需要的人。'}
+];
+const DEMO=[
+ {id:'ma',to:24,why:'高齡化：65 歲以上選民比例持續上升。'},
+ {id:'ling',to:9,why:'少子化：育兒家庭在選民中的比例下降。'},
+ {id:'chen',to:14,why:'平台經濟擴張：零工與外送工作者越來越多。'},
+ {id:'zhen',to:12,why:'首投族：一批年輕人第一次拿到選票。'},
+ {id:'liu',to:6,why:'世代交替：戰後來台的第一、二代外省族群逐漸凋零。'}
+];
+const ECO={p7:.8,p9:.6,p10:.3,p17:1,p20:.5,p21:.6,p28:.8,p15:.5,p19:.2,p11:.2,p14:.3,p24:.3};
+POL.push({id:'p32',name:'部落文化健康站擴點',tags:['civ','care'],cost:2,d:'補助原住民族部落設置文化健康站，由族人用族語照顧族人。',fx:{def:1,stg:-1},cit:{yuma:5,ma:1,zhen:1},say:{yuma:'用族語陪 yaki（祖母）唱歌、吃飯，長輩笑得比較多。',zhen:'在地人照顧在地人，服務才接得住。'}});
+const EXTRA={
+ p1:{cit:{yuma:1}},p2:{cit:{yuma:1,liu:0}},
+ p3:{cit:{yuma:3,liu:-1},say:{yuma:'部落很多人沒有勞保，基礎年金對我們很重要。',liu:'我有退休金，這筆錢應該先給沒有保障的人。'}},
+ p5:{cit:{yuma:-2,liu:1},say:{yuma:'山上根本沒有業者願意來，券拿了也用不到。',liu:'我住市區，選擇多，用券挺方便的。'}},
+ p6:{cit:{yuma:2,liu:2},say:{yuma:'公家願意來山上設據點，比等業者實在多了。',liu:'老伴走了以後，日照中心是我唯一的社交圈。'}},
+ p8:{cit:{liu:1}},p9:{cit:{yuma:1}},
+ p14:{cit:{liu:1}},p16:{cit:{yuma:3,liu:2},say:{yuma:'公車一天只有兩班，月票不如先多開幾班車。'}},
+ p18:{cit:{yuma:1,liu:1}},p20:{cit:{yuma:1}},
+ p23:{cit:{liu:2},say:{liu:'孩子在外地工作，同住優惠對我們家用不上，但這方向是對的。'}},
+ p24:{cit:{liu:-4,yuma:-1},say:{liu:'我們這一代老師的退休金已經砍過一次了，現在又要改？'}},
+ p25:{cit:{liu:-1,yuma:-1},say:{yuma:'部落網路訊號不穩，線上申請對我們很不方便。'}},
+ p26:{cit:{liu:2}},p27:{cit:{yuma:2,liu:2},say:{liu:'社區活動中心的書法班和共餐，讓我每天有地方去。'}},
+ p29:{cit:{yuma:1,liu:1}},p30:{cit:{yuma:2},say:{yuma:'山路修好了，颱風季就不會再被困在部落裡。'}},
+ p31:{cit:{yuma:2,liu:-1}},p13:{cit:{liu:-1}},p15:{cit:{yuma:-1},say:{yuma:'綠能很好，但風電和光電場別再蓋在我們的傳統領域上了。'}}
+};
+POL.forEach(p=>{const x=EXTRA[p.id];if(x){Object.assign(p.cit,x.cit||{});Object.assign(p.say,x.say||{})}});
+// ---- expanded regular policies ----
+POL.push(
+ {id:'q1',name:'健保部分負擔調降',tags:['univ'],cost:3,d:'降低看診與住院的部分負擔，讓看病更便宜。',fx:{dec:1,pov:-1},cit:{ma:3,liu:2,yuma:2,ling:1,chen:1,kevin:-1},say:{ma:'掛號費少一點，我就不會拖著不去看醫生。',kevin:'健保已經快破產了，還要再降？'}},
+ {id:'q2',name:'健保費率調漲以穩財務',tags:['reform','ins'],cost:-2,d:'調高健保費率與補充保費，避免健保財務破產。',fx:{str:-1},cit:{kevin:-2,wang:-2,de:-1,zhen:1,ma:1},say:{zhen:'健保倒了，大家都沒得用。',wang:'雇主負擔的保費又增加了。'}},
+ {id:'q3',name:'青年心理諮商補助',tags:['univ','inv'],cost:1,d:'15 到 45 歲民眾可以免費接受三次心理諮商。',fx:{stg:-1},cit:{zhen:4,ling:2,kevin:2,chen:1},say:{zhen:'壓力大到失眠時，終於有地方可以說。',kevin:'工作壓力大，知道有資源比較安心。'}},
+ {id:'q4',name:'社區精神復健與社區家園',tags:['care','civ'],cost:2,d:'在社區設置精神障礙者的日間會所與支持住宅。',fx:{stg:-1,def:1},cit:{xiang:2,zhen:2,ma:1,kevin:-1,de:-1},say:{zhen:'讓病友在社區生活，而不是關在醫院。',kevin:'要設在我們社區？很多鄰居會擔心。'}},
+ {id:'q5',name:'私立大學學費補助',tags:['univ','inv'],cost:3,d:'私立大學學生每年補助學費，縮小公私立差距。',fx:{emp:1,eco:.4},cit:{zhen:4,ling:2,chen:1,de:1,kevin:-1},say:{zhen:'不用再背那麼多就學貸款了。',kevin:'應該先把錢花在提升教育品質吧？'}},
+ {id:'q6',name:'技職教育與產學合作',tags:['inv','growth'],cost:2,d:'補助技職學校與企業合作，學生邊學邊做、畢業就業。',fx:{emp:2,eco:.5},cit:{wang:3,zhen:2,chen:1,de:1},say:{wang:'學校教的跟業界接軌，我就敢用新人。'}},
+ {id:'q7',name:'弱勢學童課後照顧與營養午餐',tags:['sel','care'],cost:1,d:'低收入、原住民族與新住民家庭的孩子，課後照顧與午餐免費。',fx:{pov:-1,def:1},cit:{ling:3,yuma:2,ati:1,zhen:1},say:{ling:'下班前孩子有地方去，還能吃頓營養的晚餐。'}},
+ {id:'q8',name:'兒少保護社工人力擴編',tags:['inv','care'],cost:2,d:'增加兒少保護社工，並設 24 小時通報與緊急安置。',fx:{stg:-1},cit:{zhen:3,ling:2,ma:1},say:{zhen:'一個社工負責 40 個案子，根本救不完。'}},
+ {id:'q9',name:'家暴被害人安置與經濟扶助',tags:['sel','care'],cost:1,d:'提供庇護住所、緊急生活費與法律扶助，協助被害人自立。',fx:{pov:-1,def:1},cit:{ling:3,zhen:2,ati:1},say:{ling:'有地方住、有錢過渡，才有勇氣離開。'}},
+ {id:'q10',name:'新住民語言與就業支持',tags:['inv','rights'],cost:1,d:'提供新住民中文課程、證照輔導與就業媒合。',fx:{emp:1,stg:-1},cit:{ati:2,ling:1,zhen:1,wang:1,de:-1},say:{ati:'學好中文以後，我想考照顧服務員證照。',wang:'語言通了，工作就上手得快。'}},
+ {id:'q11',name:'基本工資大幅調升',tags:['rights'],cost:0,d:'基本工資一次調升 8%，並訂定基本工資法。',fx:{pov:-2,eco:.3},cit:{chen:3,zhen:3,ling:2,ati:2,wang:-3,de:-3},say:{zhen:'起薪終於不是 22K 的延伸了。',de:'工讀生時薪一直漲，我只好自己顧攤。',wang:'人事成本增加，只能少請人。'}},
+ {id:'q12',name:'彈性工時與勞動鬆綁',tags:['mkt','growth'],cost:0,d:'放寬加班上限與排班規定，讓勞資自行協商工時。',fx:{emp:1,eco:.4},cit:{wang:4,de:3,kevin:1,chen:-1,zhen:-2,ling:-2},say:{wang:'訂單旺季能彈性調度，才接得了單。',ling:'排班更亂，我要怎麼接送小孩？'}},
+ {id:'q13',name:'租金補貼擴大',tags:['sel'],cost:2,d:'擴大租屋補貼的發放對象，青年與單親家庭優先。',fx:{pov:-1},cit:{zhen:3,ling:3,chen:2,kevin:-1},say:{zhen:'每個月少付三千，差很多。',kevin:'補貼最後可能都被房東漲回去了。'}},
+ {id:'q14',name:'囤房稅與空屋稅',tags:['reform'],cost:-2,d:'持有多戶房屋者提高房屋稅，促使空屋釋出。',fx:{str:-1},cit:{zhen:2,chen:1,ling:1,kevin:-2,wang:-2,liu:-1},say:{zhen:'空屋那麼多，年輕人卻租不到房子。',liu:'我那間老房子是要留給孫子的。'}},
+ {id:'q15',name:'食物銀行與實物給付',tags:['civ','sel'],cost:1,d:'補助民間食物銀行，結合超商即期品提供物資。',fx:{pov:-1},cit:{ma:2,ling:2,yuma:1,de:1,zhen:1},say:{ma:'月底錢不夠時，物資箱幫了大忙。',zhen:'物資不能取代現金，但能救急。'}},
+ {id:'q16',name:'偏鄉公車與需求反應式交通',tags:['univ','green'],cost:2,d:'偏鄉開設預約式小巴，補足公車路線的空白。',fx:{env:1,pov:-1},cit:{yuma:4,ma:3,xiang:2,liu:1},say:{yuma:'打電話預約，小巴就會開到部落口。',ma:'終於可以自己去市場和醫院了。'}},
+ {id:'q17',name:'數位落差培力計畫',tags:['inv','civ'],cost:1,d:'在社區據點教長者與偏鄉居民使用手機、線上申辦。',fx:{stg:-1},cit:{ma:2,liu:2,yuma:2,zhen:1},say:{liu:'學會視訊以後，可以天天看到國外的孫子。'}},
+ {id:'q18',name:'屋頂光電與社區能源合作社',tags:['green','civ'],cost:2,d:'補助居民在屋頂裝太陽能板，賣電收益回饋社區。',fx:{env:2,eco:.3},cit:{zhen:2,de:1,liu:1,yuma:1,wang:1},say:{de:'屋頂裝板子還能賣電，等於多一份收入。'}},
+ {id:'q19',name:'政府採購優先社會企業',tags:['civ','inv'],cost:1,d:'政府採購優先向僱用弱勢者的社會企業購買。',fx:{emp:1,stg:-1},cit:{xiang:2,zhen:2,chen:1,wang:-1},say:{xiang:'庇護工場的訂單穩定，大家才有工作。'}},
+ {id:'q20',name:'社福補助申請一站式整合',tags:['reform','civ'],cost:0,d:'整合各部會補助，只要申請一次就能核對所有資格。',fx:{stg:-1},cit:{ma:2,ling:2,kevin:1,zhen:2,de:1},say:{ling:'以前要跑五個窗口，現在一次就好。'}},
+ {id:'q21',name:'長照保險制',tags:['ins','care','old'],cost:2,d:'長照改用社會保險籌措財源，由勞雇與政府共同繳費。',fx:{def:2,str:2,dec:1},cit:{ma:2,liu:2,kevin:1,wang:-2,chen:-1,de:-1},say:{kevin:'自己繳費、自己有保障，財源比較穩。',de:'又多一筆保費要繳。'}},
+ {id:'q22',name:'外送平台最低報酬保障',tags:['rights'],cost:0,d:'規定平台每趟最低報酬，並公開派單演算法。',fx:{pov:-1},cit:{chen:4,zhen:1,wang:-1,kevin:-1},say:{chen:'平台不能再一直砍單價了。',kevin:'外送費一定會漲，最後還是消費者付。'}}
+);
+// ---- event-only cards (appear only in that event's round) ----
+const EVPOL=[
+ {id:'x1a',ev:'e1',name:'生育津貼加碼',tags:['univ','fam'],cost:2,d:'每生一胎發給一次性津貼，鼓勵生育。',fx:{pov:-1},cit:{ling:2,zhen:1,liu:1,kevin:1,de:-1},say:{zhen:'有幫助，但我更擔心的是養到大的成本。',ling:'錢有用，可是托育才是真的缺。'}},
+ {id:'x1b',ev:'e1',name:'育嬰留停津貼提高至八成薪',tags:['ins','care'],cost:2,d:'育嬰留職停薪期間的津貼從六成提高到八成薪。',fx:{def:1,str:1},cit:{kevin:3,zhen:1,ling:1,wang:-1,chen:-1},say:{kevin:'八成薪我太太就敢請了。',chen:'我們沒有雇主，根本請不到育嬰假。'}},
+ {id:'x2a',ev:'e2',name:'企業薪資補貼與紓困貸款',tags:['growth','stim'],once:true,cost:3,d:'企業不裁員就補貼部分薪資，並提供低利紓困貸款。',fx:{eco:1.5,emp:2},cit:{wang:4,de:2,kevin:1,chen:1},say:{wang:'有補貼我就撐得住，不用裁員。'}},
+ {id:'x2b',ev:'e2',name:'擴大失業給付',tags:['ins'],cost:2,d:'延長失業給付期間，並提高給付比例。',fx:{dec:1,pov:-1},cit:{chen:2,zhen:2,kevin:1,wang:-1},say:{zhen:'剛畢業就遇到不景氣，至少有段緩衝期。'}},
+ {id:'x3a',ev:'e3',name:'全民紓困金',tags:['univ','stim'],once:true,cost:3,d:'每位國民發放一筆紓困金，度過疫情難關。',fx:{eco:1.5,pov:-1},cit:{de:3,chen:2,ling:2,ma:1,yuma:1,kevin:-1},say:{de:'攤子收了兩個月，這筆錢是救命錢。',kevin:'我又不缺，發給真的需要的人就好。'}},
+ {id:'x3b',ev:'e3',name:'急難救助快速通關',tags:['sel'],once:true,cost:1,d:'疫情期間急難救助免實地訪視，三天內撥款。',fx:{pov:-1},cit:{chen:2,ling:2,de:1,yuma:1,zhen:1},say:{zhen:'少了訪視，社工擔心有人冒領，但真的救得比較快。'}},
+ {id:'x4a',ev:'e4',name:'AI 轉職學習帳戶',tags:['inv'],cost:2,d:'每位勞工有一筆學習帳戶，可以用來上數位與轉職課程。',fx:{emp:2,eco:.6},cit:{zhen:2,chen:2,kevin:1,de:1},say:{chen:'終於有錢去學新技能，不用一直跑外送。'}},
+ {id:'x4b',ev:'e4',name:'自動化設備稅（機器人稅）',tags:['reform'],cost:-2,d:'企業以 AI 或機器取代人力時課稅，收入挹注社會安全。',fx:{str:-1},cit:{wang:-3,kevin:-1,chen:2,zhen:2,de:-1},say:{wang:'這是在懲罰創新！',zhen:'被取代的人總要有人照顧。'}},
+ {id:'x5a',ev:'e5',name:'災後重建特別預算',tags:['stim','growth'],once:true,cost:3,d:'編列特別預算，修復道路、橋梁與受損家園。',fx:{eco:1.5,emp:1},cit:{yuma:4,ma:2,wang:1,de:1},say:{yuma:'聯外道路修好之前，部落像一座孤島。'}},
+ {id:'x5b',ev:'e5',name:'韌性防災社區',tags:['civ'],cost:1,d:'補助社區組織防災志工隊，平時演練、災時互助。',fx:{stg:-1},cit:{ma:2,yuma:2,liu:1,zhen:1},say:{ma:'鄰居會來敲門帶我去避難所，比較安心。'}},
+ {id:'x6a',ev:'e6',name:'失智照護全面擴大',tags:['univ','care','old'],cost:3,d:'每個鄉鎮設置失智共同照護中心與據點。',fx:{def:2,dec:1},cit:{ma:3,liu:3,ling:1,zhen:1,kevin:-1},say:{liu:'老伴失智以後，我才知道照顧者有多孤單。'}},
+ {id:'x6b',ev:'e6',name:'中高齡續留職場獎勵',tags:['inv','mkt'],cost:1,d:'僱用 55 歲以上員工的企業可以獲得補助。',fx:{emp:1,eco:.3},cit:{wang:2,de:1,liu:1,kevin:1},say:{wang:'老師傅經驗好，有補助我願意多留幾年。'}},
+ {id:'x7a',ev:'e7',name:'油電價格凍漲補貼',tags:['univ'],once:true,cost:3,d:'由政府吸收油價與電價漲幅，民生物價不漲。',fx:{env:-2,pov:-1},cit:{de:3,wang:2,chen:2,ma:1,kevin:1,zhen:-1},say:{de:'成本不漲，我的滷肉飯就不用漲價。',zhen:'補貼化石燃料，等於鼓勵大家繼續用。'}},
+ {id:'x7b',ev:'e7',name:'弱勢家庭能源補助',tags:['sel'],cost:1,d:'低收入與中低收入家庭的電費、交通費給予補助。',fx:{pov:-1},cit:{ma:2,ling:2,yuma:1},say:{ma:'夏天終於敢開冷氣了。'}},
+ {id:'x8a',ev:'e8',name:'經濟成果全民共享',tags:['univ','stim'],once:true,cost:4,d:'把超徵的稅收以現金普發給全民。',fx:{eco:1,pov:-1},cit:{chen:2,de:2,ma:2,ling:2,zhen:1,kevin:1,wang:-1},say:{kevin:'錢是好，但這樣還債的機會就沒了。'}},
+ {id:'x8b',ev:'e8',name:'設立國家主權基金',tags:['reform','growth'],once:true,cost:3,d:'把景氣好時的結餘存起來投資，留給未來的年金與社福使用。',fx:{eco:2},cit:{kevin:2,zhen:2,wang:1,ma:-1,de:-1},say:{zhen:'為下一代存一筆錢，我覺得很有遠見。',de:'現在就有人過得很苦，為什麼要存起來？'}}
+];
+// ---- petitions: one citizen per round asks for help ----
+const PETS=[
+ {who:'ling',story:'孩子發燒，托嬰中心不收，我請假請到快被老闆開除。',card:{id:'t1',name:'病童臨托與家庭照顧假',tags:['care','rights'],cost:1,d:'設置病童臨時托育，並讓家長可以請有薪家庭照顧假。',fx:{def:1},cit:{ling:4,kevin:1,zhen:1,wang:-1}}},
+ {who:'chen',story:'外送途中被撞骨折，三個月不能工作，沒有任何職災保險。',card:{id:'t2',name:'職災保險擴及自營與平台',tags:['ins','rights'],cost:2,d:'自營作業者與平台工作者可以用低保費加入職災保險。',fx:{dec:1},cit:{chen:4,de:2,wang:-1}}},
+ {who:'yuma',story:'部落的長輩看病要下山三個小時，很多人乾脆不看了。',card:{id:'t3',name:'偏鄉巡迴醫療與遠距看診',tags:['univ','care'],cost:2,d:'醫療車定期上山巡迴，並補助部落設置遠距看診站。',fx:{pov:-1,dec:1},cit:{yuma:5,ma:2}}},
+ {who:'liu',story:'老伴失智以後，我一個人照顧，已經好幾個月沒睡過整晚。',card:{id:'t4',name:'家庭照顧者喘息服務',tags:['care'],cost:1,d:'提供居家喘息與短期住宿照顧，讓照顧者可以休息。',fx:{def:1},cit:{liu:4,ma:2,ling:1}}},
+ {who:'xiang',story:'面試主管一聽我看不到，就說「那你怎麼寫程式？」',card:{id:'t5',name:'就業反歧視與合理調整補助',tags:['rights','inv'],cost:1,d:'強化身障就業歧視申訴，並補助企業添購輔具與調整工作環境。',fx:{emp:1,stg:-1},cit:{xiang:5,wang:1}}},
+ {who:'de',story:'稅務和衛生規定一大堆，光填表就要一個下午，罰單收到手軟。',card:{id:'t6',name:'小商家行政簡化一站式窗口',tags:['reform','growth'],cost:0,d:'簡化小規模營業人的稅務與申報流程，並設單一窗口。',fx:{eco:.4},cit:{de:5,wang:2,kevin:1}}},
+ {who:'wang',story:'工廠缺工缺到接單都不敢接，年輕人都不想進工廠。',card:{id:'t7',name:'產業缺工媒合與技職津貼',tags:['inv','growth'],cost:2,d:'補助技職訓練與產業實習津貼，媒合青年進入缺工產業。',fx:{emp:2,eco:.5},cit:{wang:4,zhen:1,chen:1}}},
+ {who:'kevin',story:'夫妻都是工程師，房價還是高到買不起，只能一直租。',card:{id:'t8',name:'首購族房貸利息補貼',tags:['mkt','fam'],cost:2,d:'首次購屋的年輕家庭，房貸利息由政府補貼一部分。',fx:{str:1},cit:{kevin:4,zhen:2,ling:1,ma:-1}}}
+];
+PETS.forEach(t=>{t.card.pet=t.who;t.card.say={};t.card.say[t.who]='你真的聽見我了，謝謝你。'});
+POL.push(...EVPOL,...PETS.map(t=>t.card));
+POL.forEach(p=>{if(ECO[p.id])p.fx.eco=ECO[p.id]});
+const P=Object.fromEntries(POL.map(p=>[p.id,p]));
+const EVENTS=[
+ {id:'e1',short:'少子化',name:'生育率再創新低',d:'去年新生兒跌破十萬人。',rev:1,boost:{care:1.5},cit:{ling:-1},fxt:['照顧類政策效果 ×1.5','美玲 −1']},
+ {id:'e2',pov:2.5,short:'經濟衰退',name:'全球經濟衰退',d:'出口連續六個月衰退，失業率攀升。',rev:.8,boost:{inv:1.5,growth:1.5,stim:1.6},cit:{chen:-2,wang:-1,de:-1},fxt:['稅收 ×0.8','社會投資、成長與振興類效果放大','小陳 −2、王董與阿德 −1']},
+ {id:'e3',pov:1.5,short:'疫情',name:'新型傳染病爆發',d:'學校停課、服務業停擺。',rev:.9,boost:{univ:1.3,stim:1.4},cit:{chen:-1,ma:-1,de:-2},fxt:['稅收 ×0.9','普及式與振興類效果放大','阿德 −2、小陳與秀英阿嬤 −1']},
+ {id:'e4',pov:1.5,short:'AI 失業潮',name:'AI 取代白領工作',d:'客服、會計、行政職大量消失。',rev:1,boost:{inv:1.5},cit:{zhen:-1,chen:-1,kevin:1},fxt:['社會投資類效果 ×1.5','小禎、小陳 −1、Kevin +1']},
+ {id:'e5',pov:1,short:'颱風',name:'強颱重創東部',d:'道路橋梁中斷，災後重建刻不容緩。',rev:1,oneoff:2,boost:{civ:1.5},cit:{ma:-1,yuma:-2},fxt:['本屆重建支出 +2','公私協力類效果 ×1.5','尤瑪 −2、秀英阿嬤 −1']},
+ {id:'e6',short:'超高齡',name:'正式進入超高齡社會',d:'每五人就有一人超過 65 歲。',rev:1,boost:{old:1.5,reform:1.5},cit:{ma:-1,liu:-1},fxt:['年金與長照政策效果 ×1.5','財政改革類效果 ×1.5','秀英阿嬤、劉伯伯 −1']},
+ {id:'e7',pov:1,short:'油價上漲',name:'國際油價飆漲',d:'運輸與電價同步上揚。',rev:1,boost:{green:1.5},cit:{wang:-1,chen:-1,de:-1},fxt:['綠色政策效果 ×1.5','王董、小陳、阿德 −1']},
+ {id:'e8',pov:-1,short:'景氣繁榮',name:'科技業接單滿載',d:'經濟成長率創十年新高。',rev:1.2,cit:{kevin:1,wang:1},fxt:['稅收 ×1.2','Kevin、王董 +1']}
+];
+const TAX={'低':{rev:14,cit:{kevin:1.5,wang:1.5,de:1}},'中':{rev:18,cit:{}},'高':{rev:22,cit:{kevin:-2,wang:-1.5,de:-1.5}}};
+const HAND=10, HAND_AL=5, BASE_UP=1.6, BASE_DN=1.5, RIV_BASE=.5;
+const BASE=4, DEBT_LINE=18, ROUNDS=5, MAXADD=4, GROWTH=1;
+const cnt=(h,t)=>h.reduce((n,r)=>n+r.pl.add.filter(id=>P[id].tags.includes(t)).length,0);
+const VULN=['ma','chen','ling','xiang','yuma'];
+const UNREST=[
+ {min:0,lv:0,name:'社會平穩',d:'民生大致安穩，沒有大規模的不滿。',fx:'沒有額外影響'},
+ {min:35,lv:1,name:'抗議遊行',d:'物價和生活壓力讓民眾走上街頭，要求政府負責。',fx:'執政黨在弱勢族群的支持度 −1.5'},
+ {min:60,lv:2,name:'大罷工',d:'工會發動罷工、商家罷市，經濟活動停擺好幾天。',fx:'執政黨弱勢族群支持度 −2.5、全島稅收 ×0.9、經濟動能 −1'},
+ {min:80,lv:3,name:'不信任案通過',d:'民怨沸騰，立法院通過不信任案，內閣總辭、提前改選。',fx:'執政黨全體島民支持度 −2、弱勢族群再 −2、稅收 ×0.85、改選成本讓國債 +1'}
+];
+const BASEC={nr:['kevin','wang'],co:['ma','liu','de'],tw:['chen','zhen','de'],ds:['ling','yuma','chen'],fe:['ling','zhen','ma','liu'],gr:['zhen','xiang','yuma','chen']};
+const PARTIES={
+ nr:{name:'新右派',color:'var(--p-nr)',slogan:'小政府、大市場，把選擇權還給個人。',ability:'市場化與財政改革政策成本 −1',
+   miss:[{t:'至少三屆提案選「低稅」',f:h=>h.filter(r=>r.pl.tax==='低').length>=3},{t:'累計提出 3 項以上市場化或財政改革政策',f:h=>cnt(h,'mkt')+cnt(h,'reform')>=3}]},
+ co:{name:'保守主義',color:'var(--p-co)',slogan:'家庭是社會的基石，社區互助先於政府。',ability:'家庭與公私協力政策成本 −1',
+   miss:[{t:'累計提出 3 項以上家庭或公私協力政策',f:h=>cnt(h,'fam')+cnt(h,'civ')>=3},{t:'從未選「高稅」',f:h=>h.length>0&&h.every(r=>r.pl.tax!=='高')}]},
+ tw:{name:'第三條路',color:'var(--p-tw)',slogan:'沒有權利就沒有責任，福利是跳板不是吊床。',ability:'工作福利：選擇式政策附加就業條件，成本 −1',
+   miss:[{t:'累計提出 3 項以上社會投資政策',f:h=>cnt(h,'inv')>=3},{t:'每屆提案的赤字都不超過 2',f:h=>h.length>0&&h.every(r=>r.bal>=-2)}]},
+ ds:{name:'民主社會主義',color:'var(--p-ds)',slogan:'福利是公民權利，不是施捨。',ability:'普及化：每項普及式政策讓所有島民滿意度 +0.5',
+   miss:[{t:'累計提出 4 項以上普及式政策',f:h=>cnt(h,'univ')>=4},{t:'從未提出選擇式（資產調查）政策',f:h=>cnt(h,'sel')===0}]},
+ fe:{name:'女性主義',color:'var(--p-fe)',slogan:'照顧是公共責任，不該只落在女人身上。',ability:'照顧公共化：照顧類政策成本 −1，效果 ×1.25',
+   miss:[{t:'累計提出 3 項以上照顧類政策',f:h=>cnt(h,'care')>=3},{t:'從未提出家庭類政策（把照顧推回家庭）',f:h=>cnt(h,'fam')===0}]},
+ gr:{name:'綠色主義',color:'var(--p-gr)',slogan:'沒有永續的地球，就沒有福利國家。',ability:'碳稅：可額外開徵碳稅，收入 +3（王董不滿）；綠色政策成本 −1',
+   miss:[{t:'至少三屆提案包含綠色政策',f:h=>h.filter(r=>r.pl.add.some(id=>P[id].tags.includes('green'))).length>=3},{t:'從未提出成長型減稅政策',f:h=>cnt(h,'growth')===0}]}
+};
+const REG={
+ lib:{name:'自由主義福利體制',eg:'美國、英國、澳洲',d:'國家只提供最基本的安全網，福利多經過資產調查，鼓勵個人透過市場和工作保障自己。支持者重視效率、選擇自由與工作誘因；批評者擔心保障不足與標籤化。'},
+ cons:{name:'保守統合主義福利體制',eg:'德國、法國、奧地利',d:'社會保險依職業身分設計，保障跟著工作走，並重視家庭與教會、社區等中介組織的角色。支持者看重社會穩定與輔助原則；批評者認為它維持既有階層，也把照顧責任留給家庭。'},
+ sd:{name:'社會民主主義福利體制',eg:'瑞典、丹麥、挪威',d:'福利是公民權利，以普及式給付和公共服務為主，去商品化程度高。支持者看重平等與團結；批評者擔心高稅負、財政壓力與公共服務的效率。'},
+ eap:{name:'東亞生產主義福利體制',eg:'台灣、日本、南韓',d:'社會政策服務經濟發展，重視就業與產業，照顧責任大多由家庭承擔。這是 Holliday 在 Esping-Andersen 三分法之外補充的類型，常用來討論台灣。'}
+};
+// ---------- ART (picture-book gouache style) ----------
+function shade(hex,amt){const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;
+  const f=v=>Math.round(amt>=0?v+(255-v)*amt:v*(1+amt));return '#'+[f(r),f(g),f(b)].map(v=>Math.max(0,Math.min(255,v)).toString(16).padStart(2,'0')).join('')}
+const AV={
+ ma:{bg:'#F6C99A',skin:'#F2C6A0',hair:'bun',hc:'#D9D4CE',shirt:'#8B6BB8'},
+ chen:{bg:'#9FD3CF',skin:'#DDA77E',hair:'helmet',hc:'#23A08F',shirt:'#2A8F80'},
+ ling:{bg:'#F5B5C8',skin:'#F3C9A5',hair:'long',hc:'#4A2E25',shirt:'#D9577F'},
+ xiang:{bg:'#C9DE9C',skin:'#E8B990',hair:'short',hc:'#2A2522',shirt:'#3E6CB5',acc:'shades'},
+ kevin:{bg:'#B8C7EE',skin:'#EFC39C',hair:'side',hc:'#2E2724',shirt:'#36406A',acc:'glasses'},
+ wang:{bg:'#F4D98A',skin:'#DFAE86',hair:'bald',hc:'#6A625A',shirt:'#D9702F',acc:'glasses'},
+ de:{bg:'#F8BFA0',skin:'#D29C72',hair:'cap',hc:'#3567B5',shirt:'#E2803A'},
+ yuma:{bg:'#F7C3B4',skin:'#C99068',hair:'braid',hc:'#2A1F1C',shirt:'#B7353A'},
+ liu:{bg:'#D8D2C0',skin:'#EBC29E',hair:'gray',hc:'#C9C6C0',shirt:'#7A5C44',acc:'glasses'},
+ ati:{bg:'#D9C5F0',skin:'#BF8A64',hair:'hijab',hc:'#7D5CC2',shirt:'#6C4FB0'},
+ zhen:{bg:'#A9E0CE',skin:'#F2CBA8',hair:'pony',hc:'#53372A',shirt:'#239A8A'}
+};
+let FID=0;
+function face(id,mood=0,x,y,s){const a=AV[id],K='#3B2B28',u='f'+(FID++);
+  const m=mood>1.5?'happy':mood<-1?'sad':'flat';
+  const hl=shade(a.hc,.45),hd=shade(a.hc,-.3),st=`stroke="${K}" stroke-width="1.1" stroke-linejoin="round"`;
+  let back='',front='';
+  switch(a.hair){
+   case'bun':back=`<circle cx="32" cy="11" r="6.6" fill="url(#hr${u})" ${st}/>`;front=`<path d="M16.5 29 Q17 14 32 14.5 Q47 14 47.5 29 Q44 20 32 20.5 Q20 20 16.5 29Z" fill="url(#hr${u})" ${st}/><path d="M21 22 Q25 16.5 32 16 M34 16.2 Q41 17 44 22" stroke="${hl}" stroke-width="1" fill="none" opacity=".8"/>`;break;
+   case'helmet':front=`<path d="M14.5 29 Q14.5 9.5 32 9.5 Q49.5 9.5 49.5 29 L46 27.5 Q45 18 32 18 Q19 18 18 27.5Z" fill="url(#hr${u})" ${st}/><path d="M14 27 Q32 24 50 27" stroke="${hd}" stroke-width="3.4" stroke-linecap="round" fill="none"/><path d="M21 15 Q26 11.5 33 11.8" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".55"/>`;break;
+   case'long':back=`<path d="M14.5 30 Q13.5 12.5 32 12 Q50.5 12.5 49.5 30 L51 50 Q44 52 42 45 L22 45 Q20 52 13 50Z" fill="url(#hr${u})" ${st}/>`;front=`<path d="M17 29 Q18.5 14.5 32 14.5 Q45.5 14.5 47 29 Q40 18.5 28.5 21 Q21.5 23 17 29Z" fill="url(#hr${u})" ${st}/><path d="M22 21 Q28 16 36 16.5 M38 18 Q43 21 45 26" stroke="${hl}" stroke-width="1" fill="none" opacity=".7"/>`;break;
+   case'short':front=`<path d="M16.5 28 Q16.5 12 32 12 Q47.5 12 47.5 28 Q45 19 38 19.5 Q30 21.5 22 19.5 Q18 21 16.5 28Z" fill="url(#hr${u})" ${st}/><path d="M22 16 Q28 13.5 35 14" stroke="${hl}" stroke-width="1" fill="none" opacity=".7"/>`;break;
+   case'side':front=`<path d="M16.5 29 Q15.5 12 32 12 Q48.5 12 47.5 29 Q46 19 40 18 Q28 16.5 24 21 Q19 22 16.5 29Z" fill="url(#hr${u})" ${st}/><path d="M25 15.5 Q33 13 41 15.5" stroke="${hl}" stroke-width="1" fill="none" opacity=".7"/>`;break;
+   case'bald':front=`<path d="M16.5 32 Q16 22 20 19.5 L21.5 31Z M47.5 32 Q48 22 44 19.5 L42.5 31Z" fill="url(#hr${u})" ${st}/><ellipse cx="30" cy="17" rx="5" ry="2" fill="#fff" opacity=".35"/>`;break;
+   case'hijab':back=`<path d="M11 52 Q10.5 10 32 9.5 Q53.5 10 53 52 Q42 47 32 47 Q22 47 11 52Z" fill="url(#hr${u})" ${st}/>`;front=`<path d="M16.5 31 Q16.5 14.5 32 14.5 Q47.5 14.5 47.5 31 Q47 18.5 32 18.5 Q17 18.5 16.5 31Z" fill="url(#hr${u})" ${st}/><path d="M15 34 Q14 20 24 13" stroke="${hl}" stroke-width="1.4" fill="none" opacity=".6"/>`;break;
+   case'pony':back=`<path d="M44.5 17 Q57 21 53 40 Q49.5 31 45 27.5Z" fill="url(#hr${u})" ${st}/>`;front=`<path d="M16.5 28 Q16.5 12 32 12 Q47.5 12 47.5 28 Q44 18 32 19 Q22 19 16.5 28Z" fill="url(#hr${u})" ${st}/><path d="M22 17 Q28 13.5 36 14" stroke="${hl}" stroke-width="1" fill="none" opacity=".7"/><circle cx="45.5" cy="18.5" r="2.3" fill="#F5A3B8" ${st}/>`;break;
+   case'braid':back=`<path d="M17 30 Q15 13 32 12.5 Q49 13 47 30 L48 38 Q44 34 44 30 L20 30 Q20 34 16 38Z" fill="url(#hr${u})" ${st}/><path d="M46 30 Q52 40 49 54" stroke="${a.hc}" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M47 36 l3 1 M47.5 42 l3 1 M48 48 l3 1" stroke="${hl}" stroke-width="1"/>`;front=`<path d="M17 28 Q18 15 32 14.5 Q46 15 47 28 Q42 20 32 20.5 Q22 20 17 28Z" fill="url(#hr${u})" ${st}/><path d="M16.2 23.5 Q32 18.5 47.8 23.5 L47.6 27 Q32 22 16.4 27Z" fill="#C9363B" ${st}/><path d="M20 24.4 l3 -1.6 l3 1.6 l3 -1.6 l3 1.6 l3 -1.6 l3 1.6 l3 -1.6 l3 1.6" stroke="#F6E3B4" stroke-width="1" fill="none"/>`;break;
+   case'gray':front=`<path d="M16.5 30 Q15.5 13 32 12.5 Q48.5 13 47.5 30 Q47 21 42 18.5 Q34 15.5 26 17.5 Q19 20 16.5 30Z" fill="url(#hr${u})" ${st}/><path d="M24 16.5 Q32 13.8 41 16.4 M26 19 Q33 17 40 18.6" stroke="#fff" stroke-width="1" fill="none" opacity=".7"/><path d="M24 40 Q32 44 40 40" stroke="${shade(a.skin,-.3)}" stroke-width=".9" fill="none" opacity=".6"/><path d="M20 33 q2 2 4 1 M44 33 q-2 2 -4 1" stroke="${shade(a.skin,-.3)}" stroke-width=".8" fill="none" opacity=".6"/>`;break;
+   case'cap':front=`<path d="M16 27 Q16 11 32 11 Q48 11 48 27 Z" fill="url(#hr${u})" ${st}/><path d="M14 26 Q32 21 54 25 Q55 29 50 29 Q32 26 14 30Z" fill="${hd}" ${st}/><path d="M22 15.5 Q27 12.8 32 13" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".5"/>`;break;
+  }
+  const eyeW=`fill="#2B1E1C"`;
+  let eyes=`<ellipse cx="26.5" cy="30.5" rx="1.9" ry="2.5" ${eyeW}/><ellipse cx="37.5" cy="30.5" rx="1.9" ry="2.5" ${eyeW}/><circle cx="27.1" cy="29.6" r=".7" fill="#fff"/><circle cx="38.1" cy="29.6" r=".7" fill="#fff"/>`;
+  if(m==='happy')eyes=`<path d="M24.2 31 Q26.5 28 28.8 31 M35.2 31 Q37.5 28 39.8 31" stroke="#2B1E1C" stroke-width="1.8" fill="none" stroke-linecap="round"/>`;
+  if(m==='sad')eyes=`<ellipse cx="26.5" cy="31" rx="1.7" ry="2" ${eyeW}/><ellipse cx="37.5" cy="31" rx="1.7" ry="2" ${eyeW}/><circle cx="27" cy="30.4" r=".6" fill="#fff"/><circle cx="38" cy="30.4" r=".6" fill="#fff"/>`;
+  if(a.acc==='shades')eyes=`<rect x="21" y="27" width="10" height="7" rx="3" fill="#222"/><rect x="33" y="27" width="10" height="7" rx="3" fill="#222"/><path d="M31 29.5 H33" stroke="#222" stroke-width="1.6"/><path d="M22.5 28.6 l3 -0.6 M34.5 28.6 l3 -0.6" stroke="#fff" stroke-width="1" opacity=".55"/>`;
+  if(a.acc==='glasses')eyes+=`<rect x="21.4" y="26" width="10.2" height="8.6" rx="3.6" fill="#E8F2FF" fill-opacity=".22" stroke="#4A3A36" stroke-width="1.3"/><rect x="32.4" y="26" width="10.2" height="8.6" rx="3.6" fill="#E8F2FF" fill-opacity=".22" stroke="#4A3A36" stroke-width="1.3"/><path d="M31.6 29.6 H32.4" stroke="#4A3A36" stroke-width="1.3"/>`;
+  const brow=m==='sad'?`<path d="M23 25.2 L28.5 26.8 M41 25.2 L35.5 26.8" stroke="${shade(a.hc,-.2)}" stroke-width="1.6" stroke-linecap="round"/>`:`<path d="M23.5 25.4 Q26.5 24 29 25.4 M35 25.4 Q37.5 24 40.5 25.4" stroke="${shade(a.hc==='#D9D4CE'?'#9A928A':a.hc,0)}" stroke-width="1.4" fill="none" stroke-linecap="round" opacity=".85"/>`;
+  const mouth=m==='happy'?`<path d="M26.8 36.6 Q32 43.2 37.2 36.6 Q32 38.4 26.8 36.6Z" fill="#A8433F" stroke="#5A2A26" stroke-width=".9"/><path d="M29.5 39.8 Q32 41.2 34.5 39.8" stroke="#F2928C" stroke-width="1.3" fill="none"/>`:m==='sad'?`<path d="M28 40.4 Q32 36.8 36 40.4" stroke="#5A2A26" stroke-width="1.6" fill="none" stroke-linecap="round"/>`:`<path d="M28.6 38.3 Q32 39.8 35.4 38.3" stroke="#5A2A26" stroke-width="1.6" fill="none" stroke-linecap="round"/>`;
+  const sweat=m==='sad'?`<path d="M47.3 19 Q50 24 47.3 26.6 Q44.6 24 47.3 19Z" fill="#8FD0F2" stroke="#4A8FB8" stroke-width=".8"/>`:'';
+  const pos=s?`x="${x}" y="${y}" width="${s}" height="${s}"`:'';
+  return `<svg ${pos} viewBox="-1 -1 66 66" aria-hidden="true"><defs>
+   <radialGradient id="bg${u}" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="${shade(a.bg,.55)}"/><stop offset="1" stop-color="${a.bg}"/></radialGradient>
+   <radialGradient id="sk${u}" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="${shade(a.skin,.25)}"/><stop offset=".7" stop-color="${a.skin}"/><stop offset="1" stop-color="${shade(a.skin,-.18)}"/></radialGradient>
+   <linearGradient id="hr${u}" x1="0" y1="0" x2=".3" y2="1"><stop offset="0" stop-color="${shade(a.hc,.25)}"/><stop offset=".6" stop-color="${a.hc}"/><stop offset="1" stop-color="${hd}"/></linearGradient>
+   <linearGradient id="sh${u}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${shade(a.shirt,.25)}"/><stop offset="1" stop-color="${shade(a.shirt,-.25)}"/></linearGradient>
+   <radialGradient id="bl${u}"><stop offset="0" stop-color="#F28C9A" stop-opacity="${m==='happy'?.7:.4}"/><stop offset="1" stop-color="#F28C9A" stop-opacity="0"/></radialGradient>
+   <clipPath id="c${u}"><circle cx="32" cy="32" r="31"/></clipPath></defs>
+   <g clip-path="url(#c${u})"><circle cx="32" cy="32" r="31" fill="url(#bg${u})"/>
+    <g filter="url(#rough)" opacity=".5"><circle cx="12" cy="14" r="9" fill="#fff" opacity=".35"/><circle cx="54" cy="44" r="12" fill="${shade(a.bg,-.12)}" opacity=".6"/></g>
+    ${back}<path d="M8 68 Q10 48 32 47 Q54 48 56 68Z" fill="url(#sh${u})" ${st}/><path d="M26 47.5 L32 54 L38 47.5" fill="${shade(a.shirt,.35)}" stroke="${K}" stroke-width="1" stroke-linejoin="round"/>
+    <path d="M27.5 40 H36.5 V49 Q32 51.5 27.5 49Z" fill="${shade(a.skin,-.08)}" ${st}/><path d="M27.5 41 Q32 46 36.5 41 V40 H27.5Z" fill="${shade(a.skin,-.3)}" opacity=".45"/>
+    <ellipse cx="16.8" cy="31.5" rx="2.6" ry="3.6" fill="${shade(a.skin,-.05)}" ${st}/><ellipse cx="47.2" cy="31.5" rx="2.6" ry="3.6" fill="${shade(a.skin,-.05)}" ${st}/>
+    <ellipse cx="32" cy="30.5" rx="15" ry="16.5" fill="url(#sk${u})" ${st}/>
+    <ellipse cx="22.6" cy="35.4" rx="4" ry="2.8" fill="url(#bl${u})"/><ellipse cx="41.4" cy="35.4" rx="4" ry="2.8" fill="url(#bl${u})"/>
+    ${front}${brow}${eyes}<path d="M32.4 31.8 Q31 34.6 32.8 35.1" stroke="${shade(a.skin,-.35)}" stroke-width="1.3" fill="none" stroke-linecap="round"/>${mouth}${sweat}</g>
+   <circle cx="32" cy="32" r="31" fill="none" stroke="${K}" stroke-width="1.6"/></svg>`}
+
+const SCENE={
+ hero:{sky:['#9ED3EC','#FCE7C8'],sun:'#FFD27A',weather:''},
+ e1:{sky:['#BFE0F2','#FDF0DC'],sun:'#FFDB8A',weather:'kites'},
+ e2:{sky:['#9AA6B5','#D7D9DA'],sun:null,weather:'gloom'},
+ e3:{sky:['#C9D9DC','#EEF1E6'],sun:'#F3E4B8',weather:'haze'},
+ e4:{sky:['#1E2550','#5B4A8A'],sun:null,weather:'night'},
+ e5:{sky:['#4A5868','#8D99A3'],sun:null,weather:'storm'},
+ e6:{sky:['#F2A877','#FCE0B8'],sun:'#FF9D5C',weather:''},
+ e7:{sky:['#C9A97E','#EAD9B8'],sun:'#E8A54E',weather:'smog'},
+ e8:{sky:['#7FC8EE','#FFF1C9'],sun:'#FFD24D',weather:'fireworks'},
+ ref:{sky:['#A9D8F0','#FFF0D6'],sun:'#FFD27A',weather:'flags'},
+ demo:{sky:['#F7B985','#FDE6C6'],sun:'#FF9F64',weather:''}
+};
+function landscape(key='hero',withFaces=false){const sc=SCENE[key]||SCENE.hero,u='ls'+(FID++),H=withFaces?310:230,night=sc.weather==='night';
+  const dark=['gloom','storm','night'].includes(sc.weather);
+  const win=night?'#FFD66B':'#FFE7A3';
+  const clouds=(c,o)=>`<g filter="url(#rough)" fill="${c}" opacity="${o}"><ellipse cx="70" cy="52" rx="34" ry="12"/><ellipse cx="92" cy="44" rx="22" ry="12"/><ellipse cx="54" cy="46" rx="16" ry="9"/><ellipse cx="236" cy="34" rx="30" ry="10"/><ellipse cx="256" cy="28" rx="18" ry="10"/></g>`;
+  let wx='';
+  if(sc.weather==='storm')wx=`${clouds('#3B4552',.85)}<g stroke="#D7E3EE" stroke-width="1.2" opacity=".55">${Array.from({length:46},(_,i)=>{const x=(i*37)%400,y=(i*53)%190;return `<path d="M${x} ${y} l-6 14"/>`}).join('')}</g><path d="M300 30 l-12 26 h10 l-14 30" stroke="#FFF2A8" stroke-width="3" fill="none" stroke-linejoin="round"/>`;
+  else if(sc.weather==='gloom')wx=clouds('#7B8794',.8);
+  else if(sc.weather==='haze')wx=`<rect width="400" height="${H}" fill="#E8F0E8" opacity=".35"/>${clouds('#fff',.6)}`;
+  else if(sc.weather==='smog')wx=`<rect y="60" width="400" height="120" fill="#B48A5A" opacity=".22" filter="url(#rough)"/><g fill="#7A6450" opacity=".5"><ellipse cx="330" cy="96" rx="18" ry="9"/><ellipse cx="342" cy="80" rx="13" ry="8"/></g><rect x="322" y="104" width="10" height="34" fill="#6E6258"/>`;
+  else if(sc.weather==='night')wx=`<g fill="#fff">${Array.from({length:28},(_,i)=>`<circle cx="${(i*71)%400}" cy="${(i*29)%90+8}" r="${i%4===0?1.4:.8}" opacity="${.5+(i%3)*.2}"/>`).join('')}</g><circle cx="320" cy="44" r="16" fill="#F4EBC8"/><circle cx="327" cy="40" r="14" fill="${sc.sky[0]}"/><g fill="#8FE3FF" opacity=".7"><rect x="48" y="96" width="5" height="40"/><rect x="58" y="86" width="6" height="50"/><rect x="69" y="100" width="5" height="36"/></g>`;
+  else if(sc.weather==='fireworks')wx=`<g stroke-width="2" stroke-linecap="round">${[[90,46,'#FF6B8B'],[300,40,'#FFB13D'],[200,26,'#5BC0EB']].map(([cx,cy,c])=>Array.from({length:12},(_,i)=>{const a=i/12*6.283;return `<path d="M${cx+Math.cos(a)*6} ${cy+Math.sin(a)*6} L${cx+Math.cos(a)*16} ${cy+Math.sin(a)*16}" stroke="${c}"/>`}).join('')).join('')}</g>${clouds('#fff',.5)}`;
+  else if(sc.weather==='kites')wx=`${clouds('#fff',.75)}<g stroke="#3B2B28" stroke-width="1"><path d="M110 40 l10 -10 l10 10 l-10 14z" fill="#FF8FA3"/><path d="M120 54 q-6 30 10 60" fill="none" opacity=".5"/><path d="M286 56 l8 -8 l8 8 l-8 11z" fill="#7CC4F0"/><path d="M294 67 q8 24 -4 50" fill="none" opacity=".5"/></g>`;
+  else if(sc.weather==='flags')wx=`${clouds('#fff',.75)}<path d="M0 30 Q100 50 200 34 T400 40" stroke="#3B2B28" stroke-width="1" fill="none"/>${Array.from({length:14},(_,i)=>{const x=10+i*29,y=33+Math.sin(i)*6;return `<path d="M${x} ${y} l9 0 l-4.5 12z" fill="${['#FF6B8B','#FFC24A','#4FB3A9','#5B8DEF'][i%4]}"/>`}).join('')}`;
+  else wx=clouds('#fff',.8);
+  const faces=withFaces?`<rect x="0" y="232" width="400" height="78" fill="#FFF8EC"/><path d="M0 232 Q200 222 400 232" stroke="#3B2B28" stroke-width="1.6" fill="#FFF8EC"/>${CIT.map((c,i)=>face(c.id,i%3===1?0:2,4+i*35.6,246,34)).join('')}`:'';
+  return `<svg viewBox="0 0 400 ${H}" role="img" aria-label="福利島風景插畫" preserveAspectRatio="xMidYMid slice"><defs>
+   <linearGradient id="sky${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sc.sky[0]}"/><stop offset="1" stop-color="${sc.sky[1]}"/></linearGradient>
+   <linearGradient id="sea${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark?'#5A7E92':'#6FBFD9'}"/><stop offset="1" stop-color="${dark?'#2A4456':'#2E7FA8'}"/></linearGradient>
+   <linearGradient id="gr${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${dark?'#7FA57A':'#A6D67E'}"/><stop offset="1" stop-color="${dark?'#456E50':'#4E9C5C'}"/></linearGradient>
+   <radialGradient id="glow${u}"><stop offset="0" stop-color="${sc.sun||'#fff'}" stop-opacity=".9"/><stop offset="1" stop-color="${sc.sun||'#fff'}" stop-opacity="0"/></radialGradient>
+   <radialGradient id="tree${u}" cx=".35" cy=".3"><stop offset="0" stop-color="${dark?'#7FAE76':'#9BD27A'}"/><stop offset="1" stop-color="${dark?'#2F5A3E':'#3E8A4E'}"/></radialGradient></defs>
+   <rect width="400" height="${H}" fill="url(#sky${u})"/>
+   ${sc.sun?`<circle cx="312" cy="70" r="70" fill="url(#glow${u})"/><circle cx="312" cy="70" r="24" fill="${sc.sun}"/>`:''}
+   ${wx}
+   <path d="M0 132 Q40 104 86 118 Q120 96 160 116 Q210 98 250 120 Q300 104 340 118 Q372 108 400 120 V150 H0Z" fill="${dark?'#6C7E8C':'#9DBFD3'}" opacity=".75" filter="url(#rough)"/>
+   <rect y="136" width="400" height="${H-136}" fill="url(#sea${u})"/>
+   <g stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity="${dark?.25:.55}"><path d="M20 168 h18 M70 196 h24 M330 180 h20 M360 206 h16 M280 214 h22 M40 220 h14"/></g>
+   <g transform="translate(330 150)"><path d="M0 14 h34 l-6 8 h-22z" fill="#C9583F" stroke="#3B2B28" stroke-width="1.2"/><path d="M16 14 V-14 L32 10Z" fill="#FFF6E6" stroke="#3B2B28" stroke-width="1.2"/></g>
+   <path d="M40 186 Q70 120 140 124 Q176 86 236 104 Q300 96 346 160 Q360 184 320 190 Q200 202 62 196Z" fill="url(#gr${u})" stroke="#3B2B28" stroke-width="1.4" filter="url(#rough)"/>
+   <path d="M48 190 Q200 204 334 186 Q336 196 300 200 Q200 210 70 202Z" fill="#F2DDB0" stroke="#3B2B28" stroke-width="1.1"/>
+   <path d="M236 104 Q300 96 346 160 Q300 150 260 132Z" fill="#2E6B45" opacity=".22"/>
+   ${[[78,170,13],[96,160,10],[300,150,12],[318,162,9],[220,120,11]].map(([x,y,r])=>`<rect x="${x-1.5}" y="${y}" width="3" height="${r}" fill="#6B4A32"/><circle cx="${x}" cy="${y-r*.4}" r="${r}" fill="url(#tree${u})" stroke="#3B2B28" stroke-width="1"/>`).join('')}
+   <g stroke="#3B2B28" stroke-width="1.2" stroke-linejoin="round">
+    <path d="M118 150 h26 v22 h-26z" fill="#FFF3DF"/><path d="M114 151 l17 -14 l17 14z" fill="#E0704A"/><rect x="124" y="156" width="6" height="6" fill="${win}"/><rect x="134" y="156" width="6" height="6" fill="${win}"/>
+    <path d="M152 140 h22 v32 h-22z" fill="#FFF8EC"/><path d="M149 141 l14 -12 l14 12z" fill="#4E7BC4"/><rect x="158" y="148" width="5" height="6" fill="${win}"/><rect x="166" y="148" width="5" height="6" fill="${win}"/><rect x="161" y="160" width="6" height="12" fill="#8A5A3A"/>
+    <path d="M250 146 h30 v26 h-30z" fill="#FFF3DF"/><path d="M245 147 l20 -16 l20 16z" fill="#8E6CC9"/><rect x="258" y="157" width="8" height="15" fill="#8A5A3A"/>
+    <path d="M200 132 h28 v40 h-28z" fill="#FFFDF6"/><path d="M196 133 h36 v-8 h-36z" fill="#F2B544"/><text x="214" y="153" text-anchor="middle" font-size="9" font-weight="900" fill="#3B2B28" stroke="none" font-family="Noto Serif TC,serif">投票所</text><rect x="209" y="160" width="10" height="12" fill="#8A5A3A"/>
+    <path d="M226 96 V126" /><g transform="translate(240 102) rotate(-8)"><circle r="11" fill="#FFFDF6" stroke="#D23B3B" stroke-width="2.6"/><text y="5" text-anchor="middle" font-size="13" fill="#D23B3B" stroke="none" font-weight="900" font-family="Noto Sans TC,sans-serif">卜</text></g>
+    <path d="M344 120 l6 -40 h8 l6 40z" fill="#FFF8EC"/><path d="M346 108 h16 M348 94 h12" stroke="#D84A4A" stroke-width="5"/><rect x="348" y="72" width="12" height="9" fill="#FFE59A"/>
+   </g>
+   <g stroke="#3B2B28" stroke-width="1.1" fill="none" opacity=".7"><path d="M120 70 q4 -4 8 0 q4 -4 8 0"/><path d="M150 84 q3 -3 6 0 q3 -3 6 0"/></g>
+   ${faces}
+   <rect width="400" height="${H}" filter="url(#tex)" opacity=".5" style="mix-blend-mode:multiply"/>
+  </svg>`}
+const ART_DEFS=`<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+ <filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter>
+ <filter id="tex" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="8"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .25  0 0 0 0 .15  0 0 0 .35 0"/></filter>
+</defs></svg>`;
+if(typeof document!=='undefined')document.body.insertAdjacentHTML('afterbegin',ART_DEFS);
+// ---------- STATE ----------
+const ME=0;
+const NP=6,GS=[0,1,2,3,4,5],RIV=[1,2,3,4,5];
+const blank=(tax='中')=>Array.from({length:NP},()=>({tax,add:[],cut:[],carbon:false}));
+const fresh=()=>({phase:'title',round:0,choice:null,assign:null,event:null,used:[],rot:0,platforms:blank(),adj:GS.map(()=>0),q:null,qPick:null,qDebt:0,history:[],enacted:[],debt:0,govTax:'中',bankrupt:false,refl:['','',''],eco:0,onceUsed:[],hand:[],redrawn:false,unrest:0,povShock:0,crisis:0,unrestLog:[],pets:[],pet:null,lastProbs:null,wmod:{},ref:null,refAlign:{},refSpend:0,demoDone:false,lastGov:null,filter:'all'});
+let S;
+const ev=()=>EVENTS.find(e=>e.id===S.event)||{rev:1,boost:{},cit:{},oneoff:0};
+const key=g=>S.assign[g];
+const r1=x=>Math.round(x*10)/10;
+const pname=g=>PARTIES[key(g)].name;
+const pcolor=g=>PARTIES[key(g)].color;
+const who=g=>g===ME?`${pname(g)}<span class="you">你</span>`:pname(g);
+const sign=v=>(v>0?'+':'')+v;
+
+const ideo=(id,k)=>P[id].tags.reduce((a,t)=>a+((PREF[k]&&PREF[k].w[t])||0),0);
+const fit=(id,k)=>{const v=ideo(id,k);return v>=2?1:v<0?-1:0};
+const evHit=id=>{const b=ev().boost||{};return P[id].tags.some(t=>b[t])};
+const special=p=>p.refOnly||p.ev||p.pet;
+const Wt=c=>S.wmod[c.id]!=null?S.wmod[c.id]:c.w;
+function costOf(id,k){const p=P[id];let c=p.cost;if(c<=0)return c;const t=p.tags;if(k==='nr'&&(t.includes('mkt')||t.includes('reform')))c--;if(k==='tw'&&t.includes('sel'))c--;if(k==='co'&&(t.includes('fam')||t.includes('civ')))c--;if(k==='gr'&&t.includes('green'))c--;if(k==='fe'&&t.includes('care'))c--;return Math.max(1,c)}
+function money(g){const pl=S.platforms[g],e=ev(),k=key(g);
+  const rev=r1((TAX[pl.tax].rev+GROWTH*S.round+S.eco)*e.rev*[1,1,.9,.85][S.crisis]+(k==='gr'&&pl.carbon?3:0));
+  const exist=S.enacted.filter(x=>!pl.cut.includes(x.id)).reduce((a,x)=>a+x.cost,0);
+  const adds=pl.add.reduce((a,id)=>a+costOf(id,k),0);
+  const spend=BASE+exist+adds+(e.oneoff||0)+(g===ME?S.refSpend:0);
+  return {rev,exist,adds,spend,bal:r1(rev-spend)}}
+function mult(p,k){let m=1;const b=ev().boost||{};p.tags.forEach(t=>{if(b[t])m*=b[t]});if(k==='fe'&&p.tags.includes('care'))m*=1.25;return m}
+function sat(g){const pl=S.platforms[g],k=key(g),e=ev(),s={};
+  CIT.forEach(c=>s[c.id]=(TAX[pl.tax].cit[c.id]||0)+((e.cit||{})[c.id]||0));
+  pl.add.forEach(id=>{const p=P[id],m=mult(p,k);for(const c in p.cit)s[c]+=p.cit[c]*m;if(k==='ds'&&p.tags.includes('univ'))CIT.forEach(c=>s[c.id]+=.5)});
+  pl.add.forEach(id=>{const f=fit(id,k);const bm=g===ME?1:RIV_BASE;if(f>0)BASEC[k].forEach(c=>s[c]+=BASE_UP*bm);if(f<0)BASEC[k].forEach(c=>s[c]-=BASE_DN*bm)});
+  pl.cut.forEach(id=>{const p=P[id];for(const c in p.cit)s[c]-=p.cit[c]*.8});
+  if(k==='gr'&&pl.carbon)s.wang-=2;
+  if(g===ME)for(const c in S.refAlign)s[c]+=S.refAlign[c];
+  if(S.lastGov===g){const pv=island().poverty;VULN.forEach(c=>{s[c]-=Math.max(0,pv-12)*.35+[0,1.5,2.5,4][S.crisis];if(pv<10)s[c]+=.8});if(S.crisis===3)CIT.forEach(c=>s[c.id]-=2)}
+  if(g===ME&&S.pet){const t=PETS.find(x=>x.who===S.pet);if(t&&!pl.add.includes(t.card.id))s[S.pet]-=2}
+  const bal=money(g).bal;if(bal<-1){const pen=(-bal-1)*.35;CIT.forEach(c=>s[c.id]-=pen*(c.id==='kevin'||c.id==='wang'?1.8:1))}
+  for(const c in s)s[c]=r1(s[c]);return s}
+function votes(){const sats=GS.map(sat),raw=GS.map(()=>0),voters=CIT.filter(c=>Wt(c)>0),W=voters.reduce((a,c)=>a+Wt(c),0);
+  const probs={};voters.forEach(c=>{const ex=sats.map(s=>Math.exp(5*Math.tanh(s[c.id]/5)/2.2)),sum=ex.reduce((a,b)=>a+b,0);probs[c.id]=ex.map(x=>x/sum);ex.forEach((x,g)=>raw[g]+=Wt(c)*x/sum)});
+  let pct=raw.map((x,g)=>Math.max(0,x/W*100+S.adj[g]));const t=pct.reduce((a,b)=>a+b,0)||1;pct=pct.map(x=>x/t*100);
+  return {sats,pct,probs}}
+function island(){const f={pov:0,dec:0,str:0,def:0,stg:0,env:0,emp:0};S.enacted.forEach(x=>{const p=P[x.id];for(const k in p.fx)f[k]+=p.fx[k]});
+  f.poverty=Math.min(28,Math.max(3,14+f.pov*.8+S.povShock));return f}
+function islandMood(){const s={};CIT.forEach(c=>s[c.id]=(TAX[S.govTax].cit[c.id]||0));S.enacted.forEach(x=>{const p=P[x.id];for(const c in p.cit)s[c]+=p.cit[c]});return s}
+// ---------- AI RIVALS ----------
+const PREF={
+ nr:{tax:'低',w:{stim:-1,mkt:3,reform:3.5,growth:3,sel:1,civ:1,univ:-3,rights:-2,green:-1,ins:-1},tol:0},
+ co:{tax:'低',w:{stim:1,fam:3.5,civ:3,sel:1,ins:1,old:1,growth:1,univ:-1,rights:-1.5,green:-.5},tol:1},
+ tw:{tax:'中',w:{stim:1,inv:3,sel:1.5,mkt:1,civ:1,reform:1,univ:-.5},tol:0},
+ ds:{tax:'高',w:{stim:1.5,univ:3,ins:1,care:1,rights:1.5,sel:-4,mkt:-4,growth:-2,reform:-3,fam:-1},tol:2},
+ fe:{tax:'中',w:{care:3,univ:1.2,rights:2,mkt:-.5,fam:-4},tol:1},
+ gr:{tax:'中',w:{stim:-1.5,green:4,univ:1.5,inv:1.5,civ:1,growth:-5},tol:1,carbon:true}
+};
+function aiPlatform(g){const k=key(g),pr=PREF[k],pl={tax:pr.tax,add:[],cut:[],carbon:!!pr.carbon};S.platforms[g]=pl;
+  if(!['nr','co'].includes(k)&&money(g).bal<4)pl.tax='高';
+  if(k==='co'&&money(g).bal<3)pl.tax='中';
+  if((k==='nr'||k==='tw')&&S.enacted.length){const cuts=S.enacted.filter(x=>P[x.id].cost>0&&!P[x.id].tags.some(t=>['mkt','growth','reform'].includes(t))).sort((a,b)=>(P[b.id].tags.includes('univ')-P[a.id].tags.includes('univ'))||b.cost-a.cost);
+    for(const x of cuts){if(money(g).bal>=(k==='nr'?3:1)||pl.cut.length>=(k==='nr'?2:1))break;pl.cut.push(x.id)}}
+  const cand=POL.filter(p=>(!S.enacted.some(x=>x.id===p.id)&&!S.onceUsed.includes(p.id)&&!special(p)||(p.ev===S.event&&!S.enacted.some(x=>x.id===p.id)&&!S.onceUsed.includes(p.id)))&&!(pr.avoid||[]).includes(p.id))
+    .map(p=>({p,s:p.tags.reduce((a,t)=>a+(pr.w[t]||0),0)+Math.random()*1.5})).filter(c=>c.s>1).sort((a,b)=>b.s-a.s);
+  for(const c of cand){if(pl.add.length>=MAXADD)break;const left=money(g).bal;if(costOf(c.p.id,k)<=left+pr.tol)pl.add.push(c.p.id)}
+}
+
+// ---------- INTERPELLATION (each card challenges a choice; insights give both sides) ----------
+const has=(pl,t)=>pl.add.some(id=>P[id].tags.includes(t));
+const QS=[
+ {id:'deficit',when:(pl,m)=>m.bal<-2,q:m=>`財政委員質詢：你們的政見赤字 ${-m.bal}，錢要從哪裡來？`,
+  opts:[{t:'先舉債，照顧人民比較要緊。',vote:2,debt:1,i:'支持者認為，景氣差時政府舉債支出可以穩定社會；批評者認為，債務會轉嫁給下一代，形成世代不公。'},
+        {t:'坦白說，下一屆我們會提出加稅方案。',vote:-3,debt:0,i:'誠實面對財源會流失選票，但福利支出和租稅負擔本來就是同一件事的兩面。'}]},
+ {id:'univ',when:pl=>pl.add.includes('p1')||pl.add.includes('p3'),q:()=>`記者追問：連年薪三百萬的 Kevin 也能領，這樣不是在浪費稅金嗎？`,
+  opts:[{t:'普及發放，才不會有人被貼上「窮人」的標籤。',vote:0,debt:0,i:'普及主義者認為，人人都領可以避免汙名、降低行政成本，也讓中產階級願意支持福利。'},
+        {t:'我們會對高所得者加稅，把錢收回來。',vote:1,debt:-.5,i:'選擇主義者則認為，有限資源應集中在最需要的人身上。「普及給付＋累進稅」是常見的折衷做法。'}]},
+ {id:'public',when:pl=>pl.add.includes('p6')||pl.add.includes('p7')||pl.add.includes('p14'),q:()=>`審計部報告：公辦服務排隊要半年，單位成本比民間高。你們怎麼回應？`,
+  opts:[{t:'公共服務重視品質與勞動條件，不能只看成本。',vote:-1,debt:0,i:'支持公辦的人認為，政府直接提供可以確保普及、穩定和服務人員的勞動條件。'},
+        {t:'我們會引進民間業者，用契約管理品質。',vote:2,debt:-.5,i:'福利多元主義主張由政府、市場、非營利組織與家庭共同提供服務。批評者則擔心品質與勞動條件被壓低。'}]},
+ {id:'tax',when:pl=>pl.tax==='高',q:()=>`工商團體記者會：加稅會讓企業出走，工作機會也會消失！`,
+  opts:[{t:'企業也受惠於公共建設，應負擔社會責任。',vote:-1,debt:0,i:'支持者認為，健全的福利與教育能提升勞動力品質，對企業長期有利。'},
+        {t:'我們會搭配產業投資抵減，留住企業。',vote:1,debt:1,i:'減稅配套能降低反彈，但實際稅收會打折扣。租稅競爭是全球化下每個福利國家都面對的壓力。'}]},
+ {id:'cut',when:pl=>pl.cut.length>0,q:(m,pl)=>`抗議群眾包圍立法院：為什麼要刪「${P[pl.cut[0]].name}」？`,
+  opts:[{t:'財政必須有紀律，這是對下一代負責。',vote:-3,debt:-.5,i:'支持改革者認為，不刪減就只能加稅或舉債。研究也指出福利一旦實施就會形成受益群體，刪減的政治代價很高（Pierson 的福利緊縮政治）。'},
+        {t:'我們會設兩年過渡期，讓現有受益者繼續領。',vote:1,debt:1,i:'過渡條款能降低衝擊，但改革的省錢效果也會延後出現。'}]},
+ {id:'sel',when:pl=>has(pl,'sel'),q:()=>`記者追問：資產調查讓申請者被問得很難堪，很多人乾脆不申請，你們怎麼看？`,
+  opts:[{t:'審查必須嚴格，才能確保錢用在最需要的人身上。',vote:0,debt:-.5,i:'選擇式福利的優點是目標效率高、成本低；缺點是汙名和「未請領率」，真正需要的人可能被擋在門外。'},
+        {t:'我們會簡化審查，由社工主動通知符合資格的人。',vote:2,debt:.5,i:'主動式福利（outreach）能降低汙名，但需要投入行政與社工人力。'}]},
+ {id:'voucher',when:pl=>pl.add.includes('p5'),q:()=>`偏鄉議員質詢：長照服務券在山上業者很少，拿了也不一定用得到！`,
+  opts:[{t:'只要有需求，市場自然會進來，政府不該什麼都自己做。',vote:-2,debt:0,i:'市場派認為，競爭能提升效率與選擇；但服務券的前提是有足夠的供給者，偏鄉常是市場失靈的地方。'},
+        {t:'政府補助偏鄉設置據點，都市地區維持服務券。',vote:2,debt:1,i:'在不同地區採用不同工具，是福利多元主義常見的混合做法。'}]},
+ {id:'family',when:pl=>has(pl,'fam'),q:()=>`婦女團體質詢：這些家庭政策，是不是又把照顧責任推回給媳婦和女兒？`,
+  opts:[{t:'家庭是最溫暖的照顧者，政府應該支持而不是取代家庭。',vote:0,debt:0,i:'保守主義與輔助原則認為，照顧應先由家庭和社區承擔，政府扮演支持角色。'},
+        {t:'我們會同時規劃喘息服務，減輕家庭照顧者負擔。',vote:1,debt:.5,i:'女性主義學者批評「再家庭化」政策會強化性別分工，因此主張「去家庭化」，讓照顧可以由公共服務分擔。'}]},
+ {id:'reform',when:pl=>pl.add.includes('p24'),q:()=>`退休團體抗議：說好的年金怎麼可以改？這是政府違背承諾！`,
+  opts:[{t:'不改革，年金會破產，年輕人一毛都領不到。',vote:-1,debt:-.5,i:'支持改革者重視財務永續與世代公平。'},
+        {t:'我們會保障弱勢長者的最低給付不受影響。',vote:1,debt:.5,i:'反對者強調信賴保護原則。在改革中設「保底」是常見的妥協方式。'}]},
+ {id:'ati',when:(pl,m,s)=>!pl.add.includes('p13')&&s.ati<=0,q:()=>`移工團體記者會：阿蒂們繳稅、照顧島上的長輩，卻沒有人替她們說話。你們的立場是？`,
+  opts:[{t:'政府資源有限，必須先照顧本國選民。',vote:0,debt:0,i:'這個選擇不會流失任何選票。值得討論的是：沒有投票權的人，他們的需求在民主政治中要怎麼被聽見？'},
+        {t:'下屆我們會推動移工勞動保障。',vote:-1,debt:0,i:'改善移工權益可能提高雇主和家庭的照顧成本，這是勞動權益與照顧可負擔性之間的取捨。'}]},
+ {id:'debate',when:()=>true,q:()=>`電視辯論：主持人請你用一句話說明，你們的政見最照顧誰？`,
+  opts:[{t:'照顧最需要幫助的人，把錢花在刀口上。',vote:1,debt:0,i:'這是選擇主義的語言：資源集中在最需要的人身上，重視效率。'},
+        {t:'照顧每一位島民，不管他是誰。',vote:1,debt:0,i:'這是普及主義的語言：福利是公民權，不必先證明自己夠窮。'}]}
+];
+function pickQ(){const pl=S.platforms[ME],m=money(ME),s=sat(ME);const ok=QS.filter(q=>q.id!=='debate'&&q.when(pl,m,s));
+  const q=ok.length?ok[Math.floor(Math.random()*ok.length)]:QS.find(q=>q.id==='debate');return {id:q.id,text:q.q(m,pl)}}
+
+function bubble(c,g){const pl=S.platforms[g],k=key(g);let best=null,bv=0;
+  pl.add.forEach(id=>{const p=P[id],v=(p.cit[c.id]||0)*mult(p,k);if(p.say[c.id]&&Math.abs(v)>Math.abs(bv)){bv=v;best=p.say[c.id]}});
+  if(best)return {t:best,m:bv>0?'happy':'mad'};
+  for(const id of pl.cut){const v=P[id].cit[c.id]||0;if(v>0)return {t:`「${P[id].name}」要被砍掉？那我怎麼辦！`,m:'mad'}}
+  const tx=TAX[pl.tax].cit[c.id]||0;
+  if(tx>0)return {t:'少繳一點稅，讚。',m:'happy'};
+  if(tx<0)return {t:'又要加稅？我認真考慮移民了。',m:'mad'};
+  if(k==='gr'&&pl.carbon&&c.id==='wang')return {t:'碳稅？工廠的成本又上去了。',m:'mad'};
+  if(money(g).bal<-3&&(c.id==='kevin'||c.id==='wang'))return {t:`赤字 ${-money(g).bal}？以後誰來還這筆債？`,m:'mad'};
+  const any=pl.add.reduce((a,id)=>a+(P[id].cit[c.id]||0),0);
+  if(any>0)return {t:'嗯，有照顧到我一點。',m:'happy'};
+  if(any<0)return {t:'這些政策對我沒好處。',m:'mad'};
+  return {t:'你的政見跟我沒什麼關係。',m:''}}
+function regime(){const f=island(),tc=t=>S.enacted.filter(x=>P[x.id].tags.includes(t)).length;
+  const sc={sd:f.dec+f.def*.8-f.str*.6-f.stg*.6+tc('univ'),cons:f.str*1.2+tc('ins')*2+tc('fam')*1.6+tc('civ')*.8+(f.def<=1?2:0)+1,
+   lib:tc('mkt')*2+tc('reform')*1.5+f.stg*.8+(f.dec<=3?3:0),eap:tc('growth')*2.5+f.emp*.6+(f.def<=1?2:0)+(f.dec>=2&&f.dec<=6?2:0)};
+  return {k:Object.keys(sc).reduce((a,b)=>sc[b]>sc[a]?b:a),f}}
+function radar(f){const ax=[['去商品化',f.dec],['去家庭化',f.def],['就業',f.emp],['環境',f.env],['低階層化',5-f.str],['低汙名',4-f.stg]];
+  const n=x=>Math.max(.05,Math.min(1,(x+3)/12)),cx=190,cy=170,R=118,pt=(i,r)=>{const a=i/ax.length*2*Math.PI;return [cx+r*Math.sin(a),cy-r*Math.cos(a)]};
+  let g='';[.25,.5,.75,1].forEach(k=>g+=`<polygon points="${ax.map((_,i)=>pt(i,R*k).join(',')).join(' ')}" fill="none" stroke="var(--line)"/>`);
+  ax.forEach((a,i)=>{const [x,y]=pt(i,R),[lx,ly]=pt(i,R+26);g+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--line)"/><text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="var(--ink)" font-family="Noto Sans TC,sans-serif">${a[0]}</text>`});
+  const poly=ax.map((a,i)=>pt(i,R*n(a[1])).join(',')).join(' ');
+  return `<svg viewBox="0 0 380 340" role="img" aria-label="福利島體制雷達圖">${g}<polygon points="${poly}" fill="var(--sea)" fill-opacity=".28" stroke="var(--sea)" stroke-width="2.5"/>${ax.map((a,i)=>{const [x,y]=pt(i,R*n(a[1]));return `<circle cx="${x}" cy="${y}" r="4.5" fill="var(--sea)"/>`}).join('')}</svg>`}
+function scores(){return GS.map(g=>{const h=S.history.map(r=>({pl:r.platforms[g],sat:r.sats[g],bal:r.bals[g]})),p=PARTIES[key(g)];
+  const ms=p.miss.map(m=>m.f(h)),vs=S.history.reduce((a,r)=>a+r.pct[g],0),gov=S.history.filter(r=>r.gov===g).length;
+  return {g,ms,votes:r1(vs),gov,total:r1(S.bankrupt?0:vs+gov*10+ms.filter(Boolean).length*15)}})}
+const myAdds=()=>S.history.flatMap(r=>r.platforms[ME].add);
+const myTag=t=>myAdds().filter(id=>P[id].tags.includes(t)).length;
+const ACH=[
+ {n:'長期執政',d:'五屆都由你執政',f:()=>S.history.length===ROUNDS&&S.history.every(r=>r.gov===ME)},
+ {n:'民意之王',d:'單屆得票率超過 40%',f:()=>S.history.some(r=>r.pct[ME]>=40)},
+ {n:'永遠的在野黨',d:'一次都沒有執政',f:()=>S.history.length>0&&S.history.every(r=>r.gov!==ME)},
+ {n:'阿蒂被看見了',d:'提出移工勞動保障',f:()=>myAdds().includes('p13')},
+ {n:'社工的好朋友',d:'提出社工人力與薪資方案',f:()=>myAdds().includes('p19')},
+ {n:'照顧公共化',d:'提出 3 項以上照顧政策',f:()=>myTag('care')>=3},
+ {n:'普及主義者',d:'提出 4 項以上普及式政策',f:()=>myTag('univ')>=4},
+ {n:'財政紀律',d:'每屆政見都沒有赤字',f:()=>S.history.length>0&&S.history.every(r=>r.bals[ME]>=0)},
+ {n:'改革大刀',d:'累計刪減 2 項以上方案',f:()=>S.history.reduce((a,r)=>a+r.platforms[ME].cut.length,0)>=2},
+ {n:'振興經濟',d:'提出振興或成長政策',f:()=>myTag('stim')+myTag('growth')>=2},
+ {n:'改革先鋒',d:'提出財政改革類政策',f:()=>myTag('reform')>=1},
+ {n:'安定民心',d:'五屆民怨都沒有超過 35',f:()=>S.unrestLog.length>=ROUNDS&&S.unrestLog.every(x=>x.lv===0)},
+ {n:'倒閣風暴',d:'在你執政時發生不信任案',f:()=>S.unrestLog.some(x=>x.lv===3&&x.gov===ME)},
+ {n:'破產製造機',d:'在你執政時國家破產',f:()=>S.bankrupt&&S.lastGov===ME}
+];
+function medal(on,i){return `<svg class="medal" viewBox="0 0 56 56" aria-hidden="true"><path d="M17 2 L28 20 L39 2Z" fill="${on?'var(--pink)':'var(--soft)'}" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/><circle cx="30" cy="35" r="18" fill="var(--ink)"/><circle cx="28" cy="33" r="18" fill="${on?'var(--yellow)':'var(--soft)'}" stroke="var(--ink)" stroke-width="2"/><circle cx="28" cy="33" r="12.5" fill="none" stroke="var(--ink)" stroke-width="1.3" stroke-dasharray="2 2.4"/><text x="28" y="38.5" text-anchor="middle" font-size="15" font-family="IBM Plex Mono,monospace" font-weight="600" fill="#1C2040">${i+1}</text></svg>`}
+const RQ=['你為了拿到選票，放棄了哪些原本的理念？如果重來一次，你會怎麼選？','整場遊戲中，哪一位島民一直被忽略？在真實的台灣，他對應到哪些人？','最後的福利體制跟你的意識形態一致嗎？是哪些決定讓它變成這樣？'];
+function summaryText(){const {k}=regime(),sc=scores(),me=sc[ME],rank=[...sc].sort((a,b)=>b.total-a.total).findIndex(s=>s.g===ME)+1,got=ACH.filter(a=>a.f()).map(a=>a.n);
+  return [`【福利島大選 學習單】`,`我的政黨：${pname(ME)}`,`總分：${me.total}（第 ${rank} 名，執政 ${me.gov} 屆，累計得票 ${me.votes}%）`,
+   `政黨目標：${PARTIES[key(ME)].miss.map((m,i)=>`${m.t}（${me.ms[i]?'達成':'未達成'}）`).join('；')}`,
+   `成就：${got.join('、')||'無'}`,`民怨變化：${S.unrestLog.map(x=>x.unrest).join(' → ')||'無'}`,`全島最後的福利體制：${REG[k].name}${S.bankrupt?'（國家破產）':''}`,'',
+   ...S.history.map(r=>`第 ${r.round+1} 屆｜${EVENTS.find(e=>e.id===r.event).name}｜我的政見：${r.platforms[ME].tax}稅，${r.platforms[ME].add.map(id=>P[id].name).join('、')||'無新方案'}｜執政：${pname(r.gov)}`),'',
+   ...RQ.map((q,i)=>`${i+1}. ${q}\n${S.refl[i]||'（未填寫）'}`)].join('\n')}
+
+// ---------- RENDER ----------
+const $=id=>document.getElementById(id);
+let prevSat=null;
+function render(){
+  const R=ROUNDS,done=S.history.length;
+  $('pips').innerHTML=['title','setup'].includes(S.phase)?'':Array.from({length:R},(_,i)=>`<span class="pip ${i<done?'done':i===S.round&&!['final','imf'].includes(S.phase)?'now':''}" title="第 ${i+1} 屆"></span>`).join('');
+  const isl=island(),dp=Math.min(100,S.debt/DEBT_LINE*100);
+  $('hstats').innerHTML=S.phase==='title'?'':`<div class="hstat"><span class="l">國債</span><span class="v ${dp>66?'hot':''}">${r1(S.debt)}<small class="muted" style="font-size:11px">/${DEBT_LINE}</small></span><span class="debtmini"><i class="${dp>66?'hot':''}" style="width:${dp}%"></i></span></div>
+   <div class="hstat"><span class="l">經濟</span><span class="v" style="color:var(--teal)">+${r1(S.eco)}</span></div>
+   <div class="hstat pov"><span class="l">貧窮率</span><span class="v">${r1(isl.poverty)}%</span></div>
+   <div class="hstat"><span class="l">民怨</span><span class="v ${S.unrest>=60?'hot':''}">${S.unrest}</span><span class="debtmini"><i class="${S.unrest>=60?'hot':''}" style="width:${S.unrest}%;background:${S.unrest>=80?'var(--stamp)':S.unrest>=35?'var(--orange)':'var(--teal)'}"></i></span></div>`;
+  ({title:rTitle,setup:rSetup,news:rNews,ref:rRef,demo:rDemo,budget:rBudget,results:rResults,final:rFinal,imf:rImf})[S.phase]($('stage'));
+}
+function citStrip(mood,showDelta,prev){return `<div class="cits">${CIT.map(c=>{const v=mood[c.id],ch=prev&&prev[c.id]!==v;
+  return `<div class="cit" data-cid="${c.id}" tabindex="0"><div class="ava ${ch?'bump':''}">${face(c.id,v)}</div><div class="nm">${c.name}</div>
+   ${showDelta?`<div class="dv ${v>0?'up':v<0?'down':'zero'}">${v===0?'±0':sign(r1(v))}</div>`:''}
+   ${Wt(c)?`<div class="badge-vote">${Wt(c)}% 選民</div>`:'<span class="novote">無投票權</span>'}</div>`}).join('')}</div>`}
+function islandSVG(){return landscape('hero',true)}
+function rTitle(st){
+  st.innerHTML=`<div class="stack"><div class="hero"><div class="poster">${islandSVG()}</div><div class="stack" style="gap:12px">
+     <span class="kicker" style="align-self:flex-start">社會政策與立法 · 單人策略遊戲</span><h1><span data-t="福利島大選">福利島大選</span></h1>
+     <p class="sub">帶領一個政黨參選五屆，用有限的預算照顧島上十一位居民。你會打造出什麼樣的福利國家？</p></div></div>
+   <div class="card"><h3 style="margin-bottom:10px">怎麼玩</h3><ul class="how">
+     <li><span>選一個政黨。每個政黨有自己的理念、特殊能力和目標。</span></li>
+     <li><span>每屆轉一次新聞輪盤，突發事件會改變稅收和島民需要。</span></li>
+     <li><span>每屆發 10 張政策手牌，包含島民的陳情卡和本屆事件限定政策：一半符合你的理念，一部分能回應當屆事件。提出符合理念的政策能鞏固基本盤，違背理念則會流失他們。</span></li>
+     <li><span>回答質詢、開票。得票最高的政黨執政，政策會真的實施。</span></li>
+     <li><span>貧窮率會累積成民怨：民怨太高會引發抗議、罷工，甚至不信任案倒閣，執政黨要負責。</span></li>
+     <li><span>第 3 屆會舉行公投，第 5 屆選民結構會改變。五屆結束後揭曉福利體制，小心國債超過紅線！</span></li></ul></div></div>`;
+  bar(`<span class="grow small muted">約 20 分鐘 · 建議直向持手機</span><button class="btn primary" data-a="totitle">開始遊戲</button>`);
+}
+function rSetup(st){const ks=Object.keys(PARTIES);
+  st.innerHTML=`<div class="stack"><div><p class="eyebrow">第一步</p><h2>選擇你的政黨</h2><p class="muted small" style="margin-top:4px">另外五黨由電腦扮演，跟你競爭島民的選票。</p></div>
+    <div class="plist">${ks.map(k=>{const p=PARTIES[k],on=S.choice===k;return `<button class="pcard ${on?'on':''}" style="--pc:${p.color}" data-a="choose" data-k="${k}" aria-pressed="${on}">
+      <span class="band"><span class="pname">${p.name}</span>${on?'<span class="check">✓</span>':''}</span>
+      <span class="body"><span class="slogan">${p.slogan}</span><span class="ab"><b>特殊能力</b>　${p.ability}</span>
+      <ul>${p.miss.map(m=>`<li>${m.t}</li>`).join('')}</ul></span></button>`}).join('')}</div>
+    <p class="small muted">計分：五屆累計得票率＋每屆執政 10 分＋每達成一項政黨目標 15 分。國家破產時所有人歸零。</p></div>`;
+  bar(`<button class="btn" data-a="rand">隨機</button><span class="grow small" style="text-align:right">${S.choice?`已選：<b style="color:${PARTIES[S.choice].color}">${PARTIES[S.choice].name}</b>`:'<span class="muted">點一張卡片</span>'}</span><button class="btn primary" data-a="start" ${S.choice?'':'disabled'}>出發</button>`);
+}
+function wheelSVG(){const n=EVENTS.length,R=136,cx=150,cy=150,cols=['--yellow','--pink','--teal','--blue'];let out='';
+  EVENTS.forEach((e,i)=>{const a0=i*360/n*Math.PI/180,a1=(i+1)*360/n*Math.PI/180,am=(a0+a1)/2;
+   const x0=cx+R*Math.sin(a0),y0=cy-R*Math.cos(a0),x1=cx+R*Math.sin(a1),y1=cy-R*Math.cos(a1);
+   const used=S.used.includes(e.id)&&S.event!==e.id;
+   const fill=used?'var(--soft)':`color-mix(in srgb,var(${cols[i%4]}) ${i%4===0?85:55}%,var(--surface))`;
+   const tx=cx+92*Math.sin(am),ty=cy-92*Math.cos(am),deg=am*180/Math.PI;
+   out+=`<path d="M${cx},${cy} L${x0},${y0} A${R},${R} 0 0 1 ${x1},${y1} Z" style="fill:${fill}" stroke="var(--ink)" stroke-width="2"/>
+    <text x="${tx}" y="${ty}" transform="rotate(${deg} ${tx} ${ty})" text-anchor="middle" dominant-baseline="middle" font-size="15" font-weight="900" fill="var(--ink)" opacity="${used?.35:1}" font-family="Noto Serif TC,serif">${e.short}</text>`});
+  return `<svg viewBox="0 0 300 300" role="img" aria-label="事件輪盤"><circle cx="155" cy="155" r="146" fill="var(--ink)"/><circle cx="150" cy="150" r="146" fill="var(--ink)"/>${Array.from({length:16},(_,i)=>{const a=i/16*2*Math.PI;return `<circle cx="${150+141*Math.sin(a)}" cy="${150-141*Math.cos(a)}" r="3" fill="var(--yellow)"/>`}).join('')}<g id="wheelg" style="transform:rotate(${S.rot}deg)">${out}</g><circle cx="150" cy="150" r="26" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5"/><text x="150" y="159" text-anchor="middle" font-size="24" font-weight="900" fill="var(--stamp)" font-family="Noto Sans TC,sans-serif">卜</text></svg>`}
+function paper(r){const g=r.gov,pl=r.platforms[g],first=pl.add[0]?P[pl.add[0]].name:null;
+  const hl=g===ME?`${pname(g)}勝選！${first?`「${first}」即將上路`:'承諾穩健施政'}`:`${pname(g)}拿下執政權${first?`，「${first}」將上路`:''}`;
+  const sub=pl.cut.length?`同時刪減「${P[pl.cut[0]].name}」，受影響民眾揚言抗議。`:r.bals[g]<0?`新政府預算赤字 ${-r.bals[g]}，國債持續攀升。`:'新政府預算收支平衡，財政部鬆一口氣。';
+  return `<div class="paper"><div class="mast"><b>福利島日報</b><span class="small muted num">第 ${r.round+1} 屆</span></div><div class="hl">${hl}</div><p class="small muted">${sub}</p></div>`}
+function rNews(st){const e=S.event?ev():null,last=S.history[S.history.length-1];
+  st.innerHTML=`<div class="stack"><div><p class="eyebrow">第 ${S.round+1} 屆 · 共 ${ROUNDS} 屆</p><h2>新聞快報</h2></div>
+   ${last?paper(last):''}
+   <div class="news"><div class="wheelwrap"><svg class="pointer" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 32 L3 10 Q3 2 15 2 Q27 2 27 10Z" fill="var(--stamp)" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="15" cy="11" r="3.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/></svg>${wheelSVG()}</div>
+   ${S.round>0?thermo():''}
+   <div class="bulletin"><div class="bar"><span>福利島新聞台</span><span class="live">LIVE</span></div><div class="vign">${landscape(e?e.id:'hero')}</div><div class="body">
+   ${e?`<div class="headline">${e.name}</div><p>${e.d}</p><div class="fx">${e.fxt.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
+     <p class="small muted">想一想：這則新聞讓誰的處境變差了？你的政見要怎麼回應？</p>`
+     :`<div class="headline muted">今天會發生什麼事？</div><p class="muted">每屆一則重大事件，會改變稅收和島民的需要。轉過的事件不會再出現。</p>`}
+   </div><div class="ticker"><span>國債 ${r1(S.debt)}，破產紅線 ${DEBT_LINE}　·　目前實施 ${S.enacted.length} 項福利方案　·　移工阿蒂在島上工作第 6 年，仍沒有投票權</span></div></div></div>
+   <div><h3 style="margin-bottom:8px">島民現況</h3>${citStrip(islandMood(),false)}</div></div>`;
+  bar(e?`<span class="grow small muted">事件：${e.short}</span><button class="btn primary" data-a="tobudget">${S.round===2&&!S.ref?'前往公投':S.round===4&&!S.demoDone?'看人口變遷':'開始編預算'}</button>`:`<span class="grow small muted">輪到你了</span><button class="btn stamp" data-a="spin" id="spinbtn">轉動輪盤</button>`);
+}
+const FILTERS=[['all','全部'],['univ','普及式'],['sel','選擇式'],['mkt','市場化'],['care','照顧'],['inv','社會投資'],['fam','家庭'],['civ','公私協力'],['reform','財政改革'],['ins','社會保險'],['green','綠色'],['rights','勞動權益']];
+function rBudget(st){const g=ME,k=key(g),pt=PARTIES[k],pl=S.platforms[g],m=money(g),now=sat(ME);
+  const list=S.hand.map(id=>P[id]);
+  st.innerHTML=`<div class="stack">
+   <div><p class="eyebrow">第 ${S.round+1} 屆 · ${ev().name}</p><h2>編列你的政見</h2></div>
+   <div class="tray" style="--pc:${pt.color}"><span class="lab">政見 <span class="num">${pl.add.length}/${MAXADD}</span></span>${pl.add.length||pl.cut.length?pl.add.map(id=>`<span class="tchip">${P[id].name}<button data-a="rm" data-id="${id}" aria-label="移除${P[id].name}">×</button></span>`).join('')+pl.cut.map(id=>`<span class="tchip cut">刪減 ${P[id].name}<button data-a="cut" data-id="${id}" aria-label="恢復${P[id].name}">×</button></span>`).join(''):'<span class="small muted">還沒選任何政策，往下挑選政策卡</span>'}</div>
+   <details class="card mine" style="--pc:${pt.color}"><summary><span class="pn">${pt.name}</span><span class="small">能力與目標 ▾</span></summary>
+     <div class="small inside" style="display:flex;flex-direction:column;gap:6px"><span><b>特殊能力</b>　${pt.ability}</span><span><b>基本盤</b>　${BASEC[k].map(id=>CIT.find(c=>c.id===id).name).join('、')}：提出「符合理念」的政策會更支持你，「違背理念」會流失他們。</span><ul style="margin:0;padding-left:18px">${pt.miss.map(x=>`<li>${x.t}</li>`).join('')}</ul></div></details>
+   <div class="card" style="padding:12px 12px 4px"><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:14px">島民即時反應</b><span class="small muted">支持度隨你的選擇變化</span></div>${citStrip(now,true,prevSat)}</div>
+   <div class="stack" style="gap:8px"><b style="font-size:14px">稅率</b><div class="seg">${['低','中','高'].map(t=>`<button class="${pl.tax===t?'on':''}" data-a="tax" data-t="${t}" aria-pressed="${pl.tax===t}">${t}稅<small>收入 ${r1((TAX[t].rev+GROWTH*S.round+S.eco)*ev().rev)}</small></button>`).join('')}</div>
+    ${k==='gr'?`<label class="row small" style="min-height:40px"><input type="checkbox" id="carbon" ${pl.carbon?'checked':''} style="width:20px;height:20px"> 開徵碳稅（收入 +3，王董不開心）</label>`:''}</div>
+   ${S.enacted.length?`<details class="fold" ${pl.cut.length?'open':''}><summary>既有方案 ${S.enacted.length} 項（花費 ${m.exist}，可以刪減）</summary><div class="stack" style="gap:6px;margin-top:6px">${S.enacted.map(x=>`<div class="exi ${pl.cut.includes(x.id)?'cut':''}"><span>${P[x.id].name} <span class="num muted">${x.cost}</span></span><button class="btn sm" data-a="cut" data-id="${x.id}">${pl.cut.includes(x.id)?'恢復':'刪減'}</button></div>`).join('')}</div></details>`:''}
+   ${S.pet?(()=>{const c=CIT.find(x=>x.id===S.pet),t=PETS.find(x=>x.who===S.pet),done=pl.add.includes(t.card.id);return `<div class="petition ${done?'ok':''}"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,done?2:-2)}</div><div class="pin"><p class="eyebrow">本屆陳情　${c.grp}</p><b>${c.name}：「${t.story}」</b><span class="small">${done?'你已經把「'+t.card.name+'」放進政見，'+c.name+'很感動。':'回應陳情：把手牌裡的「'+t.card.name+'」放進政見。不回應，'+c.name+'會對你失望。'}</span></div></div>`})():''}
+   <div class="stack" style="gap:8px"><div class="row" style="justify-content:space-between"><b style="font-size:14px">本屆手牌　<span class="num muted">${S.hand.length} 張</span></b><button class="btn sm" data-a="redraw" ${S.redrawn?'disabled':''}>${S.redrawn?'本屆已重抽':'重抽未選的牌'}</button></div>
+    <div class="cards">${list.map(p=>{const on=pl.add.includes(p.id),en=S.enacted.some(x=>x.id===p.id),c=costOf(p.id,k),used=S.onceUsed.includes(p.id),dis=en||used,full=!on&&pl.add.length>=MAXADD;
+      return `<button class="pol ${on?'on':''} ${full?'full':''} ${p.pet?'petc':''} ${p.ev?'evc':''}" style="--pc:${pt.color}" data-a="pol" data-id="${p.id}" ${dis?'disabled':''} aria-pressed="${on}">
+       <span class="pt">${p.name}</span><span class="coin ${c<0?'save':''}">${c<0?'省'+(-c):c}${c<p.cost&&c>0||(c===0&&p.cost>0)?`<s>${p.cost}</s>`:''}</span>
+       <span class="tags">${p.tags.filter(t=>TAGN[t]).map(t=>`<span class="tag ${t}">${TAGN[t]}</span>`).join('')}${fit(p.id,k)>0?'<span class="tag fit">符合理念</span>':fit(p.id,k)<0?'<span class="tag anti">違背理念</span>':''}${evHit(p.id)?'<span class="tag evb">事件加成</span>':''}${p.pet?'<span class="tag petb">陳情</span>':''}${p.ev?'<span class="tag evx">本屆限定</span>':''}${p.once?'<span class="tag once">一次性</span>':''}${p.fx.eco?`<span class="tag eco">帶動經濟 +${p.fx.eco}</span>`:''}${en?'<span class="tag">已實施</span>':''}${used?'<span class="tag">已發放過</span>':''}</span>
+       <span class="pd">${p.d}</span>${impact(p,k)}</button>`}).join('')}</div></div></div>`;
+  prevSat=now;
+  const over=m.spend>m.rev,w=Math.min(100,m.spend/Math.max(m.rev,m.spend)*100);
+  bar(`<div class="grow wallet"><div class="t"><span>收入 <span class="num">${m.rev}</span>・支出 <span class="num">${m.spend}</span></span><span class="bal ${m.bal<0?'neg':'pos'}">${m.bal<0?'赤字 ':'結餘 '}${sign(m.bal)}</span></div><div class="meter"><i class="${over?'over':''}" style="width:${w}%"></i></div></div><button class="btn primary" data-a="count">公布政見</button>`);
+}
+const avail=p=>!S.enacted.some(x=>x.id===p.id)&&!S.onceUsed.includes(p.id);
+function fixedCards(){const out=POL.filter(p=>p.ev&&p.ev===S.event&&avail(p)).map(p=>p.id);
+  S.pet=S.pets[S.round]||null;const t=PETS.find(x=>x.who===S.pet);if(t&&avail(t.card))out.unshift(t.card.id);return out}
+function deal(){const k=key(ME);const pool=POL.filter(p=>!special(p)&&avail(p)).map(p=>p.id);
+  const take=(arr,n,used)=>shuffle(arr.filter(id=>!used.includes(id))).slice(0,n);
+  const fixed=fixedCards();
+  const appeal=id=>CIT.reduce((a,c)=>a+Math.max(0,P[id].cit[c.id]||0)*Wt(c),0)/Math.max(1,costOf(id,k));
+  const aligned=pool.filter(id=>fit(id,k)>0).sort((a,b)=>appeal(b)-appeal(a)).slice(0,8);
+  let hand=take(aligned,5,[]);
+  hand=hand.concat(take(pool.filter(id=>evHit(id)&&fit(id,k)>=0),1,hand));
+  hand=hand.concat(take(pool.filter(id=>fit(id,k)===0).sort((a,b)=>appeal(b)-appeal(a)).slice(0,10),1,hand));
+  hand=hand.concat(take(pool,HAND-fixed.length-hand.length,hand));
+  S.hand=fixed.concat(shuffle(hand));S.platforms[ME].add=[];}
+function redraw(){const k=key(ME),pl=S.platforms[ME],fixed=fixedCards(),keep=S.hand.filter(id=>pl.add.includes(id)&&!fixed.includes(id));
+  const pool=POL.filter(p=>!special(p)&&avail(p)&&!S.hand.includes(p.id)).map(p=>p.id);
+  const need=HAND-fixed.length-keep.length,al=shuffle(pool.filter(id=>fit(id,k)>0)),ot=shuffle(pool.filter(id=>fit(id,k)<=0)),na=Math.ceil(need/2);
+  S.hand=fixed.concat(keep,al.slice(0,na),ot.slice(0,need-Math.min(na,al.length))).slice(0,HAND);S.redrawn=true;toast('換了 '+(S.hand.length-fixed.length-keep.length)+' 張新牌');}
+function impact(p,k){const xs=CIT.map(c=>({c,v:r1((p.cit[c.id]||0)*mult(p,k))})).filter(x=>x.v!==0);
+  const up=xs.filter(x=>x.v>0).sort((a,b)=>b.v-a.v).slice(0,3),dn=xs.filter(x=>x.v<0).sort((a,b)=>a.v-b.v).slice(0,2);
+  return `<span class="imp">${up.map(x=>`<span class="ic up">${x.c.name} +${x.v}</span>`).join('')}${dn.map(x=>`<span class="ic dn">${x.c.name} ${x.v}</span>`).join('')}</span>`}
+function pickRef(){const ok=REFS.filter(f=>!S.enacted.some(x=>x.id===f.pid));return (ok.length?ok:REFS)[Math.floor(Math.random()*(ok.length||REFS.length))].id}
+function runRef(){const R=REFS.find(f=>f.id===S.ref.topic),p=P[R.pid],st=S.ref.stance,sp=S.ref.spend;
+  const votes={};let yes=0,no=0,tot=0;
+  CIT.forEach(c=>{const w=Wt(c);if(!w){votes[c.id]='none';return}tot+=w;let o=(p.cit[c.id]||0);
+    if(st!=='none'&&Math.abs(o)<2.5)o+=(st==='yes'?1:-1)*sp*1.1;
+    const v=o>=1?'yes':o<=-1?'no':'skip';votes[c.id]=v;if(v==='yes')yes+=w;if(v==='no')no+=w});
+  const pass=yes>no&&yes>=tot*.25;S.refSpend=sp;
+  S.refAlign={};if(st!=='none')CIT.forEach(c=>{const v=votes[c.id];if(v==='yes'||v==='no')S.refAlign[c.id]=(v===st?1.5:-1.5)});
+  if(pass&&!S.enacted.some(x=>x.id===R.pid))S.enacted.push({id:R.pid,cost:p.cost});
+  S.ref.result={votes,yes:r1(yes/tot*100),no:r1(no/tot*100),skip:r1(100-(yes+no)/tot*100),pass};buzz(pass?[30,60,30]:40)}
+function rRef(st){const R=REFS.find(f=>f.id===S.ref.topic),res=S.ref.result,p=P[R.pid];
+  const lab={yes:'同意',no:'不同意',skip:'沒去投',none:'無投票權'};
+  st.innerHTML=`<div class="stack"><div><p class="eyebrow">第 3 屆 · 特別事件</p><h2>${R.title}</h2></div>
+   <div class="bulletin"><div class="vign">${landscape('ref')}</div><div class="body"><p class="eyebrow">公投主文</p><div class="headline" style="font-size:clamp(21px,5.6vw,28px)">${R.q}</div>
+    <div class="grid2" style="gap:10px"><div class="insight"><b>支持方</b><br>${R.pro}</div><div class="insight"><b>反對方</b><br>${R.con}</div></div>
+    <p class="small muted">通過門檻：同意票多於不同意票，且同意票達全體有投票權者的 1/4。若通過，「${p.name}」立即實施，不論誰執政。</p></div></div>
+   ${res?`<div class="card stack" style="gap:12px"><div class="row" style="justify-content:space-between"><h3>${res.pass?'公投通過':'公投未通過'}</h3><span class="kicker" style="background:${res.pass?'var(--teal)':'var(--stamp)'}">${res.pass?'PASSED':'REJECTED'}</span></div>
+     <div class="refbar"><i class="y" style="width:${res.yes}%"></i><i class="n" style="width:${res.no}%"></i><span class="th" style="left:25%"></span></div>
+     <div class="row small"><span>同意 <b class="num">${res.yes}%</b></span><span>不同意 <b class="num">${res.no}%</b></span><span class="muted">沒去投 <span class="num">${res.skip}%</span></span><span class="muted">｜虛線為 25% 門檻</span></div>
+     <div class="feed">${CIT.map(c=>{const v=res.votes[c.id];return `<div class="say"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,v==='yes'?2:v==='no'?-2:0)}</div><div class="bub ${v==='yes'?'happy':v==='no'?'mad':''}"><b>${c.name}</b>${lab[v]}${v==='skip'?'：這議題跟我關係不大。':v==='none'?'：我不能投票。':''}</div></div>`}).join('')}</div>
+     <p class="insight">${S.ref.stance==='none'?'你選擇不表態，島民對你的看法不受影響。':'跟你立場相同的島民，這屆會更支持你；立場相反的會扣分。'}${res.pass?`「${p.name}」已列入實施中的方案，成本 ${p.cost<0?'省 '+(-p.cost):p.cost}。`:''}</p></div>`
+   :`<div class="card stack" style="gap:12px"><b>你的政黨立場</b><div class="seg">${[['yes','支持'],['no','反對'],['none','不表態']].map(([v,n])=>`<button class="${S.ref.stance===v?'on':''}" data-a="stance" data-v="${v}">${n}</button>`).join('')}</div>
+     <b>投入宣傳經費（會從本屆預算扣除）</b><div class="seg">${[0,1,2].map(v=>`<button class="${S.ref.spend===v?'on':''}" data-a="spend" data-v="${v}" ${S.ref.stance==='none'&&v?'disabled':''}>${v?v+' 點':'不宣傳'}<small>${v?'說服立場不堅定的人':''}</small></button>`).join('')}</div>
+     <div><b style="font-size:14px">島民目前的看法</b>${citStrip(Object.fromEntries(CIT.map(c=>[c.id,(p.cit[c.id]||0)*1.2])),true)}</div></div>`}</div>`;
+  bar(res?`<span class="grow small muted">${res.pass?'公投通過':'公投未通過'}</span><button class="btn primary" data-a="refdone">開始編預算</button>`:`<span class="grow small muted">選好立場後開票</span><button class="btn stamp" data-a="refvote">公投開票</button>`)}
+function rDemo(st){
+  st.innerHTML=`<div class="stack"><div><p class="eyebrow">第 5 屆 · 最終選戰</p><h2>人口變遷：選民變了</h2></div>
+   <div class="bulletin"><div class="vign">${landscape('demo')}</div><div class="body"><p>十幾年過去，福利島的人口結構改變了。這一屆的選票，會用新的比例計算。</p></div></div>
+   <div class="card stack" style="gap:12px">${DEMO.map(dm=>{const c=CIT.find(x=>x.id===dm.id);return `<div class="say"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,0)}</div><div class="bub" style="flex:1"><b>${c.name}</b>代表 <span class="num">${c.w}%</span> → <b class="num" style="color:${dm.to>c.w?'var(--good)':'var(--bad)'}">${dm.to}%</b> 選民<br><span class="small muted">${dm.why}</span></div></div>`}).join('')}
+    <div class="say"><div class="ava">${face('ati',-2)}</div><div class="bub mad" style="flex:1"><b>阿蒂</b>仍然沒有投票權<br><span class="small">在台灣，移工的工作年資不能計入歸化所需的居住期間，所以即使阿蒂在島上工作了十幾年，依然無法成為公民。</span></div></div></div>
+   <p class="insight">選民結構會改變政治人物的誘因：高齡選民增加，回應長者需求的政策更容易拿到選票；但年輕世代也可能更在意財政負擔與世代公平。</p></div>`;
+  S.wmod=Object.fromEntries(DEMO.map(dm=>[dm.id,dm.to]));
+  bar(`<span class="grow small muted">最後一屆，全力一搏</span><button class="btn primary" data-a="demook">開始編預算</button>`)}
+function thermo(){const L=S.unrestLog[S.unrestLog.length-1];if(!L)return '';const u=UNREST.find(x=>x.lv===L.lv),pv=island().poverty;
+  const cause=[`貧窮率 ${L.pov}%${L.pov>12?'，高於 12% 的警戒線':L.pov<10?'，維持在低檔':''}`];if(L.cuts)cause.push(`上屆刪減了 ${L.cuts} 項福利方案`);
+  return `<div class="thermo lv${u.lv}"><div class="th-top"><span class="eyebrow">社會溫度計</span><span class="kicker" style="background:${['var(--teal)','var(--orange)','var(--stamp)','var(--stamp)'][u.lv]}">${u.name}</span></div>
+   <div class="th-bar"><i style="width:${100-L.unrest}%"></i>${[35,60,80].map(t=>`<span style="left:${t}%"></span>`).join('')}</div>
+   <div class="th-scale small muted"><span>平穩</span><span>抗議 35</span><span>罷工 60</span><span>倒閣 80</span></div>
+   <p><b>民怨 <span class="num">${L.unrest}</span></b>：${u.d}</p>
+   <p class="small">原因：${cause.join('；')}。</p>
+   <p class="small"><b>本屆影響：</b>${u.fx}${u.lv?`（執政黨：${who(L.gov)}）`:''}</p>
+   ${L.lv&&L.gov===ME?'<p class="small" style="color:var(--stamp)"><b>你是執政黨，這筆帳會算在你頭上。</b>想降低民怨，就要讓貧窮率下降。</p>':L.lv?'<p class="small">執政黨被究責，這是在野黨的機會。</p>':''}</div>`}
+let VOTES=null;
+function rResults(st){const v=votes();VOTES=v;const lead=v.pct.indexOf(Math.max(...v.pct)),answered=S.qPick!==null;
+  const ms=GS.map(money),after=r1(Math.max(0,S.debt-ms[lead].bal+(lead===ME?S.qDebt:0)));
+  const Q=QS.find(q=>q.id===S.q.id),mine=sat(ME);
+  const order=answered?GS.slice().sort((a,b)=>v.pct[b]-v.pct[a]):GS;
+  st.innerHTML=`<div class="stack"><div><p class="eyebrow">第 ${S.round+1} 屆</p><h2>開票之夜</h2></div>
+   <div class="card"><div class="vlist">${order.map(g=>`<div class="vrow ${g===ME?'me':''}" style="--pc:${pcolor(g)}">
+     <span class="who">${who(g)}</span><span class="pct" data-to="${v.pct[g]}">0.0%</span>
+     <div class="vtrack"><i data-w="${v.pct[g]}"></i>${answered&&g===lead?`<svg class="stampmark" viewBox="0 0 40 40" aria-label="當選"><circle cx="20" cy="20" r="16" fill="var(--surface)" stroke="var(--stamp)" stroke-width="3"/><text x="20" y="27" text-anchor="middle" font-size="19" fill="var(--stamp)" font-weight="700" font-family="Noto Sans TC,sans-serif">卜</text></svg>`:''}</div></div>`).join('')}</div>
+     <p class="small muted" style="margin-top:10px">阿蒂沒有投票權，她的想法不會計入。${answered?'':'回答質詢後公布當選結果。'}</p></div>
+   <div class="qcard"><div class="qh"><span class="mic"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="5" y="1.5" width="4" height="7" rx="2" fill="#fff"/><path d="M3 7 Q3 10.5 7 10.5 Q11 10.5 11 7 M7 10.5 V12.5" stroke="#fff" stroke-width="1.3" fill="none"/></svg></span>質詢時間</div><div class="qin">
+     <div class="qt">${S.q.text}</div>
+     <div class="stack" style="gap:8px">${Q.opts.map((o,i)=>`<button class="qopt ${S.qPick===i?'on':''}" data-a="answer" data-i="${i}" ${answered?'disabled':''}><span>${o.t}</span>${answered?`<span class="small muted num">得票 ${sign(o.vote)}${o.debt?`　國債 ${sign(o.debt)}`:''}</span>`:''}</button>`).join('')}</div>
+     ${answered?`<p class="insight">${Q.opts[S.qPick].i}</p>`:''}</div></div>
+   ${answered?`<div class="reveal" style="--pc:${pcolor(lead)}"><div class="top">${lead===ME?'你的政黨贏得執政！':`${pname(lead)}贏得執政`}</div><div class="bd">
+      <p>${lead===ME?'你的政見將會實施。':'你成為在野黨，接下來要看著他們的政見實施。'}</p>
+      <p class="small">新增：${S.platforms[lead].add.map(id=>P[id].name).join('、')||'（無）'}${S.platforms[lead].cut.length?`<br>刪減：${S.platforms[lead].cut.map(id=>P[id].name).join('、')}`:''}</p>
+      <p class="small">國債 <span class="num">${r1(S.debt)} → <b style="color:${after>DEBT_LINE?'var(--bad)':'inherit'}">${after}</b></span>${after>DEBT_LINE?'　超過破產紅線！':''}</p></div></div>
+    <div class="card"><h3 style="margin-bottom:4px">選民流向</h3><p class="small muted" style="margin-bottom:10px">每個族群主要投給誰，以及你的支持度和上屆比較</p><div class="flow">${CIT.map(c=>{const pr=v.probs[c.id];if(!pr)return `<div class="frow"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,0)}</div><div class="fin"><b>${c.grp}</b><span class="small muted">${c.name}・無投票權，不計入</span></div></div>`;
+      const top=pr.indexOf(Math.max(...pr)),mine=pr[ME]*100,prev=S.lastProbs&&S.lastProbs[c.id]?S.lastProbs[c.id][ME]*100:null,dl=prev==null?null:r1(mine-prev);
+      return `<div class="frow"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,mine>=25?2:mine<12?-2:0)}</div><div class="fin"><div class="row" style="justify-content:space-between;gap:6px"><b>${c.grp}<span class="small muted">　${c.name}・${Wt(c)}%</span></b>${dl==null?'':`<span class="dlt ${dl>0?'up':dl<0?'dn':''}">${dl>0?'▲':dl<0?'▼':'—'} ${Math.abs(dl)}</span>`}</div>
+       <div class="fbar">${GS.map(g=>`<i style="width:${pr[g]*100}%;background:${pcolor(g)}" title="${pname(g)}"></i>`).join('')}</div>
+       <span class="small">主要支持：<b style="color:${pcolor(top)}">${pname(top)}</b>　｜　支持你 <b class="num">${r1(mine)}%</b></span></div></div>`}).join('')}</div></div>
+    <div class="card"><h3 style="margin-bottom:10px">島民怎麼看你的政見</h3><div class="feed">${CIT.map((c,i)=>{const b=bubble(c,ME);return `<div class="say" style="animation-delay:${.15+i*.08}s"><div class="ava">${face(c.id,mine[c.id])}</div><div class="bub ${b.m}"><b>${c.name}${Wt(c)?'':'（無投票權）'}</b>${b.t}</div></div>`}).join('')}</div></div>
+    <details class="card fold"><summary>對手的政見</summary><div class="stack" style="gap:8px;margin-top:6px">${RIV.map(g=>{const pl=S.platforms[g],m=ms[g];
+      return `<div class="rival" style="--pc:${pcolor(g)}"><b>${pname(g)}</b>　${pl.tax}稅${pl.carbon?'＋碳稅':''}，<span class="num" style="color:${m.bal<0?'var(--bad)':'var(--good)'}">${m.bal<0?'赤字':'結餘'} ${sign(m.bal)}</span><br>${pl.add.map(id=>P[id].name).join('、')||'不提新方案'}${pl.cut.length?`；刪減 ${pl.cut.map(id=>P[id].name).join('、')}`:''}</div>`}).join('')}</div></details>`:''}
+   </div>`;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{st.querySelectorAll('.vtrack i').forEach(i=>i.style.width=i.dataset.w+'%');countUp(st)}));
+  bar(answered?`<span class="grow small muted">${lead===ME?'恭喜當選！':'下屆再接再厲'}</span><button class="btn primary" data-a="confirm">${S.round>=ROUNDS-1||after>DEBT_LINE?'看最後結果':'進入下一屆'}</button>`:`<span class="grow small muted">請先回答上方的質詢</span><button class="btn" disabled>等待質詢</button>`);
+}
+function countUp(st){const els=st.querySelectorAll('[data-to]'),t0=performance.now(),D=matchMedia('(prefers-reduced-motion: reduce)').matches?0:1200;
+  const step=t=>{const k=D?Math.min(1,(t-t0)/D):1,e=1-Math.pow(1-k,3);els.forEach(el=>el.textContent=(+el.dataset.to*e).toFixed(1)+'%');if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
+function rFinal(st){const {k,f}=regime(),R=REG[k],sc=scores(),rank=[...sc].sort((a,b)=>b.total-a.total),me=sc[ME],myRank=rank.findIndex(s=>s.g===ME)+1;
+  st.innerHTML=`<div class="stack">
+   <div class="card stack" style="gap:10px"><p class="eyebrow">${S.bankrupt?'破產後的福利島':'五屆結束'} · 福利島最後變成了</p><div class="regime"><span>${R.name}</span></div>
+     <p><b>現實中的例子：</b>${R.eg}</p><p>${R.d}</p>
+     <div class="radar">${radar(f)}</div>
+     <p class="small muted">分類依據 Esping-Andersen 的去商品化與階層化。雷達圖另外加入「去家庭化」，這是女性主義學者批評他忽略無酬照顧後補上的面向。</p>
+     <p class="small">實施中的方案：${S.enacted.map(x=>P[x.id].name).join('、')||'（無）'}</p></div>
+   <div class="grid2"><div class="card stack" style="gap:10px;border-left:5px solid ${pcolor(ME)}"><p class="eyebrow">你的成績</p>
+     <div style="display:flex;align-items:baseline;gap:10px"><span class="regime" style="color:${pcolor(ME)}">第 ${myRank} 名</span><span class="num muted">${me.total} 分</span></div>
+     <p class="small">執政 ${me.gov} 屆　·　累計得票 <span class="num">${me.votes}%</span></p>
+     <ul class="small" style="margin:0;padding-left:18px">${PARTIES[key(ME)].miss.map((m,i)=>`<li>${me.ms[i]?'達成':'未達成'}：${m.t}</li>`).join('')}</ul>
+     <div style="overflow-x:auto"><table><thead><tr><th>名次</th><th>政黨</th><th>執政</th><th>總分</th></tr></thead><tbody>${rank.map((s,i)=>`<tr><td class="num">${i+1}</td><td><b style="color:${pcolor(s.g)}">${who(s.g)}</b></td><td class="num">${s.gov}</td><td class="num">${s.total}</td></tr>`).join('')}</tbody></table></div>
+     <p class="small muted">${S.bankrupt?'國家破產，全部歸零。':'計分：累計得票率＋每屆執政 10 分＋每項目標 15 分。'}</p></div>
+    <div class="card stack" style="gap:10px"><p class="eyebrow">五屆紀錄</p>${S.history.map(r=>`<div class="tl" style="border-color:${pcolor(r.gov)}"><span class="h">第 ${r.round+1} 屆　${EVENTS.find(e=>e.id===r.event).name}</span>
+      <span>你：${r.platforms[ME].tax}稅，${r.platforms[ME].add.map(id=>P[id].name).join('、')||'無新方案'}</span>
+      <span class="muted small">執政：${who(r.gov)}　你的得票 ${r1(r.pct[ME])}%</span></div>`).join('')}</div></div>
+   <div class="card"><h3 style="margin-bottom:10px">成就徽章　<span class="num muted small">${ACH.filter(a=>a.f()).length}/${ACH.length}</span></h3><div class="badges">${ACH.map((a,i)=>{const on=a.f();return `<div class="ach ${on?'on':'off'}" style="animation-delay:${i*.06}s">${medal(on,i)}<b>${a.n}</b><span>${a.d}</span></div>`}).join('')}</div></div>
+   <div class="card"><h3 style="margin-bottom:10px">反思學習單</h3><div class="refl">${RQ.map((q,i)=>`<label for="refl${i}">${i+1}. ${q}<textarea id="refl${i}" data-r="${i}">${S.refl[i]}</textarea></label>`).join('')}</div>
+    <textarea id="copybox" hidden readonly style="margin-top:12px;min-height:200px"></textarea></div></div>`;
+  bar(`<button class="btn" data-a="restart">再玩一次</button><span class="grow"></span><button class="btn primary" data-a="copy">複製學習單</button>`);
+}
+function rImf(st){st.innerHTML=`<div class="imf"><div class="big">福利島財政破產</div>
+  <p>國債 <span class="num">${r1(S.debt)}</span> 超過紅線 ${DEBT_LINE}。國際貨幣基金接管財政，所有方案凍結、公務員減薪、年金延後發放。</p>
+  <p class="muted">每一黨都在爭取自己的選票，卻沒有人替整個島的帳單負責。這次沒有贏家。</p>
+  <div class="cits" style="justify-content:center">${CIT.map(c=>`<div class="cit"><div class="ava">${face(c.id,-3)}</div><div class="nm">${c.name}</div></div>`).join('')}</div></div>`;
+  bar(`<span class="grow"></span><button class="btn primary" data-a="tofinal">看最後的福利體制</button>`)}
+function bar(h){$('bar').innerHTML=h}
+function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2100)}
+function buzz(ms){try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}}
+function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const cv=$('fx'),cs=getComputedStyle(document.documentElement);cv.hidden=false;
+  const W=cv.width=innerWidth,H=cv.height=innerHeight,ctx=cv.getContext('2d'),cols=['--stamp','--ballot','--sea','--p-fe','--p-nr','--p-gr'].map(v=>cs.getPropertyValue(v).trim());
+  const ps=Array.from({length:140},()=>({x:W/2+(Math.random()-.5)*W*.3,y:H*.35,vx:(Math.random()-.5)*11,vy:-Math.random()*12-4,r:Math.random()*6+4,a:Math.random()*6,va:(Math.random()-.5)*.3,c:cols[Math.floor(Math.random()*cols.length)]}));
+  const t0=performance.now();(function f(t){ctx.clearRect(0,0,W,H);ps.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.a+=p.va;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=p.c;ctx.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);ctx.restore()});
+   if(t-t0<2400)requestAnimationFrame(f);else{ctx.clearRect(0,0,W,H);cv.hidden=true}})(t0)}
+
+// ---------- CITIZEN TOOLTIP ----------
+function tipHTML(id){const c=CIT.find(x=>x.id===id);if(!c)return '';const w=Wt(c);
+  return `<span class="tg">${c.grp}</span><br><b>${c.name}</b>　<span class="muted">${c.age} 歲</span><br>${c.role}<span class="need">${c.need}</span>
+   <span class="wt">${w?`<b class="num" style="font-size:13px">${w}%</b> 選民：島上每 100 位選民中，約有 ${w} 位屬於「${c.grp}」，他們的滿意度決定這部分選票投給誰。`:'沒有投票權：再怎麼照顧或忽略她，都不會改變選票。'}</span>`}
+let tipEl=null,tipFor=null;
+function showTip(el){const id=el.dataset.cid;if(!tipEl){tipEl=document.createElement('div');tipEl.id='ctip';tipEl.setAttribute('role','tooltip');document.body.appendChild(tipEl)}
+  tipEl.innerHTML=tipHTML(id);tipEl.hidden=false;tipFor=el;const r=el.getBoundingClientRect(),tw=tipEl.offsetWidth,th=tipEl.offsetHeight;
+  let x=r.left+r.width/2-tw/2;x=Math.max(12,Math.min(innerWidth-tw-12,x));let y=r.bottom+8;if(y+th>innerHeight-90)y=Math.max(12,r.top-th-8);
+  tipEl.style.left=x+'px';tipEl.style.top=y+'px'}
+function hideTip(){if(tipEl)tipEl.hidden=true;tipFor=null}
+document.addEventListener('pointerover',e=>{if(e.pointerType==='touch')return;const el=e.target.closest('[data-cid]');if(el)showTip(el)});
+document.addEventListener('pointerout',e=>{if(e.pointerType==='touch')return;const el=e.target.closest('[data-cid]');if(el&&!el.contains(e.relatedTarget))hideTip()});
+document.addEventListener('focusin',e=>{const el=e.target.closest&&e.target.closest('[data-cid]');if(el)showTip(el)});
+document.addEventListener('focusout',e=>{if(e.target.closest&&e.target.closest('[data-cid]'))hideTip()});
+document.addEventListener('click',e=>{const el=e.target.closest('[data-cid]');if(el&&!e.target.closest('[data-a]')){if(tipFor===el)hideTip();else showTip(el)}else if(!el)hideTip()},true);
+addEventListener('scroll',()=>hideTip(),{passive:true,capture:true});
+
+// ---------- ACTIONS ----------
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function spin(){const pool=EVENTS.filter(e=>!S.used.includes(e.id)),src=pool.length?pool:EVENTS,pick=src[Math.floor(Math.random()*src.length)],i=EVENTS.indexOf(pick);
+  const c=i*45+22.5,cur=((S.rot%360)+360)%360,target=S.rot+360*5+((360-c)-cur+720)%360;
+  const g=$('wheelg'),btn=$('spinbtn');if(btn)btn.disabled=true;
+  S.rot=target;const done=()=>{S.event=pick.id;S.used.push(pick.id);S.povShock=r1(S.povShock*.5+(pick.pov||0));buzz(25);render()};
+  if(!g||matchMedia('(prefers-reduced-motion: reduce)').matches){done();return}
+  g.style.transform=`rotate(${target}deg)`;setTimeout(done,3500)}
+function confirmGov(){const v=VOTES||votes(),gov=v.pct.indexOf(Math.max(...v.pct)),ms=GS.map(money),pl=S.platforms[gov];
+  S.lastProbs=v.probs;S.history.push({round:S.round,event:S.event,platforms:JSON.parse(JSON.stringify(S.platforms)),sats:v.sats,pct:v.pct,bals:ms.map(m=>m.bal),gov});
+  const once=pl.add.filter(id=>P[id].once);S.onceUsed.push(...once);
+  S.enacted=S.enacted.filter(x=>!pl.cut.includes(x.id)).concat(pl.add.filter(id=>!P[id].once).map(id=>({id,cost:costOf(id,key(gov))})));
+  S.lastEco=S.eco;S.eco=r1(S.eco*.4+S.enacted.reduce((a,x)=>a+(P[x.id].fx.eco||0),0)+once.reduce((a,id)=>a+P[id].fx.eco,0));
+  S.debt=r1(Math.max(0,S.debt-ms[gov].bal+(gov===ME?S.qDebt:0)));
+  {const pv=island().poverty,cuts=pl.cut.length,prev=S.unrest;S.unrest=Math.round(Math.max(0,Math.min(100,prev*.45+Math.max(0,pv-10)*6.5+cuts*9)));
+   const lvl=UNREST.filter(u=>S.unrest>=u.min).pop();S.crisis=lvl.lv;if(lvl.lv===3)S.debt=r1(S.debt+1);if(lvl.lv>=2)S.eco=r1(Math.max(0,S.eco-1));
+   S.unrestLog.push({round:S.round,pov:r1(pv),unrest:S.unrest,lv:lvl.lv,gov,cuts});}S.govTax=pl.tax;S.lastGov=gov;S.adj=GS.map(()=>0);S.q=null;S.qPick=null;S.qDebt=0;prevSat=null;
+  if(S.debt>DEBT_LINE){S.bankrupt=true;S.phase='imf'}
+  else if(S.round>=ROUNDS-1){S.phase='final'}
+  else{S.round++;S.platforms=S.platforms.map(p=>({tax:p.tax,add:[],cut:[],carbon:p.carbon}));S.event=null;S.filter='all';S.refAlign={};S.refSpend=0;S.redrawn=false;S.phase='news'}
+  render();window.scrollTo({top:0,behavior:'smooth'})}
+const go=ph=>{S.phase=ph;render();window.scrollTo({top:0,behavior:'smooth'})};
+
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t||t.disabled)return;const a=t.dataset.a;const pl=S.platforms[ME];
+  switch(a){
+   case'totitle':return go('setup');
+   case'choose':S.choice=t.dataset.k;break;
+   case'rand':S.choice=shuffle(Object.keys(PARTIES))[0];break;
+   case'start':S.assign=[S.choice,...shuffle(Object.keys(PARTIES).filter(k=>k!==S.choice))];S.pets=shuffle(PETS.map(t=>t.who)).slice(0,ROUNDS);return go('news');
+   case'spin':spin();return;
+   case'tobudget':prevSat=null;if(S.round===2&&!S.ref){S.ref={topic:pickRef(),stance:'yes',spend:0,result:null};return go('ref')}if(S.round===4&&!S.demoDone)return go('demo');deal();return go('budget');
+   case'stance':S.ref.stance=t.dataset.v;break;
+   case'spend':S.ref.spend=+t.dataset.v;break;
+   case'refvote':runRef();break;
+   case'refdone':deal();return go('budget');
+   case'demook':S.demoDone=true;deal();return go('budget');
+   case'redraw':redraw();break;
+   case'tax':pl.tax=t.dataset.t;break;
+   case'filter':S.filter=t.dataset.f;break;
+   case'cut':{const id=t.dataset.id;pl.cut=pl.cut.includes(id)?pl.cut.filter(x=>x!==id):pl.cut.concat(id);break}
+   case'pol':{const id=t.dataset.id;if(pl.add.includes(id))pl.add=pl.add.filter(x=>x!==id);else if(pl.add.length>=MAXADD){toast('最多 4 項，先點上方政見列的 × 移除一項');return}else{pl.add=pl.add.concat(id);if(pl.add.length===MAXADD)toast('已選滿 4 項，可以在上方政見列移除')}buzz(8);break}
+   case'rm':{const id=t.dataset.id;pl.add=pl.add.filter(x=>x!==id);buzz(8);break}
+   case'count':RIV.forEach(aiPlatform);S.q=pickQ();S.qPick=null;return go('results');
+   case'answer':{const i=+t.dataset.i,o=QS.find(q=>q.id===S.q.id).opts[i];S.qPick=i;S.adj[ME]+=o.vote;S.qDebt=o.debt;render();
+     const v=votes(),lead=v.pct.indexOf(Math.max(...v.pct));buzz(lead===ME?[30,60,30]:40);if(lead===ME)setTimeout(confetti,500);return}
+   case'confirm':confirmGov();return;
+   case'tofinal':return go('final');
+   case'restart':S=fresh();prevSat=null;return go('title');
+   case'copy':{const txt=summaryText(),box=$('copybox');
+     const fallback=()=>{box.hidden=false;box.value=txt;box.focus();box.select();toast('已選取全部文字，請手動複製')};
+     try{navigator.clipboard.writeText(txt).then(()=>toast('已複製，貼到課程平台就能繳交'),fallback)}catch(err){fallback()}
+     return}
+  }render()});
+document.addEventListener('change',e=>{if(e.target.id==='carbon'){S.platforms[ME].carbon=e.target.checked;render()}});
+document.addEventListener('input',e=>{if(e.target.dataset&&e.target.dataset.r!==undefined)S.refl[+e.target.dataset.r]=e.target.value});
+
+function start(d){S=(d&&d.S&&d.S.filter)?d.S:fresh();render()}
+window.claude?.hot?.snapshot?.(()=>({S}));
+window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
+</script>
+
+</body></html>
