@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>福利島｜美術樣稿 v0.2</title>
+    <link rel="stylesheet" href="art-preview.css" />
+  </head>
+  <body>
+    <aside class="review-head">
+      <a href="../docs/art-proposal.md">WELFARE ISLAND / DESIGN STUDY 02</a>
+      <p>美術樣稿 · 未接入正式遊戲</p>
+      <nav aria-label="樣稿畫面">
+        <button data-view="budget" aria-pressed="true">政策選擇</button>
+        <button data-view="results" aria-pressed="false">開票結果</button>
+        <button data-view="final" aria-pressed="false">體制揭曉</button>
+        <button data-view="news" aria-pressed="false">島嶼新聞</button>
+        <button data-view="story" aria-pressed="false">第三屆故事</button>
+        <button data-view="characters" aria-pressed="false">角色樣張</button>
+      </nav>
+    </aside>
+    <div class="workspace">
+      <div class="phone" aria-label="手機設計樣稿">
+        <header class="hud">
+          <div class="brand">
+            <span class="seal" aria-hidden="true">島</span><b>福利島大選</b
+            ><span id="round-label">第三屆 / 五屆</span>
+          </div>
+          <dl>
+            <div>
+              <dt>國債</dt>
+              <dd>未提供</dd>
+            </div>
+            <div>
+              <dt>貧窮率</dt>
+              <dd>未提供</dd>
+            </div>
+            <div>
+              <dt>民怨</dt>
+              <dd>未提供</dd>
+            </div>
+          </dl>
+        </header>
+        <main id="preview" tabindex="-1"></main>
+        <footer id="actionbar"></footer>
+      </div>
+      <aside class="annotation">
+        <span class="eyebrow">設計註記</span>
+        <h2 id="annotation-title">政策選擇</h2>
+        <p id="annotation-text"></p>
+        <p>文字與按鈕保留為 HTML。插畫提供場景與人物，不承擔政策說明。</p>
+        <p>
+          「未提供」表示資料尚未接入。政策名稱與成本取自目前基準版，不代表已審定的新版本。
+        </p>
+        <a href="../docs/art-proposal.md">閱讀完整提案與整合規格 ↗</a>
+      </aside>
+    </div>
+    <p id="notice" role="status" aria-live="polite"></p>
+    <script src="art-preview.js"></script>
+  </body>
+</html>

@@ -13,6 +13,13 @@
 
 ---
 
+## art-proposal-0.2.0 — 2026-10-16
+
+- 來源：Codex（Issue #2，分支 `codex/art-proposal`）
+- 新增六頁獨立設計樣稿、19 個原創 SVG、manifest、動畫規格與 Claude 整合 Issue #6。
+- 新增 Playwright 樣稿／既有六黨五屆回歸測試與 390px 截圖；驗證範圍見 `docs/ART_VERIFICATION.md`。
+- 未修改正式遊戲邏輯、政策數值、既有輸出檔；尚未部署美術改版。
+
 ## docs-2026-10-16a — 2026-10-16
 
 - 來源：Claude（分支 `claude/collab-docs-tests-decisions`）

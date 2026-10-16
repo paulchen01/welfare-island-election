@@ -1,5 +1,5 @@
 {
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "福利島大選素材清單。新增素材時在 assets 陣列加一筆。",
   "fields": {
     "file": "相對於 assets/ 的路徑",
@@ -9,7 +9,355 @@
     "format": "svg / webp / png",
     "transparent": "是否透明背景",
     "author": "Codex / Claude / 陳老師",
-    "version": "素材版本"
+    "version": "素材版本",
+    "id": "角色表情或圖層 id",
+    "anchor": "SVG 座標中的錨點 [x,y]",
+    "status": "proposal 表示尚未整合或核定",
+    "source": "創作來源",
+    "bytes": "UTF-8 檔案大小"
   },
-  "assets": []
+  "assets": [
+    {
+      "file": "characters/ma_happy.svg",
+      "use": "ma happy 頭像樣張",
+      "replaces": "face(ma, mood)",
+      "size": "0 0 512 512",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "ma_happy",
+      "anchor": [
+        256,
+        350
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 1368
+    },
+    {
+      "file": "characters/ma_neutral.svg",
+      "use": "ma neutral 頭像樣張",
+      "replaces": "face(ma, mood)",
+      "size": "0 0 512 512",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "ma_neutral",
+      "anchor": [
+        256,
+        350
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 1419
+    },
+    {
+      "file": "characters/ma_upset.svg",
+      "use": "ma upset 頭像樣張",
+      "replaces": "face(ma, mood)",
+      "size": "0 0 512 512",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "ma_upset",
+      "anchor": [
+        256,
+        350
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 1483
+    },
+    {
+      "file": "characters/ati_happy.svg",
+      "use": "ati happy 頭像樣張",
+      "replaces": "face(ati, mood)",
+      "size": "0 0 512 512",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "ati_happy",
+      "anchor": [
+        256,
+        350
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 1205
+    },
+    {
+      "file": "characters/ati_neutral.svg",
+      "use": "ati neutral 頭像樣張",
+      "replaces": "face(ati, mood)",
+      "size": "0 0 512 512",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "ati_neutral",
+      "anchor": [
+        256,
+        350
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 1256
+    },
+    {
+      "file": "characters/ati_upset.svg",
+      "use": "ati upset 頭像樣張",
+      "replaces": "face(ati, mood)",
+      "size": "0 0 512 512",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "ati_upset",
+      "anchor": [
+        256,
+        350
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 1320
+    },
+    {
+      "file": "scenes/island_base.svg",
+      "use": "新聞島嶼底圖",
+      "replaces": "rNews → landscape()",
+      "size": "0 0 780 430",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "island_base",
+      "anchor": [
+        390,
+        340
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 1358
+    },
+    {
+      "file": "scenes/island_care.svg",
+      "use": "島嶼聚合圖層 care",
+      "replaces": "landscape() future policy layers",
+      "size": "0 0 780 430",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "care",
+      "anchor": [
+        390,
+        340
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 398
+    },
+    {
+      "file": "scenes/island_housing.svg",
+      "use": "島嶼聚合圖層 housing",
+      "replaces": "landscape() future policy layers",
+      "size": "0 0 780 430",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "housing",
+      "anchor": [
+        390,
+        340
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 444
+    },
+    {
+      "file": "scenes/island_community.svg",
+      "use": "島嶼聚合圖層 community",
+      "replaces": "landscape() future policy layers",
+      "size": "0 0 780 430",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "community",
+      "anchor": [
+        390,
+        340
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 398
+    },
+    {
+      "file": "scenes/island_health.svg",
+      "use": "島嶼聚合圖層 health",
+      "replaces": "landscape() future policy layers",
+      "size": "0 0 780 430",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "health",
+      "anchor": [
+        390,
+        340
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 466
+    },
+    {
+      "file": "scenes/island_school.svg",
+      "use": "島嶼聚合圖層 school",
+      "replaces": "landscape() future policy layers",
+      "size": "0 0 780 430",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "school",
+      "anchor": [
+        390,
+        340
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 447
+    },
+    {
+      "file": "scenes/island_industry.svg",
+      "use": "島嶼聚合圖層 industry",
+      "replaces": "landscape() future policy layers",
+      "size": "0 0 780 430",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "industry",
+      "anchor": [
+        390,
+        340
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 360
+    },
+    {
+      "file": "scenes/island_transport.svg",
+      "use": "島嶼聚合圖層 transport",
+      "replaces": "landscape() future policy layers",
+      "size": "0 0 780 430",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "transport",
+      "anchor": [
+        390,
+        340
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 407
+    },
+    {
+      "file": "scenes/island_energy.svg",
+      "use": "島嶼聚合圖層 energy",
+      "replaces": "landscape() future policy layers",
+      "size": "0 0 780 430",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "energy",
+      "anchor": [
+        390,
+        340
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 400
+    },
+    {
+      "file": "icons/care.svg",
+      "use": "政策卡 care 圖示",
+      "replaces": "card()",
+      "size": "0 0 48 48",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "care",
+      "anchor": [
+        24.0,
+        24.0
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 255
+    },
+    {
+      "file": "icons/institution.svg",
+      "use": "政策卡 institution 圖示",
+      "replaces": "card()",
+      "size": "0 0 48 48",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "institution",
+      "anchor": [
+        24.0,
+        24.0
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 255
+    },
+    {
+      "file": "icons/cost.svg",
+      "use": "政策卡 cost 圖示",
+      "replaces": "card()",
+      "size": "0 0 48 48",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "cost",
+      "anchor": [
+        24.0,
+        24.0
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 260
+    },
+    {
+      "file": "icons/people.svg",
+      "use": "政策卡 people 圖示",
+      "replaces": "card()",
+      "size": "0 0 48 48",
+      "format": "svg",
+      "transparent": true,
+      "author": "Codex",
+      "version": "0.2.0",
+      "id": "people",
+      "anchor": [
+        24.0,
+        24.0
+      ],
+      "status": "proposal",
+      "source": "Original SVG paths authored for this project; no external artwork",
+      "bytes": 255
+    }
+  ]
 }

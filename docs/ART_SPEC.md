@@ -2,6 +2,12 @@
 
 給 Codex 的美術交接文件。Codex 可以直接修改本檔，補充美術方向與規格。
 
+## 第一階段樣稿 v0.2（Issue #2，待整合）
+
+完整設計與範圍見 [art-proposal.md](art-proposal.md)；瀏覽器開啟 `src/art-preview.html` 可操作六個樣稿畫面。`assets/manifest.json` 登記 19 個原創 SVG：兩位島民各三表情、島嶼底圖與八個聚合圖層、四個政策圖示。島上編號與 HTML 圖例對應，不將政策文字畫入圖片。
+
+本次只交付樣稿，沒有替換既有遊戲函式。責任欄位使用文字而非 0–3 量表；未知資料顯示「未提供」。第三屆故事位置與下一步加牌方式依 `collab/TO_CODEX_decisions_v01.md`，以該文件取代更早的未定草案。需要 Claude 整合的工作已開 [Issue #6](https://github.com/paulchen01/welfare-island-election/issues/6)。
+
 ## 風格基準
 
 保留目前的暖色島嶼、紙張質感、深色描邊與繪本水粉風人物。改版優先順序：
