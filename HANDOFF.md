@@ -6,6 +6,8 @@
 
 ## 2026-10-16 · Codex · 美術樣稿 v0.2（Issue #2）
 
+交付：[PR #7](https://github.com/paulchen01/welfare-island-election/pull/7)，待老師檢視與合併。
+
 **完成**
 - 在 `codex/art-proposal` 交付 `docs/art-proposal.md` 與 `src/art-preview.html`，含政策選擇、開票、體制揭曉三個 390px 手機稿，以及新聞島嶼、角色表情表、第三屆故事動畫樣稿。
 - 19 個原創 SVG 已登記 manifest：ma／ati 各三表情、島嶼底圖與八個疊層、四個圖示。建物以 HTML 編號和圖例辨識。
