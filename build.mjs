@@ -41,6 +41,7 @@ const browser =
 <title>誰來照顧誰｜社會福利政策體驗遊戲</title>
 <meta name="description" content="社會政策與立法課堂遊戲：用七種福利觀點在福利島執政五屆，看看誰來照顧誰。">
 <meta name="author" content="飽螺的社工甘苦便條紙">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 40 40%27%3E%3Cellipse cx=%2720%27 cy=%2713%27 rx=%277.5%27 ry=%2710%27 fill=%27%230F9A92%27/%3E%3Cellipse cx=%2727%27 cy=%2720%27 rx=%2710%27 ry=%277.5%27 fill=%27%23FFC93C%27/%3E%3Cellipse cx=%2720%27 cy=%2727%27 rx=%277.5%27 ry=%2710%27 fill=%27%23EC4F8C%27/%3E%3Cellipse cx=%2713%27 cy=%2720%27 rx=%2710%27 ry=%277.5%27 fill=%27%232F5DB8%27/%3E%3Ccircle cx=%2720%27 cy=%2720%27 r=%273.4%27 fill=%27%23FBFAF6%27 stroke=%27%231C2040%27 stroke-width=%272%27/%3E%3C/svg%3E">
 <meta property="og:title" content="誰來照顧誰｜社會福利政策體驗遊戲">
 <meta property="og:description" content="用七種福利觀點在福利島執政五屆，看看誰來照顧誰。飽螺的社工甘苦便條紙 製作。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
