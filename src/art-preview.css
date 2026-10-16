@@ -614,10 +614,10 @@ h3 {
 #notice:not(:empty) {
   padding: 12px 16px;
 }
-.playing .actors img:first-child {
+.playing .actors > .painted-portrait:first-child {
   animation: listen 2.4s ease-out both;
 }
-.playing .actors img:last-child {
+.playing .actors > .painted-portrait:last-child {
   animation: respond 2.4s ease-out both;
 }
 .playing .scene img:last-child {
@@ -792,4 +792,49 @@ h3 {
   .playing .scene [data-layer]:not([hidden]) {
     animation: none;
   }
+}
+
+/* Model-generated raster atlases. Never draw portrait shapes with SVG/CSS. */
+.painted-portrait {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
+  flex: none;
+  vertical-align: middle;
+}
+.painted-portrait img {
+  position: absolute;
+  inset: 0;
+  width: 300%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+}
+.character-grid .painted-portrait {
+  width: 100%;
+  height: auto;
+}
+.actors > .painted-portrait {
+  width: 100px;
+  height: 100px;
+}
+.painted-building {
+  position: absolute;
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  transform: translate(-50%, -100%);
+}
+.scene .painted-building img {
+  position: absolute;
+  inset: 0;
+  width: 400%;
+  height: 200%;
+  max-width: none;
+  object-fit: fill;
+}
+.painted-building.preview-layer {
+  opacity: 0.45;
+  filter: grayscale(1);
 }

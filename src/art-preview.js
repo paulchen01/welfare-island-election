@@ -52,19 +52,20 @@
     currentView = "budget";
   const motion = matchMedia("(prefers-reduced-motion: reduce)");
   const portrait = (id, mood = "neutral", cls = "portrait") =>
-    `<img class="${cls}" src="../assets/characters/${id}_${mood}.svg" alt="${id === "ma" ? "秀英阿嬤" : "阿蒂"}，${{ happy: "開心", neutral: "平靜", upset: "不滿" }[mood]}表情">`;
-  const markerPoints = [
-    [280, 224],
-    [160, 265],
-    [439, 208],
-    [480, 147],
-    [564, 249],
-    [566, 170],
-    [383, 157],
-    [637, 233],
+    `<span class="painted-portrait ${cls}" role="img" aria-label="${id === "ma" ? "秀英阿嬤" : "阿蒂"}，${{ happy: "開心", neutral: "平靜", upset: "不滿" }[mood]}表情"><img src="../assets/characters/${id}-expressions.webp" alt="" style="transform:translateX(-${{ happy: 0, neutral: 100 / 3, upset: 200 / 3 }[mood]}%)"></span>`;
+  // x, ground anchor y, width as percentages of the complete scene.
+  const objects = [
+    [29, 58, 15],
+    [39, 74, 12],
+    [55, 60, 16],
+    [72, 42, 12],
+    [25, 78, 15],
+    [73, 65, 14],
+    [52, 83, 16],
+    [73, 83, 14],
   ];
   const scene = (active = ["care", "transport", "housing"]) =>
-    `<div class="scene" role="img" aria-label="島嶼圖層排版示範，編號對照下方圖例，並非本局實施紀錄"><img src="../assets/scenes/island_base.svg" alt="">${layers.map(([id]) => `<img data-layer="${id}" src="../assets/scenes/island_${id}.svg" alt="" ${active.includes(id) ? "" : "hidden"}>`).join("")}${layers.map(([id], i) => `<span class="map-marker" data-marker="${id}" aria-hidden="true" style="left:${markerPoints[i][0] / 7.8}%;top:${markerPoints[i][1] / 4.3}%" ${active.includes(id) ? "" : "hidden"}>${i + 1}</span>`).join("")}</div><div class="layer-legend" aria-label="目前顯示的素材圖層">${layers.map(([id, name], i) => `<span data-legend="${id}" ${active.includes(id) ? "" : "hidden"}><b>${i + 1}</b> ${name}</span>`).join("")}<span class="empty-legend" ${active.length ? "hidden" : ""}>僅顯示島嶼底圖</span></div>`;
+    `<div class="scene" role="img" aria-label="模型水粉插畫島嶼；編號對照下方圖例，並非本局實施紀錄"><img class="painted-base" src="../assets/scenes/island-painted.webp" alt="">${layers.map(([id], i) => `<span class="painted-building" data-layer="${id}" style="left:${objects[i][0]}%;top:${objects[i][1]}%;width:${objects[i][2]}%" ${active.includes(id) ? "" : "hidden"}><img src="../assets/scenes/services-painted.webp" alt="" style="transform:translate(-${(i % 4) * 25}%,-${Math.floor(i / 4) * 50}%)"></span>`).join("")}${layers.map(([id], i) => `<span class="map-marker" data-marker="${id}" aria-hidden="true" style="left:${objects[i][0]}%;top:${objects[i][1] - (objects[i][2] * 780) / 430 + 5}%" ${active.includes(id) ? "" : "hidden"}>${i + 1}</span>`).join("")}</div><div class="layer-legend" aria-label="目前顯示的素材圖層">${layers.map(([id, name], i) => `<span data-legend="${id}" ${active.includes(id) ? "" : "hidden"}><b>${i + 1}</b> ${name}</span>`).join("")}<span class="empty-legend" ${active.length ? "hidden" : ""}>僅顯示島嶼底圖</span></div>`;
   const roles = (labels) =>
     `<dl class="roles">${labels.map((x) => `<div><dt>${x}</dt><dd>${missing}</dd></div>`).join("")}</dl>`;
   const intro = (tag, title, sub) =>
@@ -142,8 +143,8 @@
             `<section class="panel"><h2>${id === "ma" ? "秀英阿嬤" : "阿蒂"}</h2><p class="sub">${id === "ma" ? "81 歲 · 獨居，住山邊老社區" : "30 歲 · 印尼籍看護移工，在台第 6 年"}</p><div class="character-grid">${["happy", "neutral", "upset"].map((m) => `<figure>${portrait(id, m, "")}<figcaption>${{ happy: "開心", neutral: "平靜", upset: "不滿" }[m]}</figcaption></figure>`).join("")}</div></section>`,
         )
         .join("") +
-      `<div class="strip">兩位角色各 3 張、同尺寸同錨點。移工不投票，但政策影響與當事人敘事仍保留。</div><h2>動作樣張</h2><p>在「第三屆故事」播放依序進場與傾聽的 2.4 秒示範；不以誇張哭泣或勝利姿勢代替論點。</p>`;
-    bar.innerHTML = `<div class="balance">SVG 素材<strong>512 × 512</strong></div><button data-action="characters">查看故事動作 →</button>`;
+      `<div class="strip">兩位角色各 3 種模型水粉表情，以透明 WebP 圖集呈現。移工不投票，但政策影響與當事人敘事仍保留。</div><h2>動作樣張</h2><p>在「第三屆故事」播放依序進場與傾聽的 2.4 秒示範；不以誇張哭泣或勝利姿勢代替論點。</p>`;
+    bar.innerHTML = `<div class="balance">模型插畫<strong>每格 260 × 260</strong></div><button data-action="characters">查看故事動作 →</button>`;
   }
   const meta = {
     budget: [
@@ -160,7 +161,7 @@
     ],
     news: [
       "新聞島嶼 / rNews",
-      "底圖加八個透明聚合圖層。制度型政策不用建築代替，選牌預覽與實施紀錄不可混用。",
+      "模型水粉底圖加八個透明插畫物件。制度型政策不用建築代替，選牌預覽與實施紀錄不可混用。",
     ],
     story: [
       "第三屆後果 / 新流程",
@@ -168,7 +169,7 @@
     ],
     characters: [
       "角色 / face",
-      "保留既有辨識特徵：白髮髮髻與紫衣、柔和頭巾。頭巾沿用既有角色設定，不推定移工的宗教或一致穿著。",
+      "使用繪圖模型生成的點陣插畫，保留白髮髮髻與紫衣、柔和頭巾。頭巾沿用既有角色設定，不推定移工的宗教或一致穿著。",
     ],
   };
   function stop() {

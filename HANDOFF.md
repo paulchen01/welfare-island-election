@@ -4,6 +4,22 @@
 
 ---
 
+## 2026-10-16 · Codex · 模型水粉插畫 v0.3（PR #7 更新）
+
+**已確認的新指示**
+- 老師要求人物使用模型插畫，不要 SVG 人物。此要求取代 v0.2 向量人物方案。
+
+**完成**
+- 內建 imagegen 生成秀英阿嬤、阿蒂各三表情（兩份透明圖集）、無建物島嶼底圖、八類場景物件圖集。
+- 新增 4 個 WebP，已連接 src/art-preview.html 六頁樣稿；舊 6 張 SVG 人物移除。其餘 SVG 場景只作舊版參考，UI 小圖示仍保留 SVG。
+- 最新檔名、圖集格序與整合示例見 docs/art-painted-v03.md；原始提示詞見 docs/art-prompts-v03.md。
+
+**下一步／限制**
+- Claude 請依最新 manifest 0.3.0 與 Issue #6 接入，人物不能再引用舊 SVG 檔名。圖集表情用 CSS 裁切顯示，不是重新描圖。
+- 這批只有兩位人物，其餘九位、正式遊戲替換、深色主題、Artifact 載入尚未完成。未合併或改寫 main。
+
+---
+
 ## 2026-10-16 · Codex · 美術樣稿 v0.2（Issue #2）
 
 交付：[PR #7](https://github.com/paulchen01/welfare-island-election/pull/7)，待老師檢視與合併。

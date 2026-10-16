@@ -1,5 +1,16 @@
 # 美術樣稿 v0.2 驗證紀錄
 
+## v0.3 模型插畫更新驗證（2026-10-16）
+
+- 同一套 `tests/art_preview_test.cjs` 已在更換素材後重跑通過：六個畫面、360／390／1280px、正文放大、控制項、圖層與圖例、動畫略過及系統減少動態。
+- 既有六黨各完整五屆到達 final，無 pageerror，反思摘要檢查通過。
+- 手機截圖更新於 `docs/screenshots/art-v03/`，已人工檢視人物六種表情、新聞島嶼與故事畫面。
+- 4 個 WebP 均寬 780px，manifest 大小一致；人物和服務物件圖集均保留 alpha 透明背景。manifest 沒有任何 SVG 人物項目，六張 SVG 人物檔已移除。
+- `node build.mjs --check`、樣稿語法、diff 空白檢查通過；正式遊戲程式沒有內容變動。
+- 使用內建 imagegen 生成插畫，WebP 只做交付尺寸與格式轉換；無 SVG 人物描圖。
+
+以下為 v0.2 的歷史紀錄；舊人物 SVG 已由 v0.3 圖集取代，正式整合以 `art-painted-v03.md` 為準。
+
 日期：2026-10-16。環境：Windows、Node 24.18.0、Playwright 搭配本機 Edge（headless）。本次是樣稿驗證與基準版回歸，不是七黨新版、政策平衡或學習效果測試。
 
 ## 通過

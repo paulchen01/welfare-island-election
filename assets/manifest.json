@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "福利島大選素材清單。新增素材時在 assets 陣列加一筆。",
   "fields": {
     "file": "相對於 assets/ 的路徑",
@@ -14,117 +14,10 @@
     "anchor": "SVG 座標中的錨點 [x,y]",
     "status": "proposal 表示尚未整合或核定",
     "source": "創作來源",
-    "bytes": "UTF-8 檔案大小"
+    "bytes": "UTF-8 檔案大小",
+    "frames": "點陣圖集欄列、每格尺寸與表情／類型順序；未指定表示單張"
   },
   "assets": [
-    {
-      "file": "characters/ma_happy.svg",
-      "use": "ma happy 頭像樣張",
-      "replaces": "face(ma, mood)",
-      "size": "0 0 512 512",
-      "format": "svg",
-      "transparent": true,
-      "author": "Codex",
-      "version": "0.2.0",
-      "id": "ma_happy",
-      "anchor": [
-        256,
-        350
-      ],
-      "status": "proposal",
-      "source": "Original SVG paths authored for this project; no external artwork",
-      "bytes": 1368
-    },
-    {
-      "file": "characters/ma_neutral.svg",
-      "use": "ma neutral 頭像樣張",
-      "replaces": "face(ma, mood)",
-      "size": "0 0 512 512",
-      "format": "svg",
-      "transparent": true,
-      "author": "Codex",
-      "version": "0.2.0",
-      "id": "ma_neutral",
-      "anchor": [
-        256,
-        350
-      ],
-      "status": "proposal",
-      "source": "Original SVG paths authored for this project; no external artwork",
-      "bytes": 1419
-    },
-    {
-      "file": "characters/ma_upset.svg",
-      "use": "ma upset 頭像樣張",
-      "replaces": "face(ma, mood)",
-      "size": "0 0 512 512",
-      "format": "svg",
-      "transparent": true,
-      "author": "Codex",
-      "version": "0.2.0",
-      "id": "ma_upset",
-      "anchor": [
-        256,
-        350
-      ],
-      "status": "proposal",
-      "source": "Original SVG paths authored for this project; no external artwork",
-      "bytes": 1483
-    },
-    {
-      "file": "characters/ati_happy.svg",
-      "use": "ati happy 頭像樣張",
-      "replaces": "face(ati, mood)",
-      "size": "0 0 512 512",
-      "format": "svg",
-      "transparent": true,
-      "author": "Codex",
-      "version": "0.2.0",
-      "id": "ati_happy",
-      "anchor": [
-        256,
-        350
-      ],
-      "status": "proposal",
-      "source": "Original SVG paths authored for this project; no external artwork",
-      "bytes": 1205
-    },
-    {
-      "file": "characters/ati_neutral.svg",
-      "use": "ati neutral 頭像樣張",
-      "replaces": "face(ati, mood)",
-      "size": "0 0 512 512",
-      "format": "svg",
-      "transparent": true,
-      "author": "Codex",
-      "version": "0.2.0",
-      "id": "ati_neutral",
-      "anchor": [
-        256,
-        350
-      ],
-      "status": "proposal",
-      "source": "Original SVG paths authored for this project; no external artwork",
-      "bytes": 1256
-    },
-    {
-      "file": "characters/ati_upset.svg",
-      "use": "ati upset 頭像樣張",
-      "replaces": "face(ati, mood)",
-      "size": "0 0 512 512",
-      "format": "svg",
-      "transparent": true,
-      "author": "Codex",
-      "version": "0.2.0",
-      "id": "ati_upset",
-      "anchor": [
-        256,
-        350
-      ],
-      "status": "proposal",
-      "source": "Original SVG paths authored for this project; no external artwork",
-      "bytes": 1320
-    },
     {
       "file": "scenes/island_base.svg",
       "use": "新聞島嶼底圖",
@@ -139,7 +32,7 @@
         390,
         340
       ],
-      "status": "proposal",
+      "status": "legacy-reference-not-used-in-v03-preview",
       "source": "Original SVG paths authored for this project; no external artwork",
       "bytes": 1358
     },
@@ -157,7 +50,7 @@
         390,
         340
       ],
-      "status": "proposal",
+      "status": "legacy-reference-not-used-in-v03-preview",
       "source": "Original SVG paths authored for this project; no external artwork",
       "bytes": 398
     },
@@ -175,7 +68,7 @@
         390,
         340
       ],
-      "status": "proposal",
+      "status": "legacy-reference-not-used-in-v03-preview",
       "source": "Original SVG paths authored for this project; no external artwork",
       "bytes": 444
     },
@@ -193,7 +86,7 @@
         390,
         340
       ],
-      "status": "proposal",
+      "status": "legacy-reference-not-used-in-v03-preview",
       "source": "Original SVG paths authored for this project; no external artwork",
       "bytes": 398
     },
@@ -211,7 +104,7 @@
         390,
         340
       ],
-      "status": "proposal",
+      "status": "legacy-reference-not-used-in-v03-preview",
       "source": "Original SVG paths authored for this project; no external artwork",
       "bytes": 466
     },
@@ -229,7 +122,7 @@
         390,
         340
       ],
-      "status": "proposal",
+      "status": "legacy-reference-not-used-in-v03-preview",
       "source": "Original SVG paths authored for this project; no external artwork",
       "bytes": 447
     },
@@ -247,7 +140,7 @@
         390,
         340
       ],
-      "status": "proposal",
+      "status": "legacy-reference-not-used-in-v03-preview",
       "source": "Original SVG paths authored for this project; no external artwork",
       "bytes": 360
     },
@@ -265,7 +158,7 @@
         390,
         340
       ],
-      "status": "proposal",
+      "status": "legacy-reference-not-used-in-v03-preview",
       "source": "Original SVG paths authored for this project; no external artwork",
       "bytes": 407
     },
@@ -283,7 +176,7 @@
         390,
         340
       ],
-      "status": "proposal",
+      "status": "legacy-reference-not-used-in-v03-preview",
       "source": "Original SVG paths authored for this project; no external artwork",
       "bytes": 400
     },
@@ -298,8 +191,8 @@
       "version": "0.2.0",
       "id": "care",
       "anchor": [
-        24.0,
-        24.0
+        24,
+        24
       ],
       "status": "proposal",
       "source": "Original SVG paths authored for this project; no external artwork",
@@ -316,8 +209,8 @@
       "version": "0.2.0",
       "id": "institution",
       "anchor": [
-        24.0,
-        24.0
+        24,
+        24
       ],
       "status": "proposal",
       "source": "Original SVG paths authored for this project; no external artwork",
@@ -334,8 +227,8 @@
       "version": "0.2.0",
       "id": "cost",
       "anchor": [
-        24.0,
-        24.0
+        24,
+        24
       ],
       "status": "proposal",
       "source": "Original SVG paths authored for this project; no external artwork",
@@ -352,12 +245,122 @@
       "version": "0.2.0",
       "id": "people",
       "anchor": [
-        24.0,
-        24.0
+        24,
+        24
       ],
       "status": "proposal",
       "source": "Original SVG paths authored for this project; no external artwork",
       "bytes": 255
+    },
+    {
+      "file": "scenes/island-painted.webp",
+      "use": "模型繪製無建物島嶼底圖",
+      "replaces": "v0.3 art-preview only; formal game integration pending",
+      "size": "780x430",
+      "format": "webp",
+      "transparent": false,
+      "author": "Codex / built-in imagegen",
+      "version": "0.3.0",
+      "id": "island-painted",
+      "anchor": [
+        390,
+        340
+      ],
+      "status": "artwork-ready-integration-pending",
+      "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v03.md; export only resized/encoded",
+      "bytes": 107326
+    },
+    {
+      "file": "characters/ma-expressions.webp",
+      "use": "模型繪製角色三表情圖集",
+      "replaces": "v0.3 art-preview only; formal game integration pending",
+      "size": "780x260",
+      "format": "webp",
+      "transparent": true,
+      "author": "Codex / built-in imagegen",
+      "version": "0.3.0",
+      "id": "ma-expressions",
+      "anchor": [
+        130,
+        230
+      ],
+      "status": "artwork-ready-integration-pending",
+      "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v03.md; export only resized/encoded",
+      "bytes": 66618,
+      "frames": {
+        "columns": 3,
+        "rows": 1,
+        "width": 260,
+        "height": 260,
+        "order": [
+          "happy",
+          "neutral",
+          "upset"
+        ]
+      }
+    },
+    {
+      "file": "characters/ati-expressions.webp",
+      "use": "模型繪製角色三表情圖集",
+      "replaces": "v0.3 art-preview only; formal game integration pending",
+      "size": "780x260",
+      "format": "webp",
+      "transparent": true,
+      "author": "Codex / built-in imagegen",
+      "version": "0.3.0",
+      "id": "ati-expressions",
+      "anchor": [
+        130,
+        230
+      ],
+      "status": "artwork-ready-integration-pending",
+      "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v03.md; export only resized/encoded",
+      "bytes": 59346,
+      "frames": {
+        "columns": 3,
+        "rows": 1,
+        "width": 260,
+        "height": 260,
+        "order": [
+          "happy",
+          "neutral",
+          "upset"
+        ]
+      }
+    },
+    {
+      "file": "scenes/services-painted.webp",
+      "use": "模型繪製八類服務物件圖集",
+      "replaces": "v0.3 art-preview only; formal game integration pending",
+      "size": "780x390",
+      "format": "webp",
+      "transparent": true,
+      "author": "Codex / built-in imagegen",
+      "version": "0.3.0",
+      "id": "services-painted",
+      "anchor": [
+        97.5,
+        180
+      ],
+      "status": "artwork-ready-integration-pending",
+      "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v03.md; export only resized/encoded",
+      "bytes": 116116,
+      "frames": {
+        "columns": 4,
+        "rows": 2,
+        "width": 195,
+        "height": 195,
+        "order": [
+          "care",
+          "transport",
+          "housing",
+          "energy",
+          "community",
+          "health",
+          "school",
+          "industry"
+        ]
+      }
     }
   ]
 }

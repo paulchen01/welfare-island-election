@@ -2,9 +2,13 @@
 
 給 Codex 的美術交接文件。Codex 可以直接修改本檔，補充美術方向與規格。
 
-## 第一階段樣稿 v0.2（Issue #2，待整合）
+## 最新素材 v0.3：人物改為模型插畫
 
-完整設計與範圍見 [art-proposal.md](art-proposal.md)；瀏覽器開啟 `src/art-preview.html` 可操作六個樣稿畫面。`assets/manifest.json` 登記 19 個原創 SVG：兩位島民各三表情、島嶼底圖與八個聚合圖層、四個政策圖示。島上編號與 HTML 圖例對應，不將政策文字畫入圖片。
+依老師最新指示，人物必須用繪圖模型插畫，不使用 SVG 人物。兩位角色現以透明 WebP 三表情圖集交付，舊六張 SVG 人物移除；島嶼與八類場景物件也已換成模型水粉插畫。請以 [art-painted-v03.md](art-painted-v03.md) 及 manifest 0.3.0 為最新素材規格，舊檔名與 SVG 人物規則不再適用。所有文字仍由 HTML 呈現。
+
+## 第一階段樣稿 v0.2 歷史紀錄（已由 v0.3 更新人物）
+
+完整設計與範圍見 [art-proposal.md](art-proposal.md)；瀏覽器開啟 `src/art-preview.html` 可操作六個樣稿畫面。v0.2 當時登記 19 個原創 SVG（其中六張人物現已移除，最新 manifest 以 v0.3 為準）：兩位島民各三表情、島嶼底圖與八個聚合圖層、四個政策圖示。島上編號與 HTML 圖例對應，不將政策文字畫入圖片。
 
 本次只交付樣稿，沒有替換既有遊戲函式。責任欄位使用文字而非 0–3 量表；未知資料顯示「未提供」。第三屆故事位置與下一步加牌方式依 `collab/TO_CODEX_decisions_v01.md`，以該文件取代更早的未定草案。需要 Claude 整合的工作已開 [Issue #6](https://github.com/paulchen01/welfare-island-election/issues/6)。
 
