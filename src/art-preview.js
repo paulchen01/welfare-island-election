@@ -51,8 +51,76 @@
     noticeTimer,
     currentView = "budget";
   const motion = matchMedia("(prefers-reduced-motion: reduce)");
+  const citizens = [
+  {
+    "id": "ma",
+    "name": "秀英阿嬤",
+    "age": 81,
+    "role": "獨居長者，住在山邊的老社區"
+  },
+  {
+    "id": "chen",
+    "name": "小陳",
+    "age": 28,
+    "role": "外送員，沒有雇主幫忙保勞保"
+  },
+  {
+    "id": "ling",
+    "name": "美玲",
+    "age": 35,
+    "role": "單親媽媽，兩個孩子 1 歲和 7 歲"
+  },
+  {
+    "id": "xiang",
+    "name": "宇翔",
+    "age": 24,
+    "role": "視障青年，資工系畢業找工作中"
+  },
+  {
+    "id": "kevin",
+    "name": "Kevin",
+    "age": 40,
+    "role": "半導體工程師，年薪 300 萬，房貸壓力大"
+  },
+  {
+    "id": "wang",
+    "name": "王董",
+    "age": 56,
+    "role": "中小企業老闆，員工 40 人"
+  },
+  {
+    "id": "de",
+    "name": "阿德",
+    "age": 47,
+    "role": "夜市攤商，自己當老闆，最怕繁瑣規定"
+  },
+  {
+    "id": "yuma",
+    "name": "尤瑪",
+    "age": 52,
+    "role": "泰雅族，部落文化健康站照服員，住在山上部落"
+  },
+  {
+    "id": "liu",
+    "name": "劉伯伯",
+    "age": 78,
+    "role": "外省第二代，退休公立學校老師，住眷村改建國宅"
+  },
+  {
+    "id": "ati",
+    "name": "阿蒂",
+    "age": 30,
+    "role": "印尼籍看護移工，在台第 6 年"
+  },
+  {
+    "id": "zhen",
+    "name": "小禎",
+    "age": 22,
+    "role": "社工系應屆畢業生，正在找工作"
+  }
+];
   const portrait = (id, mood = "neutral", cls = "portrait") =>
-    `<span class="painted-portrait ${cls}" role="img" aria-label="${id === "ma" ? "秀英阿嬤" : "阿蒂"}，${{ happy: "開心", neutral: "平靜", upset: "不滿" }[mood]}表情"><img src="../assets/characters/${id}-expressions.webp" alt="" style="transform:translateX(-${{ happy: 0, neutral: 100 / 3, upset: 200 / 3 }[mood]}%)"></span>`;
+    `<span class="painted-portrait ${cls}" role="img" aria-label="${citizens.find(c => c.id === id).name}，${{ happy: "開心", neutral: "平靜", upset: "擔憂" }[mood]}表情"><img src="../assets/characters/${id}-expressions.webp" alt="" style="transform:translateX(-${{ happy: 0, neutral: 100 / 3, upset: 200 / 3 }[mood]}%)"></span>`;
   // x, ground anchor y, width as percentages of the complete scene.
   const objects = [
     [29, 58, 15],
@@ -137,13 +205,13 @@
         "每個人，都有自己的處境。",
         "表情呈現對當下處境的回應，不代表角色價值。",
       ) +
-      ["ma", "ati"]
+      citizens.map(c => c.id)
         .map(
           (id) =>
-            `<section class="panel"><h2>${id === "ma" ? "秀英阿嬤" : "阿蒂"}</h2><p class="sub">${id === "ma" ? "81 歲 · 獨居，住山邊老社區" : "30 歲 · 印尼籍看護移工，在台第 6 年"}</p><div class="character-grid">${["happy", "neutral", "upset"].map((m) => `<figure>${portrait(id, m, "")}<figcaption>${{ happy: "開心", neutral: "平靜", upset: "不滿" }[m]}</figcaption></figure>`).join("")}</div></section>`,
+            `<section class="panel"><h2>${citizens.find(c => c.id === id).name}</h2><p class="sub">${citizens.find(c => c.id === id).age} 歲 · ${citizens.find(c => c.id === id).role}</p><div class="character-grid">${["happy", "neutral", "upset"].map((m) => `<figure>${portrait(id, m, "")}<figcaption>${{ happy: "開心", neutral: "平靜", upset: "擔憂" }[m]}</figcaption></figure>`).join("")}</div></section>`,
         )
         .join("") +
-      `<div class="strip">兩位角色各 3 種模型水粉表情，以透明 WebP 圖集呈現。移工不投票，但政策影響與當事人敘事仍保留。</div><h2>動作樣張</h2><p>在「第三屆故事」播放依序進場與傾聽的 2.4 秒示範；不以誇張哭泣或勝利姿勢代替論點。</p>`;
+      `<div class="strip">11 位角色共 33 種模型水粉表情，以透明 WebP 圖集呈現。移工不投票，但政策影響與當事人敘事仍保留。</div><h2>動作樣張</h2><p>在「第三屆故事」播放依序進場與傾聽的 2.4 秒示範；不以誇張哭泣或勝利姿勢代替論點。</p>`;
     bar.innerHTML = `<div class="balance">模型插畫<strong>每格 260 × 260</strong></div><button data-action="characters">查看故事動作 →</button>`;
   }
   const meta = {

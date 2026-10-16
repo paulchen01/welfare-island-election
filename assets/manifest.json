@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "福利島大選素材清單。新增素材時在 assets 陣列加一筆。",
   "fields": {
     "file": "相對於 assets/ 的路徑",
@@ -359,6 +359,267 @@
           "health",
           "school",
           "industry"
+        ]
+      }
+    },
+    {
+      "file": "characters/chen-expressions.webp",
+      "use": "小陳三表情模型插畫",
+      "replaces": "face('chen', score) integration pending; art-preview only",
+      "size": "780x260",
+      "format": "webp",
+      "transparent": true,
+      "author": "Codex / built-in imagegen",
+      "version": "0.4.0",
+      "id": "chen-expressions",
+      "anchor": [
+        130,
+        230
+      ],
+      "status": "artwork-ready-integration-pending",
+      "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
+      "bytes": 71288,
+      "frames": {
+        "columns": 3,
+        "rows": 1,
+        "width": 260,
+        "height": 260,
+        "order": [
+          "happy",
+          "neutral",
+          "upset"
+        ]
+      }
+    },
+    {
+      "file": "characters/ling-expressions.webp",
+      "use": "美玲三表情模型插畫",
+      "replaces": "face('ling', score) integration pending; art-preview only",
+      "size": "780x260",
+      "format": "webp",
+      "transparent": true,
+      "author": "Codex / built-in imagegen",
+      "version": "0.4.0",
+      "id": "ling-expressions",
+      "anchor": [
+        130,
+        230
+      ],
+      "status": "artwork-ready-integration-pending",
+      "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
+      "bytes": 62676,
+      "frames": {
+        "columns": 3,
+        "rows": 1,
+        "width": 260,
+        "height": 260,
+        "order": [
+          "happy",
+          "neutral",
+          "upset"
+        ]
+      }
+    },
+    {
+      "file": "characters/xiang-expressions.webp",
+      "use": "宇翔三表情模型插畫",
+      "replaces": "face('xiang', score) integration pending; art-preview only",
+      "size": "780x260",
+      "format": "webp",
+      "transparent": true,
+      "author": "Codex / built-in imagegen",
+      "version": "0.4.0",
+      "id": "xiang-expressions",
+      "anchor": [
+        130,
+        230
+      ],
+      "status": "artwork-ready-integration-pending",
+      "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
+      "bytes": 67020,
+      "frames": {
+        "columns": 3,
+        "rows": 1,
+        "width": 260,
+        "height": 260,
+        "order": [
+          "happy",
+          "neutral",
+          "upset"
+        ]
+      }
+    },
+    {
+      "file": "characters/kevin-expressions.webp",
+      "use": "Kevin三表情模型插畫",
+      "replaces": "face('kevin', score) integration pending; art-preview only",
+      "size": "780x260",
+      "format": "webp",
+      "transparent": true,
+      "author": "Codex / built-in imagegen",
+      "version": "0.4.0",
+      "id": "kevin-expressions",
+      "anchor": [
+        130,
+        230
+      ],
+      "status": "artwork-ready-integration-pending",
+      "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
+      "bytes": 61608,
+      "frames": {
+        "columns": 3,
+        "rows": 1,
+        "width": 260,
+        "height": 260,
+        "order": [
+          "happy",
+          "neutral",
+          "upset"
+        ]
+      }
+    },
+    {
+      "file": "characters/wang-expressions.webp",
+      "use": "王董三表情模型插畫",
+      "replaces": "face('wang', score) integration pending; art-preview only",
+      "size": "780x260",
+      "format": "webp",
+      "transparent": true,
+      "author": "Codex / built-in imagegen",
+      "version": "0.4.0",
+      "id": "wang-expressions",
+      "anchor": [
+        130,
+        230
+      ],
+      "status": "artwork-ready-integration-pending",
+      "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
+      "bytes": 71116,
+      "frames": {
+        "columns": 3,
+        "rows": 1,
+        "width": 260,
+        "height": 260,
+        "order": [
+          "happy",
+          "neutral",
+          "upset"
+        ]
+      }
+    },
+    {
+      "file": "characters/de-expressions.webp",
+      "use": "阿德三表情模型插畫",
+      "replaces": "face('de', score) integration pending; art-preview only",
+      "size": "780x260",
+      "format": "webp",
+      "transparent": true,
+      "author": "Codex / built-in imagegen",
+      "version": "0.4.0",
+      "id": "de-expressions",
+      "anchor": [
+        130,
+        230
+      ],
+      "status": "artwork-ready-integration-pending",
+      "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
+      "bytes": 66208,
+      "frames": {
+        "columns": 3,
+        "rows": 1,
+        "width": 260,
+        "height": 260,
+        "order": [
+          "happy",
+          "neutral",
+          "upset"
+        ]
+      }
+    },
+    {
+      "file": "characters/yuma-expressions.webp",
+      "use": "尤瑪三表情模型插畫",
+      "replaces": "face('yuma', score) integration pending; art-preview only",
+      "size": "780x260",
+      "format": "webp",
+      "transparent": true,
+      "author": "Codex / built-in imagegen",
+      "version": "0.4.0",
+      "id": "yuma-expressions",
+      "anchor": [
+        130,
+        230
+      ],
+      "status": "artwork-ready-integration-pending",
+      "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
+      "bytes": 66168,
+      "frames": {
+        "columns": 3,
+        "rows": 1,
+        "width": 260,
+        "height": 260,
+        "order": [
+          "happy",
+          "neutral",
+          "upset"
+        ]
+      }
+    },
+    {
+      "file": "characters/liu-expressions.webp",
+      "use": "劉伯伯三表情模型插畫",
+      "replaces": "face('liu', score) integration pending; art-preview only",
+      "size": "780x260",
+      "format": "webp",
+      "transparent": true,
+      "author": "Codex / built-in imagegen",
+      "version": "0.4.0",
+      "id": "liu-expressions",
+      "anchor": [
+        130,
+        230
+      ],
+      "status": "artwork-ready-integration-pending",
+      "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
+      "bytes": 74560,
+      "frames": {
+        "columns": 3,
+        "rows": 1,
+        "width": 260,
+        "height": 260,
+        "order": [
+          "happy",
+          "neutral",
+          "upset"
+        ]
+      }
+    },
+    {
+      "file": "characters/zhen-expressions.webp",
+      "use": "小禎三表情模型插畫",
+      "replaces": "face('zhen', score) integration pending; art-preview only",
+      "size": "780x260",
+      "format": "webp",
+      "transparent": true,
+      "author": "Codex / built-in imagegen",
+      "version": "0.4.0",
+      "id": "zhen-expressions",
+      "anchor": [
+        130,
+        230
+      ],
+      "status": "artwork-ready-integration-pending",
+      "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
+      "bytes": 80028,
+      "frames": {
+        "columns": 3,
+        "rows": 1,
+        "width": 260,
+        "height": 260,
+        "order": [
+          "happy",
+          "neutral",
+          "upset"
         ]
       }
     }
