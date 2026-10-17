@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "《誰來照顧誰》素材清單。新增素材時在 assets 陣列加一筆。",
   "fields": {
     "file": "相對於 assets/ 的路徑",
@@ -622,6 +622,20 @@
           "upset"
         ]
       }
+    },
+    {
+      "file": "scenes/newsroom-painted-v1.webp",
+      "use": "福利島新聞台原創粉彩主播與新聞棚，空白螢幕由 HTML 疊入事件主題",
+      "replaces": "rNews() → newsBroadcast(e)",
+      "size": "1440x810",
+      "format": "webp",
+      "transparent": false,
+      "author": "Codex / built-in imagegen",
+      "version": "0.5.0",
+      "id": "newsroom-painted",
+      "status": "integrated-in-newsroom",
+      "source": "Generated with built-in imagegen; exact prompt in docs/art-newsroom-v05.md; export only resized/encoded",
+      "bytes": 146428
     }
   ]
 }

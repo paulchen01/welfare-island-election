@@ -36,7 +36,7 @@ async function imageChecks(page) {
     heroPortraits:document.querySelectorAll('.hero-faces image[href$="-expressions.webp"]').length,
     scenes:Object.keys(SCENE).map(k=>({key:k,painted:landscape(k).includes('island-painted.webp')}))
   }));
-  assert.equal(art.loaded, art.expected, 'all 13 art files load');
+  assert.equal(art.loaded, art.expected, 'all declared art files load');
   assert(art.island, 'title uses painted island');
   assert(art.portraits.every(x=>x.painted), 'all 11 characters and 33 expressions use painted art');
   assert.equal(art.heroPortraits,11,'title contains 11 painted portraits');
