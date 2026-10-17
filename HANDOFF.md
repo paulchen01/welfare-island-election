@@ -4,6 +4,16 @@
 
 ---
 
+## 2026-10-17 · Codex · 棚內事件轉盤 v0.6（分支 `codex/studio-wheel`）
+
+- 老師確認「棚內道具」方向：奶油白與霧金外框、珊瑚紅指針、實體底座，中央沿用照顧四葉徽章。
+- 新增內建 imagegen 原創八種事件圖集 `assets/scenes/events-painted-v1.webp`；manifest 0.6.0，總預載 15 張。完整提示詞見 `docs/art-wheel-v06.md`。
+- 修改 `wheelSVG()`、`rNews()`、`spin()` 與 `ART_FILES()`，新增 `wheelProp()`。事件文字維持正向、已播報蓋章、選中後短暫亮起再交主播播報；道具操作鈕與固定操作列共用動作並防止重複觸發。
+- 保留事件池、政策數值、五屆流程及教學內容；支援缺圖、深色與減少動態。
+- 驗證：指針與事件一致、五種尺寸／色系各八次不重複抽選、已播報標示、缺圖仍可玩；新聞棚及七觀點各五屆回歸、語法與建置一致性檢查。截圖已另行檢視。
+
+---
+
 ## 2026-10-17 · Codex · 福利島新聞棚 v0.5（分支 `codex/newsroom-art`）
 
 - 依老師提供的新聞台構圖參考，用內建 imagegen 生成原創粉彩主播與新聞棚；已整合為 `assets/scenes/newsroom-painted-v1.webp` 並登記 manifest 0.5.0。

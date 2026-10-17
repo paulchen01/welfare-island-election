@@ -1,5 +1,5 @@
 {
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "《誰來照顧誰》素材清單。新增素材時在 assets 陣列加一筆。",
   "fields": {
     "file": "相對於 assets/ 的路徑",
@@ -636,6 +636,27 @@
       "status": "integrated-in-newsroom",
       "source": "Generated with built-in imagegen; exact prompt in docs/art-newsroom-v05.md; export only resized/encoded",
       "bytes": 146428
+    },
+    {
+      "file": "scenes/events-painted-v1.webp",
+      "use": "新聞棚事件轉盤的八種水粉插畫圖示",
+      "replaces": "wheelSVG() inside wheelProp()",
+      "size": "1600x800",
+      "format": "webp",
+      "transparent": true,
+      "author": "Codex / built-in imagegen",
+      "version": "0.6.0",
+      "id": "events-painted",
+      "status": "integrated-in-studio-wheel",
+      "source": "Generated with built-in imagegen; exact prompt in docs/art-wheel-v06.md; export only resized/encoded",
+      "bytes": 334486,
+      "frames": {
+        "columns": 4,
+        "rows": 2,
+        "width": 400,
+        "height": 400,
+        "order": ["e1", "e2", "e3", "e4", "e5", "e6", "e7", "e8"]
+      }
     }
   ]
 }
