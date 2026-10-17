@@ -132,8 +132,32 @@ const PETS=[
  {who:'kevin',story:'夫妻都是工程師，房價還是高到買不起，只能一直租。',card:{id:'t8',name:'首購族房貸利息補貼',tags:['mkt','fam'],cost:2,d:'首次購屋的年輕家庭，房貸利息由政府補貼一部分。',fx:{str:1},cit:{kevin:4,zhen:2,ling:1,ma:-1}}}
 ];
 PETS.forEach(t=>{t.card.pet=t.who;t.card.say={};t.card.say[t.who]='你真的聽見我了，謝謝你。'});
+// ---- 世界各國政策 v0.3（由 docs/data/world_policies_v0.3.py 產生，請勿手改）----
+POL.push(
+ {id:'w1',name:"勞工董事共同決定",tags:["rights"],cost:0,d:"員工 2000 人以上的大企業，監事會一半席次由勞工選出，參與重大經營決策。",fx:{"str":-1},cit:{"chen":1,"zhen":2,"kevin":1,"wang":-3,"de":-1},say:{"zhen":"公司要裁員，勞工代表至少能在董事會上表達意見。","wang":"經營決策都要跟工會商量，速度會慢很多。"},src:"德國《共同決定法》（1976）"},
+ {id:'w2',name:"受僱者基金",tags:["rights","reform"],cost:0,d:"對企業超額利潤課徵一定比例，轉入由工會代表管理的基金，逐步持有企業股份。",fx:{"str":-1,"eco":-0.3},cit:{"zhen":2,"chen":2,"ling":1,"kevin":-2,"wang":-4,"de":-1},say:{"chen":"公司賺的錢，終於有一部分是我們的。","wang":"這是在沒收企業，誰還敢投資？"},src:"瑞典受僱者基金（梅德納計畫，1984–1991）"},
+ {id:'w3',name:"富人團結稅",tags:["reform"],cost:-2,d:"淨資產超過門檻的富人，每年依資產課徵 1.7%–3.5% 的累進稅。",fx:{"str":-1,"eco":-0.2},cit:{"chen":1,"zhen":2,"ling":1,"ma":1,"kevin":-2,"wang":-3,"liu":-1},say:{"zhen":"薪水都被房租吃掉，資產多的人多繳一點很合理。","wang":"資產稅會把有錢人和資金趕到國外。"},src:"西班牙大額財富團結稅（2022）"},
+ {id:'w4',name:"產業別工資委員會",tags:["rights"],cost:0,d:"政府、工會與雇主按產業一起協商最低工資與勞動條件，協議適用整個產業。",fx:{"pov":-1,"str":-1},cit:{"chen":2,"zhen":2,"ling":2,"ati":1,"wang":-2,"de":-2},say:{"ling":"小公司沒有工會，現在也能照產業協議加薪。","de":"產業統一工資，我這種小攤子付不起。"},src:"烏拉圭工資委員會重新啟動（2005）"},
+ {id:'w5',name:"員工承購合作社",tags:["civ","rights"],cost:1,d:"公司倒閉時，員工可以把失業給付一次領出作為資本，承接公司並改成員工合作社。",fx:{"emp":1,"eco":0.3},cit:{"chen":2,"de":1,"zhen":1,"wang":1},say:{"chen":"與其一起失業，不如大家一起當老闆。"},src:"義大利《馬可拉法》（1985）"},
+ {id:'w6',name:"工會經辦失業保險",tags:["ins","rights"],cost:2,d:"失業保險由工會設立的基金經辦，政府補助並監督，給付依原本薪資計算。",fx:{"dec":1,"pov":-1},cit:{"chen":2,"zhen":1,"kevin":1,"wang":-1,"de":-1},say:{"zhen":"加入工會不只為了抗爭，失業時也有人照應。"},src:"根特制（丹麥、瑞典、芬蘭、冰島）"},
+ {id:'w7',name:"縮短工時試行",tags:["rights","green"],cost:1,d:"公部門先試行縮短每週工時、薪水不減，再評估擴大到民間。",fx:{"def":1,"env":1},cit:{"zhen":3,"ling":3,"chen":1,"kevin":2,"wang":-2,"de":-1},say:{"ling":"多一個下午，可以去接孩子放學。","wang":"人少一天，訂單誰來趕？"},src:"冰島縮短工時試驗（2015–2019）"},
+ {id:'w8',name:"自來水回歸公營",tags:["univ"],cost:1,d:"結束與民間水務公司的特許合約，由市政府成立公營公司供水。",fx:{"pov":-1,"dec":1},cit:{"ma":1,"ling":1,"chen":1,"liu":1,"wang":-1},say:{"ma":"水費沒漲，水管也有人來修。"},src:"法國巴黎自來水回歸公營（2010）"},
+ {id:'w9',name:"外包勞工協商權保障",tags:["rights"],cost:0,d:"外包、派遣與平台勞工可以向實際掌控工作條件的母公司協商，並限制企業向罷工勞工求償。",fx:{"str":-1},cit:{"chen":3,"zhen":1,"ati":1,"wang":-3,"kevin":-1},say:{"chen":"真正決定我收入的是平台，現在終於能直接談了。","wang":"外包商的事都要我出面談，經營風險太大。"},src:"南韓《工會法》修正（俗稱黃色信封法，2025）"},
+ {id:'w10',name:"父母各半育嬰假",tags:["care","rights"],cost:2,d:"父母各有 6 個月育嬰假，只有 6 週可以轉給對方，期間領八成薪。",fx:{"def":2,"emp":1},cit:{"ling":2,"kevin":2,"zhen":2,"wang":-2,"de":-1},say:{"kevin":"爸爸一定會請，請假不用再看主管臉色。","wang":"一次少兩個人，排班很頭痛。"},src:"冰島《育嬰假法》（2021）"},
+ {id:'w11',name:"同工同酬認證",tags:["rights"],cost:0,d:"25 人以上的企業必須通過外部稽核，證明同樣價值的工作支付同樣的薪水。",fx:{"stg":-1},cit:{"ling":2,"zhen":2,"xiang":1,"wang":-2,"kevin":-1},say:{"ling":"同樣的工作，終於不用再猜自己是不是領得比較少。"},src:"冰島同工同酬認證（2018）"},
+ {id:'w12',name:"照顧年資計入年金",tags:["ins","care","fam"],cost:2,d:"照顧幼兒的父母，每個孩子有 3 年由政府代繳年金保費，退休金不因照顧而中斷。",fx:{"pov":-1},cit:{"ling":2,"ma":1,"liu":1,"de":1},say:{"ling":"在家帶小孩那幾年，退休金也有算到。"},src:"德國年金保險育兒年資（1992 年後出生每孩 3 年）"},
+ {id:'w13',name:"碳費全民分紅",tags:["green","univ"],cost:0,d:"對燃料課徵碳費，大部分收入平均退還每位居民；用油用電少的人反而賺。",fx:{"env":2},cit:{"zhen":2,"chen":1,"ling":1,"yuma":1,"wang":-2,"de":-1},say:{"zhen":"我騎車通勤，碳費分紅比我繳的還多。","yuma":"山上只能開車，希望偏鄉另外有配套。"},src:"瑞士二氧化碳稅退還（隨健保保費）"},
+ {id:'w14',name:"修理減稅",tags:["green","reform"],cost:1,d:"修理衣服、鞋子、腳踏車的營業稅減半，修家電的工資可以抵稅。",fx:{"env":1,"emp":1},cit:{"de":2,"zhen":1,"ma":1,"liu":1},say:{"de":"修鞋修傘的老師傅，生意又回來了。"},src:"瑞典修理減稅（2017）"},
+ {id:'w15',name:"煤礦公正轉型協議",tags:["green","inv","rights"],cost:3,d:"關閉煤礦時，政府與工會協議提早退休、轉職與礦區生態復育，礦工優先受僱。",fx:{"env":2,"emp":1},cit:{"chen":2,"yuma":1,"zhen":1,"wang":-1},say:{"chen":"礦場關了，至少復育工程讓我們先上工。"},src:"西班牙煤礦公正轉型協議（2018）"},
+ {id:'w16',name:"飲料瓶押金制度",tags:["green","mkt"],cost:0,d:"一次性飲料瓶加收押金，空瓶拿回店裡就退錢。",fx:{"env":1},cit:{"zhen":1,"ma":1,"de":-1,"wang":-1},say:{"ma":"撿瓶子退押金，還能貼補一點零用。","de":"店裡還要收空瓶，地方都不夠放。"},src:"德國一次性飲料瓶押金（2003）"},
+ {id:'w17',name:"個人公積金帳戶",tags:["mkt","ins"],cost:-1,d:"勞雇每月強制提撥到個人帳戶，存的錢用在自己的住宅、醫療與退休。",fx:{"str":1,"dec":-1},cit:{"kevin":3,"wang":1,"zhen":1,"chen":-1,"ma":-1},say:{"kevin":"自己存自己用，不用擔心以後被下一代砍。","chen":"薪水這麼低，帳戶根本存不了多少。"},src:"新加坡中央公積金（1955）"},
+ {id:'w18',name:"學校教育券",tags:["mkt"],cost:1,d:"公費按學生人數撥給學校，家長可以自由選擇公立或民間學校。",fx:{"eco":0.2},cit:{"kevin":3,"ling":1,"zhen":-1,"yuma":-1},say:{"kevin":"可以幫孩子挑適合的學校，選擇變多了。","yuma":"山上只有一間學校，教育券對我們沒差。"},src:"瑞典自由學校改革（1992）"},
+ {id:'w19',name:"彈性安全",tags:["inv","ins"],cost:3,d:"企業解僱較容易，但失業給付高，並積極輔導再就業，三者搭配。",fx:{"emp":2,"dec":1},cit:{"kevin":2,"wang":2,"chen":1,"zhen":1,"de":1},say:{"wang":"景氣差時能調整人力，我才敢多請人。","chen":"被裁了也有錢撐著，還有人幫我找下一份工作。"},src:"丹麥彈性安全「黃金三角」"}
+);
+const WORLD_LAYERS={"w5":"industry","w13":"energy","w14":"industry","w15":"energy","w18":"school"};
+// ---- END 世界各國政策 ----
 POL.push(...EVPOL,...PETS.map(t=>t.card));
-// ---------- META：政策責任與觀點資料（由 docs/data/embed_policy_meta.py 產生，來源 policy_meta_v0.2.json，請勿手改）----------
+// ---------- META：政策責任與觀點資料（由 docs/data/embed_policy_meta.py 產生，來源 policy_meta_v0.3.json，請勿手改）----------
 const META={
  p1:{"pv":"政府（現金給付）","py":"稅收","tg":"0–17 歲兒童的家庭，不看收入","gain":"減輕育兒成本，沒有審查汙名","risk":"高所得家庭也領，成本高","vw":[["社會民主","up","普及給付，沒有審查汙名"],["新右派","dn","錢也給不需要的人，加重稅負"],["女性主義","mid","現金不能取代托育服務"]]},
  p2:{"pv":"政府（社會救助）","py":"稅收","tg":"通過資產調查的低收入戶","gain":"資源集中，貧窮率下降最多","risk":"審查造成汙名，有人因此不申請","vw":[["新右派","up","最低安全網，資源集中在最需要的人"],["社會民主","dn","選擇式福利造成汙名與階層化"],["馬克思主義","dn","只救急，不改變分配結構"]]},
@@ -212,7 +236,26 @@ const META={
  t6:{"pv":"政府","py":"省下行政成本","tg":"小規模營業人","gain":"減少行政負擔","risk":"規定簡化後的稽核","vw":[["新右派","up","減少管制"],["第三條路","up","行政現代化"],["馬克思主義","mid","簡化可以，但勞動保障不能跟著鬆綁"]]},
  t7:{"pv":"政府與企業","py":"稅收","tg":"青年與缺工產業","gain":"填補缺工","risk":"沒有處理工作條件，青年意願仍低","vw":[["第三條路","up","技能與就業媒合"],["綠色主義","mid","媒合應優先投入永續產業"],["馬克思主義","dn","缺工問題出在勞動條件"]]},
  t8:{"pv":"政府與銀行","py":"稅收","tg":"首次購屋的家庭","gain":"減輕購屋負擔","risk":"可能推升房價，租屋者沒有好處","vw":[["新右派","up","鼓勵擁有自有住宅"],["綠色主義","dn","鼓勵購屋與開發，空屋卻沒有活化"],["新社會運動","dn","租屋的青年與弱勢得不到"]]},
- p31:{"pv":"政府","py":"稅收","tg":"全體國民","gain":"無條件的底線保障，沒有汙名","risk":"財政負擔極重，工作誘因有爭議","vw":[["綠色主義","up","降低對成長與工作的依賴"],["新社會運動","up","不需審查，不必證明自己夠窮"],["新右派","dn","財政負擔與工作誘因"],["第三條路","dn","沒有責任的權利"]]}
+ p31:{"pv":"政府","py":"稅收","tg":"全體國民","gain":"無條件的底線保障，沒有汙名","risk":"財政負擔極重，工作誘因有爭議","vw":[["綠色主義","up","降低對成長與工作的依賴"],["新社會運動","up","不需審查，不必證明自己夠窮"],["新右派","dn","財政負擔與工作誘因"],["第三條路","dn","沒有責任的權利"]]},
+ w1:{"pv":"企業（勞資共治）","py":"企業（決策成本）","tg":"大型企業的受僱者","gain":"勞工對裁員、工作條件有發言權","risk":"只適用大企業，股東代表仍握最後一票","vw":[["馬克思主義","up","讓勞工參與生產決策，挑戰資本獨占經營權"],["社會民主","up","勞資夥伴共同治理的傳統"],["新右派","dn","干預財產權，降低企業決策效率"]],"src":"德國《共同決定法》（1976）","url":"https://en.wikipedia.org/wiki/Mitbestimmungsgesetz"},
+ w2:{"pv":"工會代表管理的基金","py":"獲利較高的企業","tg":"全體受僱者","gain":"企業獲利的一部分回到勞工手中","risk":"企業反彈強烈，瑞典實施 7 年後廢止","vw":[["馬克思主義","up","勞工逐步共同擁有生產工具"],["社會民主","mid","瑞典社民黨內部也有分歧，最後在 1991 年廢止"],["新右派","dn","走向社會主義，打擊投資意願"],["第三條路","dn","以集體持股取代市場投資，與社會投資路線不同"]],"src":"瑞典受僱者基金（梅德納計畫，1984–1991）","url":"https://en.wikipedia.org/wiki/Employee_funds"},
+ w3:{"pv":"政府","py":"淨資產超過門檻的富人","tg":"稅收用於全體","gain":"增加財源，縮小財富差距","risk":"資產難估值，富人可能移居或轉移資產","vw":[["馬克思主義","up","直接處理財富集中"],["社會民主","up","累進稅支撐普及福利"],["新右派","dn","資本外逃、重複課稅"],["第三條路","mid","支持公平稅負，但擔心資本外移、影響投資"]],"src":"西班牙大額財富團結稅（2022）","url":"https://www.thelocal.es/20230614/qa-how-does-spains-solidarity-tax-on-wealth-work"},
+ w4:{"pv":"政府、工會、雇主三方","py":"雇主（人事成本）","tg":"各產業的受僱者","gain":"沒有工會的小公司員工也受協議保障","risk":"小店家可能負擔不起產業統一工資","vw":[["馬克思主義","up","集體力量提高勞工議價能力"],["社會民主","up","三方協商的勞資夥伴關係"],["新右派","dn","工資僵固，小企業負擔不起"]],"src":"烏拉圭工資委員會重新啟動（2005）","url":"https://www.gub.uy/presidencia/comunicacion/noticias/reinstalacion-consejos-salarios-2005-posibilito-bajar-pobreza-aumentar"},
+ w5:{"pv":"員工合作社與政策性融資機構","py":"失業給付預付＋政府融資","tg":"即將倒閉公司的員工","gain":"保住工作與技術","risk":"合作社仍有經營風險","vw":[["馬克思主義","up","勞工自主管理生產"],["第三條路","up","把消極給付轉成積極就業"],["新右派","mid","民間自主可以，但政府不該貼錢救經營不善的公司"]],"src":"義大利《馬可拉法》（1985）","url":"https://gr.boell.org/sites/default/files/uploads/2015/10/the-marcora-law.pdf"},
+ w6:{"pv":"工會設立的失業基金","py":"會員保費＋政府補助","tg":"加入基金的受僱者","gain":"失業時的所得替代較高","risk":"沒加入基金的人保障較少","vw":[["馬克思主義","up","強化工會的組織力量"],["社會民主","up","工會與國家共同提供保障"],["新右派","dn","變相鼓勵入會，獨厚工會"]],"src":"根特制（丹麥、瑞典、芬蘭、冰島）","url":"https://en.wikipedia.org/wiki/Ghent_system"},
+ w7:{"pv":"政府（公部門先行）","py":"雇主（人力調度成本）","tg":"試辦單位的員工","gain":"壓力與倦怠降低，生產力大致維持","risk":"服務業、製造業不一定能照搬","vw":[["馬克思主義","up","把生產力成果還給勞工的時間"],["女性主義","up","讓男女都有時間分擔照顧"],["綠色主義","up","不追求更多產出與消費，減少碳排"],["新右派","dn","工時應由勞資自行協商"]],"src":"冰島縮短工時試驗（2015–2019）","url":"https://www.kshb.com/news/national/icelandic-trials-studying-shorter-workweeks-hailed-as-overwhelming-successes"},
+ w8:{"pv":"市政府公營水務公司","py":"用戶水費","tg":"全體居民","gain":"盈餘回到水價與管線投資","risk":"公營也可能有效率與管理問題","vw":[["馬克思主義","up","民生必需品去商品化"],["綠色主義","up","公共管理水資源，重視長期永續"],["新右派","dn","公營缺乏效率，應用契約管理民間業者"]],"src":"法國巴黎自來水回歸公營（2010）","url":"https://theecologist.org/2014/feb/21/public-water-no-pipe-dream"},
+ w9:{"pv":"政府（修法）","py":"母公司與企業","tg":"外包、派遣與平台勞工","gain":"非典型勞工也有議價能力","risk":"勞資爭議可能增加","vw":[["馬克思主義","up","讓實際掌握生產的資本負起雇主責任"],["新社會運動","up","保障非典型勞工的集體權利"],["新右派","dn","增加企業法律風險，影響投資"]],"src":"南韓《工會法》修正（俗稱黃色信封法，2025）","url":"https://www.bakermckenzie.com/en/insight/publications/alerts/2025/08/south-korea-yellow-envelope-act-passed"},
+ w10:{"pv":"育嬰假給付（社會保險）","py":"保費＋政府","tg":"有工作的父母","gain":"父親請假比例提高，照顧更平均","risk":"自營與零工者用不到；雇主調度成本","vw":[["女性主義","up","讓父親也承擔照顧，改變性別分工"],["社會民主","up","普及且依所得計算的社會保險給付"],["新右派","mid","（新保守）家庭應自己決定誰照顧"]],"src":"冰島《育嬰假法》（2021）","url":"https://www.norden.org/en/info-norden/parental-benefit-iceland"},
+ w11:{"pv":"企業（外部稽核）","py":"企業（稽核成本）","tg":"25 人以上企業的員工","gain":"讓薪資差距看得見","risk":"小企業的行政負擔","vw":[["女性主義","up","從制度面處理性別薪資差距"],["新社會運動","up","反歧視，承認被低估的工作價值"],["新右派","dn","行政成本高，薪資應由市場決定"]],"src":"冰島同工同酬認證（2018）","url":"https://government.is/news/article/2018/01/04/New-Icelandic-law-on-Equal-Pay-Certification-entered-into-force-on-January-1-2018"},
+ w12:{"pv":"年金保險","py":"政府（稅收代繳）","tg":"照顧幼兒的父母","gain":"照顧者的老年經濟較有保障","risk":"可能鼓勵母親較長期退出職場","vw":[["女性主義","up","承認無酬照顧的價值"],["新右派","up","（新保守）肯定家庭照顧的貢獻"],["馬克思主義","mid","補償照顧，但照顧仍主要落在母親身上"]],"src":"德國年金保險育兒年資（1992 年後出生每孩 3 年）","url":"https://tuenews.de/en/the-state-pays-pension-contributions-for-raising-children/"},
+ w13:{"pv":"政府（隨健保保費退還）","py":"使用化石燃料的家庭與企業","tg":"全體居民（平均分紅）","gain":"減碳，低耗能家庭可能淨賺","risk":"偏鄉、通勤距離長的人負擔較重","vw":[["綠色主義","up","讓污染有價格，又不加重弱勢負擔"],["新右派","mid","用價格機制取代管制可以接受，但仍是新稅"],["馬克思主義","dn","個人分紅沒有改變生產結構"]],"src":"瑞士二氧化碳稅退還（隨健保保費）","url":"https://www.helsana.ch/dam/en/pdf/individuals/brochures/information-sheet-environmental-levies-2027.pdf"},
+ w14:{"pv":"修理店、小商家","py":"政府少收稅","tg":"全體消費者","gain":"修理比買新便宜，增加在地工作","risk":"修理費若仍高，效果有限","vw":[["綠色主義","up","延長物品壽命，減少丟棄"],["新右派","up","以減稅引導，而不是管制"],["馬克思主義","mid","方向正確，但沒處理大量生產的根源"]],"src":"瑞典修理減稅（2017）","url":"https://www.wgbh.org/news/2017-01-03/sweden-tries-to-curb-buy-and-throw-away-culture-through-tax-breaks"},
+ w15:{"pv":"政府、工會共同規劃","py":"稅收","tg":"化石燃料產業勞工與礦區居民","gain":"減碳，同時照顧受衝擊的勞工","risk":"成本高，新產業不一定留得住年輕人","vw":[["綠色主義","up","淘汰化石燃料"],["馬克思主義","up","轉型代價不由勞工獨自承擔"],["第三條路","up","投資轉職與新產業"],["新右派","dn","補助成本高，應由市場調整"]],"src":"西班牙煤礦公正轉型協議（2018）","url":"https://www.industriall-union.org/spanish-coal-unions-win-landmark-just-transition-deal"},
+ w16:{"pv":"商店與回收系統","py":"消費者先付押金、業者負擔回收成本","tg":"全體居民","gain":"回收變成習慣，減少垃圾","risk":"小商店的收瓶空間與人力負擔","vw":[["綠色主義","up","讓回收變成日常習慣"],["新右派","up","用經濟誘因，不靠禁令"],["馬克思主義","mid","責任落在消費者，生產者責任仍不足"]],"src":"德國一次性飲料瓶押金（2003）","url":"https://www.goethe.de/prj/ger/en/wow/nachhaltig-erklaert/27021598.html"},
+ w17:{"pv":"公積金機構","py":"勞工與雇主提撥","tg":"受僱者","gain":"不依賴政府財政，世代負擔清楚","risk":"低薪與照顧中斷者帳戶存不夠","vw":[["新右派","up","個人責任，不變成世代互相負擔"],["第三條路","mid","強制儲蓄可以，但低薪者需要補助"],["社會民主","dn","沒有風險分攤，低薪者老後保障不足"]],"src":"新加坡中央公積金（1955）","url":"https://www.3ecpa.com.sg/resources/business-compendium/central-provident-fund-cpf"},
+ w18:{"pv":"公立與民間學校","py":"稅收（按學生撥款）","tg":"學齡兒童的家庭","gain":"家長有選擇，學校彼此競爭","risk":"學校分化，偏鄉沒有選擇","vw":[["新右派","up","家長選擇與學校競爭"],["第三條路","mid","選擇可以，但要保障弱勢學生"],["社會民主","dn","加深學校分化與階層化"],["馬克思主義","dn","教育變成營利生意"]],"src":"瑞典自由學校改革（1992）","url":"https://skolkoll.se/en/glossary/friskolereformen/"},
+ w19:{"pv":"政府與勞資協商","py":"稅收與失業保險","tg":"受僱者與企業","gain":"就業流動高，失業時有保障","risk":"需要高稅收支撐；解僱較容易","vw":[["第三條路","up","保障人，而不是保障職位"],["社會民主","up","高給付與勞資協商的北歐模式"],["馬克思主義","dn","解僱更容易，勞工議價力下降"]],"src":"丹麥彈性安全「黃金三角」","url":"https://en.wikipedia.org/wiki/Flexicurity"}
 };
 // ---------- END META ----------
 POL.forEach(p=>{if(ECO[p.id])p.fx.eco=ECO[p.id]});
@@ -229,6 +272,8 @@ const EVENTS=[
 ];
 const TAX={'低':{rev:14,cit:{kevin:1,wang:1,de:.5}},'中':{rev:18,cit:{}},'高':{rev:22,cit:{kevin:-2,wang:-1.5,de:-1.5}}};
 const HAND=8, HAND_AL=5, BASE_UP=1.6, BASE_DN=1.5, RIV_BASE=.5;
+// 各觀點基本盤對「符合／違背理念」的反應強度（平衡用，見 tests/balance_sim.py）
+const BASE_MULT={sd:.6,nr:.45,tw:.6,mx:2.6,fe:1.2,ns:1.6,gr:1.6};
 const BASE=4, DEBT_LINE=18, ROUNDS=5, MAXADD=4, GROWTH=1;
 const cnt=(h,t)=>h.reduce((n,r)=>n+r.pl.add.filter(id=>P[id].tags.includes(t)).length,0);
 const VULN=['ma','chen','ling','xiang','yuma'];
@@ -417,6 +462,7 @@ function paintedFace(id,mood,x,y,s){const f=`characters/${id}-expressions.webp`;
 // 島嶼服務圖層：政策 id → 圖層（依 docs/data/policy_meta_v0.1.json 的 islandLayer；「制度」類不畫建物）
 const ISLE_ORDER=[['care','照顧服務'],['transport','交通'],['housing','住宅'],['energy','能源'],['community','社區設施'],['health','醫療'],['school','學校'],['industry','產業']];
 const ISLE_LAYERS={care:'p5 p6 p7 p21 p32 q21 x6a t1 t4',transport:'p16 q16 p30 x5a',housing:'p14',energy:'p15 q18 x7a',community:'q15 p27 q10 q4 q9 p22 q17 x5b',health:'q1 q3 t3',school:'q7 q6 q5 x4a',industry:'q19 p17 x2a t7'};
+if(typeof WORLD_LAYERS!=='undefined')Object.entries(WORLD_LAYERS).forEach(([id,k])=>{if(ISLE_LAYERS[k])ISLE_LAYERS[k]+=' '+id});
 const ISLE_POS=[[29,58,15],[39,74,12],[55,60,16],[72,42,12],[25,78,15],[73,65,14],[52,83,16],[73,83,14]];// x、地面 y、寬度（場景百分比，取自 Codex art-preview.js）
 function paintedIsland(){if(!ART.ok['scenes/island-painted.webp']||!ART.ok['scenes/services-painted.webp'])return null;
   const live=S.enacted.filter(x=>P[x.id]&&!P[x.id].custom&&isActive(x)),bld=S.enacted.filter(x=>P[x.id]&&!P[x.id].custom&&!isActive(x));
@@ -457,7 +503,13 @@ const pcolor=g=>PARTIES[key(g)].color;
 const who=g=>g===ME?`${pname(g)}<span class="you">你</span>`:pname(g);
 const sign=v=>(v>0?'+':'')+v;
 
-const ideo=(id,k)=>P[id].tags.reduce((a,t)=>a+((PREF[k]&&PREF[k].w[t])||0),0);
+// 理念符合度：先依政策標籤計算，若 META（policy_meta_v0.2）寫明該觀點的立場，則以立場為準：
+// 支持 → 至少「符合理念」、批評 → 至少「違背理念」、保留 → 中立。未提到的觀點沿用標籤計算。
+const ideoTag=(id,k)=>P[id].tags.reduce((a,t)=>a+((PREF[k]&&PREF[k].w[t])||0),0);
+const VIEW_NAME={sd:'社會民主',nr:'新右派',tw:'第三條路',mx:'馬克思主義',fe:'女性主義',ns:'新社會運動',gr:'綠色主義'};
+const stanceOf=(id,k)=>{const vw=typeof META!=='undefined'&&META[id]&&META[id].vw;if(!vw)return null;const r=vw.find(v=>v[0]===VIEW_NAME[k]);return r?r[1]:null};
+const ideo=(id,k)=>{const v=ideoTag(id,k),s=stanceOf(id,k);
+  if(s==='up')return Math.max(v,2);if(s==='dn')return Math.min(v,-1.5);if(s==='mid')return Math.max(0,Math.min(1.5,v));return v};
 const fit=(id,k)=>{const v=ideo(id,k);return v>=2?1:v<0?-1:0};
 const evHit=id=>{const b=ev().boost||{};return P[id].tags.some(t=>b[t])};
 const special=p=>p.refOnly||p.ev||p.pet;
@@ -473,7 +525,7 @@ function mult(p,k){let m=1;const b=ev().boost||{};p.tags.forEach(t=>{if(b[t])m*=
 function sat(g){const pl=S.platforms[g],k=key(g),e=ev(),s={};
   CIT.forEach(c=>s[c.id]=(TAX[pl.tax].cit[c.id]||0)+((e.cit||{})[c.id]||0));
   pl.add.forEach(id=>{const p=P[id],m=mult(p,k);for(const c in p.cit)s[c]+=p.cit[c]*m;if(k==='sd'&&p.tags.includes('univ'))CIT.forEach(c=>s[c.id]+=.5)});
-  pl.add.forEach(id=>{const f=fit(id,k);const bm=(g===ME?1:RIV_BASE)*(k==='nr'?.55:k==='mx'||k==='ns'?1.25:1);if(f>0)BASEC[k].forEach(c=>s[c]+=BASE_UP*bm);if(f<0)BASEC[k].forEach(c=>s[c]-=BASE_DN*bm)});
+  pl.add.forEach(id=>{const f=fit(id,k);const bm=(g===ME?1:RIV_BASE)*(BASE_MULT[k]||1);if(f>0)BASEC[k].forEach(c=>s[c]+=BASE_UP*bm);if(f<0)BASEC[k].forEach(c=>s[c]-=BASE_DN*bm)});
   pl.cut.forEach(id=>{const p=P[id];for(const c in p.cit)s[c]-=p.cit[c]*.8});
   if(pl.adj)for(const id in pl.adj){const p=P[id],m=pl.adj[id]-1;for(const c in p.cit)s[c]+=p.cit[c]*m*.9}
   if(k==='mx'&&S.crisis>=1)['chen','zhen','ling','xiang'].forEach(c=>s[c]+=1.5*S.crisis);
@@ -506,7 +558,7 @@ function aiPlatform(g){const k=key(g),pr=PREF[k],pl={tax:pr.tax,add:[],cut:[],ca
   if((k==='nr'||k==='tw')&&S.enacted.length){const cuts=S.enacted.filter(x=>P[x.id].cost>0&&!P[x.id].tags.some(t=>['mkt','growth','reform'].includes(t))).sort((a,b)=>(P[b.id].tags.includes('univ')-P[a.id].tags.includes('univ'))||b.cost-a.cost);
     for(const x of cuts){if(money(g).bal>=(k==='nr'?3:1)||pl.cut.length>=(k==='nr'?2:1))break;pl.cut.push(x.id)}}
   const cand=POL.filter(p=>(!S.enacted.some(x=>x.id===p.id)&&!S.onceUsed.includes(p.id)&&!special(p)||(p.ev===S.event&&!S.enacted.some(x=>x.id===p.id)&&!S.onceUsed.includes(p.id)))&&!(pr.avoid||[]).includes(p.id))
-    .map(p=>({p,s:p.tags.reduce((a,t)=>a+(pr.w[t]||0),0)+Math.random()*1.5-(S.round===1&&issueOf(p.id)?9:0)})).filter(c=>c.s>1).sort((a,b)=>b.s-a.s);
+    .map(p=>({p,s:ideo(p.id,k)+Math.random()*1.5-(S.round===1&&issueOf(p.id)?9:0)})).filter(c=>c.s>1).sort((a,b)=>b.s-a.s);
   if(S.round===1&&S.issue){const I=ISSUES.find(i=>i.id===S.issue),os=I.opts.map(o=>o.id).filter(id=>P[id]&&!S.enacted.some(x=>x.id===id)).sort((x,y)=>ideo(y,k)-ideo(x,k));if(os[0])pl.add.push(os[0])}
   for(const c of cand){if(pl.add.length>=MAXADD)break;const left=money(g).bal;if(costOf(c.p.id,k)<=left+pr.tol)pl.add.push(c.p.id)}
 }
@@ -1164,7 +1216,9 @@ function pickQ(){const pl=S.platforms[ME],m=money(ME),s=sat(ME),me=key(ME);
   const unused=QS.filter(q=>!S.qUsed.includes(q.id));const generic=['debate','debate2','debate3'];
   let ok=unused.filter(q=>!generic.includes(q.id)&&q.when(pl,m,s));
   const own=ok.filter(q=>q.id===me+'1');if(own.length&&S.round<=1)ok=own;
-  if(!ok.length)ok=unused.filter(q=>generic.includes(q.id));if(!ok.length)ok=unused.length?unused:QS;
+  if(!ok.length)ok=unused.filter(q=>generic.includes(q.id));
+  // 後備時也只挑條件成立的質詢，否則像「刪減」質詢在沒有刪減時會讀不到政策而出錯
+  if(!ok.length)ok=unused.filter(q=>q.when(pl,m,s));if(!ok.length)ok=QS.filter(q=>generic.includes(q.id));
   const q=ok[Math.floor(Math.random()*ok.length)];S.qUsed.push(q.id);return {id:q.id,text:q.q(m,pl)}}
 
 // ---- government formation with implementation timing, amendments, labor power ----
@@ -1328,7 +1382,7 @@ const VIEW_KEY=Object.fromEntries(Object.entries(AP_LABEL).map(([k,n])=>[n,k]));
 const ST_LABEL={up:'支持',mid:'保留',dn:'批評'};
 function roleBox(id){const m=META[id]||{};
   return `<dl class="roles"><dt>誰提供</dt><dd>${m.pv||NA}</dd><dt>誰負擔</dt><dd>${m.py||NA}</dd><dt>服務對象</dt><dd>${m.tg||NA}</dd>
-   <dt>預期改善</dt><dd>${m.gain||NA}</dd><dt>需要考量</dt><dd>${m.risk||NA}</dd></dl>`}
+   <dt>預期改善</dt><dd>${m.gain||NA}</dd><dt>需要考量</dt><dd>${m.risk||NA}</dd>${m.src?`<dt>現實案例</dt><dd>${m.url?`<a href="${m.url}" target="_blank" rel="noopener">${m.src}</a>`:m.src}</dd>`:''}</dl>`}
 function viewBox(id){const vw=(META[id]||{}).vw;if(!vw||!vw.length)return `<p class="small"><b>為什麼與這些觀點有關？</b> ${NA}</p>`;
   return `<details class="views"><summary>為什麼與這些觀點有關？</summary><ul>${vw.map(([n,s,w])=>{const k=VIEW_KEY[n];
    return `<li>${k?pchip(k):`<b>${n}</b>`}<span class="vst ${s}">${ST_LABEL[s]||s}</span>${w}</li>`}).join('')}</ul>
