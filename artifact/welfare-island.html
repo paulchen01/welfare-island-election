@@ -688,6 +688,8 @@ const EVENTS=[
 ];
 const TAX={'低':{rev:14,cit:{kevin:1,wang:1,de:.5}},'中':{rev:18,cit:{}},'高':{rev:22,cit:{kevin:-2,wang:-1.5,de:-1.5}}};
 const HAND=8, HAND_AL=5, BASE_UP=1.6, BASE_DN=1.5, RIV_BASE=.5;
+// 各觀點基本盤對「符合／違背理念」的反應強度（平衡用，見 tests/balance_sim.py）
+const BASE_MULT={sd:.6,nr:.45,tw:.6,mx:2.6,fe:1.2,ns:1.6,gr:1.6};
 const BASE=4, DEBT_LINE=18, ROUNDS=5, MAXADD=4, GROWTH=1;
 const cnt=(h,t)=>h.reduce((n,r)=>n+r.pl.add.filter(id=>P[id].tags.includes(t)).length,0);
 const VULN=['ma','chen','ling','xiang','yuma'];
@@ -906,7 +908,13 @@ const pcolor=g=>PARTIES[key(g)].color;
 const who=g=>g===ME?`${pname(g)}<span class="you">你</span>`:pname(g);
 const sign=v=>(v>0?'+':'')+v;
 
-const ideo=(id,k)=>P[id].tags.reduce((a,t)=>a+((PREF[k]&&PREF[k].w[t])||0),0);
+// 理念符合度：先依政策標籤計算，若 META（policy_meta_v0.2）寫明該觀點的立場，則以立場為準：
+// 支持 → 至少「符合理念」、批評 → 至少「違背理念」、保留 → 中立。未提到的觀點沿用標籤計算。
+const ideoTag=(id,k)=>P[id].tags.reduce((a,t)=>a+((PREF[k]&&PREF[k].w[t])||0),0);
+const VIEW_NAME={sd:'社會民主',nr:'新右派',tw:'第三條路',mx:'馬克思主義',fe:'女性主義',ns:'新社會運動',gr:'綠色主義'};
+const stanceOf=(id,k)=>{const vw=typeof META!=='undefined'&&META[id]&&META[id].vw;if(!vw)return null;const r=vw.find(v=>v[0]===VIEW_NAME[k]);return r?r[1]:null};
+const ideo=(id,k)=>{const v=ideoTag(id,k),s=stanceOf(id,k);
+  if(s==='up')return Math.max(v,2);if(s==='dn')return Math.min(v,-1.5);if(s==='mid')return Math.max(0,Math.min(1.5,v));return v};
 const fit=(id,k)=>{const v=ideo(id,k);return v>=2?1:v<0?-1:0};
 const evHit=id=>{const b=ev().boost||{};return P[id].tags.some(t=>b[t])};
 const special=p=>p.refOnly||p.ev||p.pet;
@@ -922,7 +930,7 @@ function mult(p,k){let m=1;const b=ev().boost||{};p.tags.forEach(t=>{if(b[t])m*=
 function sat(g){const pl=S.platforms[g],k=key(g),e=ev(),s={};
   CIT.forEach(c=>s[c.id]=(TAX[pl.tax].cit[c.id]||0)+((e.cit||{})[c.id]||0));
   pl.add.forEach(id=>{const p=P[id],m=mult(p,k);for(const c in p.cit)s[c]+=p.cit[c]*m;if(k==='sd'&&p.tags.includes('univ'))CIT.forEach(c=>s[c.id]+=.5)});
-  pl.add.forEach(id=>{const f=fit(id,k);const bm=(g===ME?1:RIV_BASE)*(k==='nr'?.55:k==='mx'||k==='ns'?1.25:1);if(f>0)BASEC[k].forEach(c=>s[c]+=BASE_UP*bm);if(f<0)BASEC[k].forEach(c=>s[c]-=BASE_DN*bm)});
+  pl.add.forEach(id=>{const f=fit(id,k);const bm=(g===ME?1:RIV_BASE)*(BASE_MULT[k]||1);if(f>0)BASEC[k].forEach(c=>s[c]+=BASE_UP*bm);if(f<0)BASEC[k].forEach(c=>s[c]-=BASE_DN*bm)});
   pl.cut.forEach(id=>{const p=P[id];for(const c in p.cit)s[c]-=p.cit[c]*.8});
   if(pl.adj)for(const id in pl.adj){const p=P[id],m=pl.adj[id]-1;for(const c in p.cit)s[c]+=p.cit[c]*m*.9}
   if(k==='mx'&&S.crisis>=1)['chen','zhen','ling','xiang'].forEach(c=>s[c]+=1.5*S.crisis);
@@ -955,7 +963,7 @@ function aiPlatform(g){const k=key(g),pr=PREF[k],pl={tax:pr.tax,add:[],cut:[],ca
   if((k==='nr'||k==='tw')&&S.enacted.length){const cuts=S.enacted.filter(x=>P[x.id].cost>0&&!P[x.id].tags.some(t=>['mkt','growth','reform'].includes(t))).sort((a,b)=>(P[b.id].tags.includes('univ')-P[a.id].tags.includes('univ'))||b.cost-a.cost);
     for(const x of cuts){if(money(g).bal>=(k==='nr'?3:1)||pl.cut.length>=(k==='nr'?2:1))break;pl.cut.push(x.id)}}
   const cand=POL.filter(p=>(!S.enacted.some(x=>x.id===p.id)&&!S.onceUsed.includes(p.id)&&!special(p)||(p.ev===S.event&&!S.enacted.some(x=>x.id===p.id)&&!S.onceUsed.includes(p.id)))&&!(pr.avoid||[]).includes(p.id))
-    .map(p=>({p,s:p.tags.reduce((a,t)=>a+(pr.w[t]||0),0)+Math.random()*1.5-(S.round===1&&issueOf(p.id)?9:0)})).filter(c=>c.s>1).sort((a,b)=>b.s-a.s);
+    .map(p=>({p,s:ideo(p.id,k)+Math.random()*1.5-(S.round===1&&issueOf(p.id)?9:0)})).filter(c=>c.s>1).sort((a,b)=>b.s-a.s);
   if(S.round===1&&S.issue){const I=ISSUES.find(i=>i.id===S.issue),os=I.opts.map(o=>o.id).filter(id=>P[id]&&!S.enacted.some(x=>x.id===id)).sort((x,y)=>ideo(y,k)-ideo(x,k));if(os[0])pl.add.push(os[0])}
   for(const c of cand){if(pl.add.length>=MAXADD)break;const left=money(g).bal;if(costOf(c.p.id,k)<=left+pr.tol)pl.add.push(c.p.id)}
 }
@@ -1577,7 +1585,9 @@ function pickQ(){const pl=S.platforms[ME],m=money(ME),s=sat(ME),me=key(ME);
   const unused=QS.filter(q=>!S.qUsed.includes(q.id));const generic=['debate','debate2','debate3'];
   let ok=unused.filter(q=>!generic.includes(q.id)&&q.when(pl,m,s));
   const own=ok.filter(q=>q.id===me+'1');if(own.length&&S.round<=1)ok=own;
-  if(!ok.length)ok=unused.filter(q=>generic.includes(q.id));if(!ok.length)ok=unused.length?unused:QS;
+  if(!ok.length)ok=unused.filter(q=>generic.includes(q.id));
+  // 後備時也只挑條件成立的質詢，否則像「刪減」質詢在沒有刪減時會讀不到政策而出錯
+  if(!ok.length)ok=unused.filter(q=>q.when(pl,m,s));if(!ok.length)ok=QS.filter(q=>generic.includes(q.id));
   const q=ok[Math.floor(Math.random()*ok.length)];S.qUsed.push(q.id);return {id:q.id,text:q.q(m,pl)}}
 
 // ---- government formation with implementation timing, amendments, labor power ----
