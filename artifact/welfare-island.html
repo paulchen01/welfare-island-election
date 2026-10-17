@@ -113,8 +113,41 @@ main{padding-top:20px}
 .check{position:relative;z-index:1;width:30px;height:30px;border-radius:50%;background:var(--paper);color:var(--ink);border:2px solid var(--ink);display:grid;place-items:center;font-weight:900;font-size:15px}
 
 /* wheel + news */
-.news{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:center}
-@media (min-width:760px){.news{grid-template-columns:minmax(0,320px) minmax(0,1fr)}}
+.news{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"broadcast" "wheel";gap:24px;align-items:center}
+@media (min-width:760px){.news{grid-template-columns:minmax(0,260px) minmax(0,1fr);grid-template-areas:"wheel broadcast"}}
+.news>.wheelwrap{grid-area:wheel;width:min(62vw,260px);margin-bottom:24px}
+.wheel-caption{font-size:13px;text-align:center;color:var(--muted);margin-top:10px}
+.broadcast{grid-area:broadcast;container-type:inline-size;min-width:0;overflow:hidden;border:1px solid #283f56;border-radius:15px;background:var(--surface);box-shadow:0 5px 0 #20364d22,0 14px 30px #20364d12}
+.broadcast-stage{position:relative;aspect-ratio:16/9;overflow:hidden;background:#a9c6d9}
+.broadcast-studio{display:block;width:100%;height:100%;object-fit:cover}
+.broadcast-brand{position:absolute;left:3%;top:4%;display:flex;flex-direction:column;gap:1px;padding:5px 8px;border-left:3px solid #ec987b;border-radius:0 3px 3px 0;background:#183750e8;color:#fff;line-height:1.25;box-shadow:0 2px 8px #10283b22}
+.broadcast-brand b{font-size:clamp(12px,2.6cqw,23px);letter-spacing:.08em}
+.broadcast-brand>span{font:600 clamp(6px,1.2cqw,10px)/1.3 var(--f-num);letter-spacing:.08em}
+.broadcast-live{position:absolute;right:3%;top:4%;display:flex;align-items:center;gap:5px;padding:4px 7px;border-radius:3px;background:#19384fe8;color:white;font:600 clamp(9px,1.5cqw,13px)/1.3 var(--f-num)}
+.broadcast-live i{width:6px;height:6px;border-radius:50%;background:#ff8b73;animation:blink 2s infinite}
+.broadcast-live>span{margin-left:3px;padding-left:7px;border-left:1px solid #ffffff70;font-family:var(--f-body)}
+.broadcast-screen{position:absolute;left:42%;top:15.4%;width:53.5%;height:48%;overflow:hidden;clip-path:polygon(0 4%,100% 0,100% 100%,0 96%);background:#eaf0eb;color:#16354a}
+.broadcast-screen-art{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.37}
+.broadcast-screen::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#f8f4e6ed 0%,#f8f4e6b8 43%,#dce9e933 100%);pointer-events:none}
+.broadcast-screen-copy{position:absolute;z-index:1;inset:10% 9%;display:flex;flex-direction:column;justify-content:center;gap:5%;text-align:left}
+.broadcast-screen-copy>span{font-size:clamp(9px,1.65cqw,15px);font-weight:700;letter-spacing:.14em;color:#415d6c}
+.broadcast-screen-title{font-family:var(--f-display);font-size:clamp(21px,5cqw,48px);font-weight:900;line-height:1.2;letter-spacing:.03em;overflow-wrap:anywhere}
+.broadcast-screen-copy>em{font-size:clamp(8px,1.45cqw,13px);font-style:normal;font-weight:700;border-top:1px solid #59768566;padding-top:5%;align-self:flex-start}
+.broadcast-lower-third{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:stretch;border-top:4px solid #d47860;background:#fff0ba;color:#152e45}
+.broadcast-flash{display:grid;place-content:center;min-width:clamp(52px,10cqw,88px);padding:8px;background:#224d67;color:#fff;text-align:center;font-size:clamp(13px,2.4cqw,21px);line-height:1.35;font-weight:900;letter-spacing:.1em}
+.broadcast-headline{align-self:center;min-width:0;padding:9px 12px;font-family:var(--f-body);font-size:clamp(20px,4.1cqw,36px);font-weight:900;letter-spacing:0;line-height:1.25;overflow-wrap:anywhere;text-wrap:pretty}
+.broadcast-ticker{display:flex;align-items:stretch;gap:10px;padding:8px 12px;background:#17364c;color:#eef7f7;font-size:12px;line-height:1.6}
+.broadcast-ticker>b{flex:none;align-self:center;padding-right:10px;border-right:1px solid #7898a7;color:#b4dfdf;letter-spacing:.08em}
+.broadcast-ticker p{display:flex;flex-wrap:wrap;column-gap:14px;row-gap:2px}
+.broadcast-ticker p>span{display:inline-block}.broadcast-ticker p>span::before{content:"•";color:#e9ad81;margin-right:5px}
+.broadcast-ticker strong{color:#fff}
+.broadcast-copy{display:grid;gap:12px;padding:16px 18px}
+.broadcast-lead{font-size:16px;line-height:1.7}
+.broadcast .chip{background:var(--soft);color:var(--ink);border:1px solid var(--hair);font-size:13px;padding:4px 8px}
+.broadcast-question{font-size:13px;line-height:1.7;color:var(--muted);padding-top:10px;border-top:1px solid var(--hair)}
+.broadcast-stage.is-fallback{background:linear-gradient(120deg,#243d59,#81acbd)}
+.broadcast-stage.is-fallback .broadcast-screen{left:8%;top:28%;width:84%;height:62%;clip-path:none;border-radius:4px}
+@container (max-width:420px){.broadcast-ticker{gap:6px;padding:7px 10px;font-size:11px}.broadcast-ticker>b{display:none}.broadcast-copy{padding:14px}.broadcast-brand{padding:4px 6px}.broadcast-screen-copy{gap:5%}}
 .wheelwrap{position:relative;width:min(78vw,300px);aspect-ratio:1;margin:6px auto 0}
 .wheelwrap>svg:not(.pointer){width:100%;height:100%;display:block}
 #wheelg{transform-origin:150px 150px;transition:transform 3.4s cubic-bezier(.15,.85,.2,1)}
@@ -199,7 +232,7 @@ body[data-phase="budget"] .hud{display:none}
 body[data-phase="budget"] .dock{top:env(safe-area-inset-top,0px);padding-top:12px}
 body[data-phase="budget"] main{padding-top:0}
 .bstack{gap:14px}
-.news.one{grid-template-columns:minmax(0,1fr)}
+.news.one{grid-template-columns:minmax(0,1fr);grid-template-areas:"broadcast"}
 .hstat{min-width:max-content}
 .tag,.ic{font-size:12px}
 .spot{display:flex;gap:8px;align-items:baseline;font-size:13px;line-height:1.4;max-width:1080px;margin:0 auto;width:100%;border-radius:8px;padding:4px 8px;animation:pop .4s both}
@@ -872,7 +905,7 @@ if(typeof document!=='undefined')document.body.insertAdjacentHTML('afterbegin',A
 // 島嶼：assets/scenes/island-painted.webp（底圖）＋ services-painted.webp（4×2 服務圖集）。
 // 素材載入成功才使用；載入失敗（離線、Artifact 未附檔）時沿用下方原本的 SVG 繪圖。
 const ART={base:'assets/',ok:{}};
-const ART_FILES=()=>[...CIT.map(c=>`characters/${c.id}-expressions.webp`),'scenes/island-painted.webp','scenes/services-painted.webp'];
+const ART_FILES=()=>[...CIT.map(c=>`characters/${c.id}-expressions.webp`),'scenes/island-painted.webp','scenes/services-painted.webp','scenes/newsroom-painted-v1.webp'];
 function preloadArt(ms=2500){return Promise.race([
   Promise.all(ART_FILES().map(f=>new Promise(res=>{const im=new Image();im.onload=()=>{ART.ok[f]=1;res()};im.onerror=()=>res();im.src=ART.base+f}))),
   new Promise(res=>setTimeout(res,ms))])}
@@ -1232,16 +1265,27 @@ function paper(r){const g=r.gov,pl=r.platforms[g],first=pl.add[0]?P[pl.add[0]].n
   const hl=g===ME?`${pname(g)}勝選！${first?`「${first}」即將上路`:'承諾穩健施政'}`:`${pname(g)}拿下執政權${first?`，「${first}」將上路`:''}`;
   const sub=pl.cut.length?`同時刪減「${P[pl.cut[0]].name}」，受影響民眾揚言抗議。`:r.bals[g]<0?`新政府預算赤字 ${-r.bals[g]}，國債持續攀升。`:'新政府預算收支平衡，財政部鬆一口氣。';
   return `<div class="paper"><div class="mast"><b>福利島日報</b><span class="small muted num">第 ${r.round+1} 屆</span></div><div class="hl">${hl}</div><p class="small muted">${sub}</p></div>`}
+function newsBroadcast(e){const studio='scenes/newsroom-painted-v1.webp',ready=ART.ok[studio];
+  const active=S.enacted.filter(x=>P[x.id]&&isActive(x)).length;
+  return `<section class="broadcast" aria-label="福利島新聞台">
+   <div class="broadcast-stage ${ready?'':'is-fallback'}">
+    ${ready?`<img class="broadcast-studio" src="${ART.base+studio}" width="1440" height="810" alt="粉彩插畫主播坐在新聞棚播報桌前，右側是新聞大螢幕">`:''}
+    <div class="broadcast-brand"><b>福利島新聞台</b><span>WELFARE ISLAND NEWS</span></div>
+    <div class="broadcast-live"><i aria-hidden="true"></i>LIVE<span>第 ${S.round+1} 屆</span></div>
+    <div class="broadcast-screen">
+     <div class="broadcast-screen-art" aria-hidden="true" ${ART.ok['scenes/island-painted.webp']?`style="background-image:url('${ART.base}scenes/island-painted.webp')"`:''}></div>
+     <div class="broadcast-screen-copy"><span>${e?'本屆焦點':'關心島上的每一個人'}</span><strong class="broadcast-screen-title">${e?e.short:'今日焦點'}</strong><em>福利島 · 民生現場</em></div>
+    </div>
+   </div>
+   <div class="broadcast-lower-third"><span class="broadcast-flash">${e?'焦點':'新聞'}<br>快報</span><h3 class="broadcast-headline">${e?e.name:'福利島今日焦點'}</h3></div>
+   <div class="broadcast-ticker"><b>島上動態</b><p><span>國債 <strong class="num">${r1(S.debt)} / ${DEBT_LINE}</strong></span><span>已生效 <strong class="num">${active}</strong> 項政策</span><span>移工阿蒂在島上工作第 6 年，仍沒有投票權</span></p></div>
+   <div class="broadcast-copy">${e?`<p class="broadcast-lead">${e.d}</p><div class="fx">${e.fxt.map(t=>`<span class="chip">${t}</span>`).join('')}</div><p class="broadcast-question">想一想：這則新聞讓誰的處境變差了？你的政見要怎麼回應？</p>`:`<p class="broadcast-lead">主播已就位，下一則新聞將影響島上的生活。</p><p class="small muted">轉動輪盤，揭曉本屆事件。每屆一則重大事件，會改變稅收和島民的需要；轉過的事件不會再出現。</p>`}</div>
+   </section>`}
 function rNews(st){const e=S.event?ev():null,last=S.history[S.history.length-1];
   st.innerHTML=`<div class="stack"><div><p class="eyebrow">第 ${S.round+1} 屆 · 共 ${ROUNDS} 屆</p><h2>新聞快報</h2></div>
    ${last?paper(last):''}
    ${!e&&S.round>0?islandCard():''}${!e&&S.round>0?thermo():''}${!e?storyFeed():''}
-   <div class="news ${e?'one':''}">${e?'':`<div class="wheelwrap"><svg class="pointer" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 32 L3 10 Q3 2 15 2 Q27 2 27 10Z" fill="var(--stamp)" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="15" cy="11" r="3.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/></svg>${wheelSVG()}</div>`}
-   <div class="bulletin"><div class="bar"><span>福利島新聞台</span><span class="live">LIVE</span></div><div class="vign">${landscape(e?e.id:'hero')}</div><div class="body">
-   ${e?`<div class="headline">${e.name}</div><p>${e.d}</p><div class="fx">${e.fxt.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
-     <p class="small muted">想一想：這則新聞讓誰的處境變差了？你的政見要怎麼回應？</p>`
-     :`<div class="headline muted">今天會發生什麼事？</div><p class="muted">每屆一則重大事件，會改變稅收和島民的需要。轉過的事件不會再出現。</p>`}
-   </div><div class="ticker"><span>國債 ${r1(S.debt)}，破產紅線 ${DEBT_LINE}　·　目前實施 ${S.enacted.length} 項福利方案　·　移工阿蒂在島上工作第 6 年，仍沒有投票權</span></div></div></div>
+   <div class="news ${e?'one':''}">${newsBroadcast(e)}${e?'':`<div class="wheelwrap"><svg class="pointer" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 32 L3 10 Q3 2 15 2 Q27 2 27 10Z" fill="var(--stamp)" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="15" cy="11" r="3.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/></svg>${wheelSVG()}<p class="wheel-caption">轉動輪盤，揭曉本屆新聞</p></div>`}</div>
    ${e?cqPanel()+demoPreview():''}
    <div><h3 style="margin-bottom:8px">島民現況</h3>${citStrip(islandMood(),false)}</div></div>`;
   const cqWait=S.cq&&S.cq.pick==null;

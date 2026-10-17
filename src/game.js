@@ -405,7 +405,7 @@ if(typeof document!=='undefined')document.body.insertAdjacentHTML('afterbegin',A
 // 島嶼：assets/scenes/island-painted.webp（底圖）＋ services-painted.webp（4×2 服務圖集）。
 // 素材載入成功才使用；載入失敗（離線、Artifact 未附檔）時沿用下方原本的 SVG 繪圖。
 const ART={base:'assets/',ok:{}};
-const ART_FILES=()=>[...CIT.map(c=>`characters/${c.id}-expressions.webp`),'scenes/island-painted.webp','scenes/services-painted.webp'];
+const ART_FILES=()=>[...CIT.map(c=>`characters/${c.id}-expressions.webp`),'scenes/island-painted.webp','scenes/services-painted.webp','scenes/newsroom-painted-v1.webp'];
 function preloadArt(ms=2500){return Promise.race([
   Promise.all(ART_FILES().map(f=>new Promise(res=>{const im=new Image();im.onload=()=>{ART.ok[f]=1;res()};im.onerror=()=>res();im.src=ART.base+f}))),
   new Promise(res=>setTimeout(res,ms))])}
@@ -765,16 +765,27 @@ function paper(r){const g=r.gov,pl=r.platforms[g],first=pl.add[0]?P[pl.add[0]].n
   const hl=g===ME?`${pname(g)}勝選！${first?`「${first}」即將上路`:'承諾穩健施政'}`:`${pname(g)}拿下執政權${first?`，「${first}」將上路`:''}`;
   const sub=pl.cut.length?`同時刪減「${P[pl.cut[0]].name}」，受影響民眾揚言抗議。`:r.bals[g]<0?`新政府預算赤字 ${-r.bals[g]}，國債持續攀升。`:'新政府預算收支平衡，財政部鬆一口氣。';
   return `<div class="paper"><div class="mast"><b>福利島日報</b><span class="small muted num">第 ${r.round+1} 屆</span></div><div class="hl">${hl}</div><p class="small muted">${sub}</p></div>`}
+function newsBroadcast(e){const studio='scenes/newsroom-painted-v1.webp',ready=ART.ok[studio];
+  const active=S.enacted.filter(x=>P[x.id]&&isActive(x)).length;
+  return `<section class="broadcast" aria-label="福利島新聞台">
+   <div class="broadcast-stage ${ready?'':'is-fallback'}">
+    ${ready?`<img class="broadcast-studio" src="${ART.base+studio}" width="1440" height="810" alt="粉彩插畫主播坐在新聞棚播報桌前，右側是新聞大螢幕">`:''}
+    <div class="broadcast-brand"><b>福利島新聞台</b><span>WELFARE ISLAND NEWS</span></div>
+    <div class="broadcast-live"><i aria-hidden="true"></i>LIVE<span>第 ${S.round+1} 屆</span></div>
+    <div class="broadcast-screen">
+     <div class="broadcast-screen-art" aria-hidden="true" ${ART.ok['scenes/island-painted.webp']?`style="background-image:url('${ART.base}scenes/island-painted.webp')"`:''}></div>
+     <div class="broadcast-screen-copy"><span>${e?'本屆焦點':'關心島上的每一個人'}</span><strong class="broadcast-screen-title">${e?e.short:'今日焦點'}</strong><em>福利島 · 民生現場</em></div>
+    </div>
+   </div>
+   <div class="broadcast-lower-third"><span class="broadcast-flash">${e?'焦點':'新聞'}<br>快報</span><h3 class="broadcast-headline">${e?e.name:'福利島今日焦點'}</h3></div>
+   <div class="broadcast-ticker"><b>島上動態</b><p><span>國債 <strong class="num">${r1(S.debt)} / ${DEBT_LINE}</strong></span><span>已生效 <strong class="num">${active}</strong> 項政策</span><span>移工阿蒂在島上工作第 6 年，仍沒有投票權</span></p></div>
+   <div class="broadcast-copy">${e?`<p class="broadcast-lead">${e.d}</p><div class="fx">${e.fxt.map(t=>`<span class="chip">${t}</span>`).join('')}</div><p class="broadcast-question">想一想：這則新聞讓誰的處境變差了？你的政見要怎麼回應？</p>`:`<p class="broadcast-lead">主播已就位，下一則新聞將影響島上的生活。</p><p class="small muted">轉動輪盤，揭曉本屆事件。每屆一則重大事件，會改變稅收和島民的需要；轉過的事件不會再出現。</p>`}</div>
+   </section>`}
 function rNews(st){const e=S.event?ev():null,last=S.history[S.history.length-1];
   st.innerHTML=`<div class="stack"><div><p class="eyebrow">第 ${S.round+1} 屆 · 共 ${ROUNDS} 屆</p><h2>新聞快報</h2></div>
    ${last?paper(last):''}
    ${!e&&S.round>0?islandCard():''}${!e&&S.round>0?thermo():''}${!e?storyFeed():''}
-   <div class="news ${e?'one':''}">${e?'':`<div class="wheelwrap"><svg class="pointer" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 32 L3 10 Q3 2 15 2 Q27 2 27 10Z" fill="var(--stamp)" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="15" cy="11" r="3.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/></svg>${wheelSVG()}</div>`}
-   <div class="bulletin"><div class="bar"><span>福利島新聞台</span><span class="live">LIVE</span></div><div class="vign">${landscape(e?e.id:'hero')}</div><div class="body">
-   ${e?`<div class="headline">${e.name}</div><p>${e.d}</p><div class="fx">${e.fxt.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
-     <p class="small muted">想一想：這則新聞讓誰的處境變差了？你的政見要怎麼回應？</p>`
-     :`<div class="headline muted">今天會發生什麼事？</div><p class="muted">每屆一則重大事件，會改變稅收和島民的需要。轉過的事件不會再出現。</p>`}
-   </div><div class="ticker"><span>國債 ${r1(S.debt)}，破產紅線 ${DEBT_LINE}　·　目前實施 ${S.enacted.length} 項福利方案　·　移工阿蒂在島上工作第 6 年，仍沒有投票權</span></div></div></div>
+   <div class="news ${e?'one':''}">${newsBroadcast(e)}${e?'':`<div class="wheelwrap"><svg class="pointer" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 32 L3 10 Q3 2 15 2 Q27 2 27 10Z" fill="var(--stamp)" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="15" cy="11" r="3.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/></svg>${wheelSVG()}<p class="wheel-caption">轉動輪盤，揭曉本屆新聞</p></div>`}</div>
    ${e?cqPanel()+demoPreview():''}
    <div><h3 style="margin-bottom:8px">島民現況</h3>${citStrip(islandMood(),false)}</div></div>`;
   const cqWait=S.cq&&S.cq.pick==null;
