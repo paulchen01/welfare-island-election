@@ -420,15 +420,21 @@ const ISLE_LAYERS={care:'p5 p6 p7 p21 p32 q21 x6a t1 t4',transport:'p16 q16 p30 
 const ISLE_POS=[[29,58,15],[39,74,12],[55,60,16],[72,42,12],[25,78,15],[73,65,14],[52,83,16],[73,83,14]];// x、地面 y、寬度（場景百分比，取自 Codex art-preview.js）
 function paintedIsland(){if(!ART.ok['scenes/island-painted.webp']||!ART.ok['scenes/services-painted.webp'])return null;
   const live=S.enacted.filter(x=>P[x.id]&&!P[x.id].custom&&isActive(x)),bld=S.enacted.filter(x=>P[x.id]&&!P[x.id].custom&&!isActive(x));
-  const on=ISLE_ORDER.map(([id,name],i)=>({id,name,i,pols:live.map(x=>x.id).filter(pid=>ISLE_LAYERS[id].split(' ').includes(pid))})).filter(l=>l.pols.length);
+  // Buildings are the island's accumulated construction, while policies decide whether services are operating.
+  const past=S.history.map(h=>h.islandBefore||[]);
+  const on=ISLE_ORDER.map(([id,name],i)=>{const ids=ISLE_LAYERS[id].split(' '),pols=live.map(x=>x.id).filter(pid=>ids.includes(pid)),pending=bld.map(x=>x.id).filter(pid=>ids.includes(pid));
+    const peak=Math.max(pols.length,...past.map(frame=>new Set(frame.filter(pid=>ids.includes(pid))).size));
+    return {id,name,i,pols,pending,peak,state:pols.length?'active':pending.length?'building':'paused'};
+  }).filter(l=>l.peak||l.pending.length);
   const inst=live.filter(x=>!ISLE_ORDER.some(([id])=>ISLE_LAYERS[id].split(' ').includes(x.id)));
+  const bldInst=bld.filter(x=>!ISLE_ORDER.some(([id])=>ISLE_LAYERS[id].split(' ').includes(x.id)));
   const b=ART.base+'scenes/';
-  return `<div class="isle"><div class="isle-scene" role="img" aria-label="福利島現況：${on.length?on.map(l=>l.name).join('、'):'尚未設置服務據點'}"><img class="isle-base" src="${b}island-painted.webp" alt="">
-   ${on.map(l=>{const [px,py,w]=ISLE_POS[l.i];return `<span class="isle-bld" style="left:${px}%;top:${py}%;width:${w}%"><img src="${b}services-painted.webp" alt="" style="transform:translate(-${(l.i%4)*25}%,-${Math.floor(l.i/4)*50}%)"></span><span class="isle-pin" style="left:${px}%;top:${py-w*780/430+5}%" aria-hidden="true">${l.i+1}</span>`}).join('')}</div>
-   <div class="isle-legend">${on.length?on.map(l=>`<div><b>${l.i+1}</b><span><strong>${l.name}</strong>　${l.pols.map(pid=>P[pid].name).join('、')}</span></div>`).join(''):`<p class="small muted">島上還沒有實施任何服務方案。你的政見通過後，對應的設施會出現在這裡。</p>`}
-   ${bld.length?`<div class="inst"><b>建</b><span><strong>建置中</strong>　${bld.map(x=>P[x.id].name).join('、')}（下屆開始服務）</span></div>`:''}
+  return `<div class="isle"><div class="isle-scene" role="img" aria-label="福利島現況：${on.length?on.map(l=>l.name+(l.state==='paused'?'（服務暫停）':l.state==='building'?'（建置中）':'')).join('、'):'尚未設置服務據點'}"><img class="isle-base" src="${b}island-painted.webp" alt="">
+   ${on.map(l=>{const [px,py,base]=ISLE_POS[l.i],w=base*(1+Math.min(Math.max(0,l.peak-1),2)*.08);return `<span class="isle-bld is-${l.state}" data-layer="${l.id}" style="left:${px}%;top:${py}%;width:${w}%"><img src="${b}services-painted.webp" alt="" style="transform:translate(-${(l.i%4)*25}%,-${Math.floor(l.i/4)*50}%)">${l.state!=='active'?`<span class="isle-state">${l.state==='paused'?'暫停':'建置中'}</span>`:''}</span><span class="isle-pin" style="left:${px}%;top:${py-w*780/430+5}%" aria-hidden="true">${l.i+1}</span>`}).join('')}</div>
+   <div class="isle-legend">${on.length?on.map(l=>`<div><b>${l.i+1}</b><span><strong>${l.name}</strong>　${l.state==='paused'?'服務暫停，建物保留':l.pols.map(pid=>P[pid].name).join('、')}${l.pending.length?` <span class="muted">建置中：${l.pending.map(pid=>P[pid].name).join('、')}</span>`:''}</span></div>`).join(''):`<p class="small muted">島上還沒有實施任何服務方案。你的政見通過後，對應的設施會出現在這裡。</p>`}
+   ${bldInst.length?`<div class="inst"><b>建</b><span><strong>建置中</strong>　${bldInst.map(x=>P[x.id].name).join('、')}（下屆開始服務）</span></div>`:''}
    ${inst.length?`<div class="inst"><b>制</b><span><strong>制度與給付</strong>　${inst.map(x=>P[x.id].name).join('、')}</span></div>`:''}</div>
-   <p class="small muted isle-note">圖示代表島上已有這類服務，不代表由誰經營或成效好壞。</p></div>`}
+   <p class="small muted isle-note">建物保留，服務停辦則標示暫停；圖示不代表經營者或成效。</p></div>`}
 
 function islandCard(title){const h=paintedIsland();return h?`<div class="card"><h3 style="margin-bottom:8px">${title||'福利島現況'}</h3>${h}</div>`:''}
 function heroArt(){if(!ART.ok['scenes/island-painted.webp'])return null;
@@ -782,6 +788,9 @@ function paper(r){const g=r.gov,pl=r.platforms[g],first=pl.add[0]?P[pl.add[0]].n
   const hl=g===ME?`${pname(g)}勝選！${first?`「${first}」即將上路`:'承諾穩健施政'}`:`${pname(g)}拿下執政權${first?`，「${first}」將上路`:''}`;
   const sub=pl.cut.length?`同時刪減「${P[pl.cut[0]].name}」，受影響民眾揚言抗議。`:r.bals[g]<0?`新政府預算赤字 ${-r.bals[g]}，國債持續攀升。`:'新政府預算收支平衡，財政部鬆一口氣。';
   return `<div class="paper"><div class="mast"><b>福利島日報</b><span class="small muted num">第 ${r.round+1} 屆</span></div><div class="hl">${hl}</div><p class="small muted">${sub}</p></div>`}
+let tickerPaused=false;
+function newsTicker(active){const items=`<span>國債 <strong class="num">${r1(S.debt)} / ${DEBT_LINE}</strong></span><span>已生效 <strong class="num">${active}</strong> 項政策</span><span>移工阿蒂在島上工作第 6 年，仍沒有投票權</span>`;
+  return `<div class="broadcast-ticker${tickerPaused?' is-paused':''}"><b>島上動態</b><div class="broadcast-ticker-window"><div class="broadcast-ticker-track"><p class="broadcast-ticker-copy">${items}</p><p class="broadcast-ticker-copy" aria-hidden="true">${items}</p></div></div><button class="ticker-toggle" data-a="ticker" aria-pressed="${tickerPaused}" aria-label="${tickerPaused?'繼續':'暫停'}島上動態跑馬燈">${tickerPaused?'繼續':'暫停'}</button></div>`}
 function newsBroadcast(e){const studio='scenes/newsroom-painted-v1.webp',ready=ART.ok[studio];
   const active=S.enacted.filter(x=>P[x.id]&&isActive(x)).length;
   return `<section class="broadcast" aria-label="福利島新聞台">
@@ -795,7 +804,7 @@ function newsBroadcast(e){const studio='scenes/newsroom-painted-v1.webp',ready=A
     </div>
    </div>
    <div class="broadcast-lower-third"><span class="broadcast-flash">${e?'焦點':'新聞'}<br>快報</span><h3 class="broadcast-headline">${e?e.name:'福利島今日焦點'}</h3></div>
-   <div class="broadcast-ticker"><b>島上動態</b><p><span>國債 <strong class="num">${r1(S.debt)} / ${DEBT_LINE}</strong></span><span>已生效 <strong class="num">${active}</strong> 項政策</span><span>移工阿蒂在島上工作第 6 年，仍沒有投票權</span></p></div>
+   ${newsTicker(active)}
    <div class="broadcast-copy">${e?`<p class="broadcast-lead">${e.d}</p><div class="fx">${e.fxt.map(t=>`<span class="chip">${t}</span>`).join('')}</div><p class="broadcast-question">想一想：這則新聞讓誰的處境變差了？你的政見要怎麼回應？</p>`:`<p class="broadcast-lead">主播已就位，下一則新聞將影響島上的生活。</p><p class="small muted">轉動輪盤，揭曉本屆事件。每屆一則重大事件，會改變稅收和島民的需要；轉過的事件不會再出現。</p>`}</div>
    </section>`}
 function rNews(st){const e=S.event?ev():null,last=S.history[S.history.length-1];
@@ -1015,6 +1024,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t
    case'rand':S.choice=shuffle(Object.keys(PARTIES))[0];break;
    case'start':S.assign=[S.choice,...shuffle(Object.keys(PARTIES).filter(k=>k!==S.choice))];S.pets=shuffle(PETS.map(t=>t.who)).slice(0,ROUNDS);return go('news');
    case'spin':spin();return;
+   case'ticker':{tickerPaused=!tickerPaused;t.closest('.broadcast-ticker').classList.toggle('is-paused',tickerPaused);t.textContent=tickerPaused?'繼續':'暫停';t.setAttribute('aria-pressed',String(tickerPaused));t.setAttribute('aria-label',`${tickerPaused?'繼續':'暫停'}島上動態跑馬燈`);return}
    case'tobudget':prevSat=null;if(S.round===2&&!S.ref){S.ref={topic:pickRef(),stance:'yes',spend:0,result:null};return go('ref')}if(S.round===3&&!S.reformDone){S.platforms[ME].adj={};return go('reform')}if(S.round===4&&!S.demoDone)return go('demo');deal();return go('budget');
    case'stance':S.ref.stance=t.dataset.v;break;
    case'spend':S.ref.spend=+t.dataset.v;break;
@@ -1159,7 +1169,7 @@ function pickQ(){const pl=S.platforms[ME],m=money(ME),s=sat(ME),me=key(ME);
 
 // ---- government formation with implementation timing, amendments, labor power ----
 function confirmGov(){const v=VOTES||votes(),gov=v.pct.indexOf(Math.max(...v.pct)),ms=GS.map(money),pl=S.platforms[gov];
-  S.lastProbs=v.probs;S.history.push({round:S.round,event:S.event,issue:S.round===1?S.issue:null,platforms:JSON.parse(JSON.stringify(S.platforms)),sats:v.sats,pct:v.pct,bals:ms.map(m=>m.bal),gov});
+  S.lastProbs=v.probs;S.history.push({round:S.round,event:S.event,issue:S.round===1?S.issue:null,platforms:JSON.parse(JSON.stringify(S.platforms)),sats:v.sats,pct:v.pct,bals:ms.map(m=>m.bal),gov,islandBefore:S.enacted.filter(isActive).map(x=>x.id)});
   const once=pl.add.filter(id=>P[id].once);S.onceUsed.push(...once);
   if(gov===ME&&pl.adj)S.enacted.forEach(x=>{const a=pl.adj[x.id];if(a){x.mul=(x.mul||1)*a;x.cost=r1(x.cost*a)}});
   const newIds=pl.add.filter(id=>!P[id].once);
