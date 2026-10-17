@@ -294,7 +294,7 @@ const AV={
  zhen:{bg:'#A9E0CE',skin:'#F2CBA8',hair:'pony',hc:'#53372A',shirt:'#239A8A'}
 };
 let FID=0;
-function face(id,mood=0,x,y,s){const a=AV[id],K='#3B2B28',u='f'+(FID++);
+function face(id,mood=0,x,y,s){const pf=paintedFace(id,mood,x,y,s);if(pf)return pf;const a=AV[id],K='#3B2B28',u='f'+(FID++);
   const m=mood>1.5?'happy':mood<-1?'sad':'flat';
   const hl=shade(a.hc,.45),hd=shade(a.hc,-.3),st=`stroke="${K}" stroke-width="1.1" stroke-linejoin="round"`;
   let back='',front='';
@@ -351,7 +351,7 @@ const SCENE={
  ref:{sky:['#A9D8F0','#FFF0D6'],sun:'#FFD27A',weather:'flags'},
  demo:{sky:['#F7B985','#FDE6C6'],sun:'#FF9F64',weather:''}
 };
-function landscape(key='hero',withFaces=false){const sc=SCENE[key]||SCENE.hero,u='ls'+(FID++),H=withFaces?310:230,night=sc.weather==='night';
+function landscape(key='hero',withFaces=false){const painted=withFaces?heroArt():paintedLandscape(key);if(painted)return painted;const sc=SCENE[key]||SCENE.hero,u='ls'+(FID++),H=withFaces?310:230,night=sc.weather==='night';
   const dark=['gloom','storm','night'].includes(sc.weather);
   const win=night?'#FFD66B':'#FFE7A3';
   const clouds=(c,o)=>`<g filter="url(#rough)" fill="${c}" opacity="${o}"><ellipse cx="70" cy="52" rx="34" ry="12"/><ellipse cx="92" cy="44" rx="22" ry="12"/><ellipse cx="54" cy="46" rx="16" ry="9"/><ellipse cx="236" cy="34" rx="30" ry="10"/><ellipse cx="256" cy="28" rx="18" ry="10"/></g>`;
@@ -433,6 +433,10 @@ function paintedIsland(){if(!ART.ok['scenes/island-painted.webp']||!ART.ok['scen
 function islandCard(title){const h=paintedIsland();return h?`<div class="card"><h3 style="margin-bottom:8px">${title||'福利島現況'}</h3>${h}</div>`:''}
 function heroArt(){if(!ART.ok['scenes/island-painted.webp'])return null;
   return `<div class="hero-isle"><img src="${ART.base}scenes/island-painted.webp" alt="福利島"><div class="hero-faces">${CIT.map((c,i)=>`<span>${face(c.id,i%3===1?0:2)}</span>`).join('')}</div></div>`}
+// 新聞、公投與人口變遷共用粉彩底圖；事件氣氛以 CSS 疊色呈現，政策設施仍由 paintedIsland() 依實施紀錄繪製。
+function paintedLandscape(key){if(!ART.ok['scenes/island-painted.webp'])return null;
+  const weather=(SCENE[key]||SCENE.hero).weather;
+  return `<div class="painted-landscape" data-weather="${weather}"><img src="${ART.base}scenes/island-painted.webp" width="780" height="430" alt="福利島粉彩風景"></div>`}
 // ---------- STATE ----------
 const ME=0;
 const NP=7,GS=[0,1,2,3,4,5,6],RIV=[1,2,3,4,5,6];

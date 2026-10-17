@@ -254,8 +254,8 @@
     },
     {
       "file": "scenes/island-painted.webp",
-      "use": "模型繪製無建物島嶼底圖",
-      "replaces": "v0.3 art-preview only; formal game integration pending",
+      "use": "首頁、新聞、公投、人口變遷與實施政策島嶼的共用粉彩底圖",
+      "replaces": "heroArt(), paintedLandscape(), paintedIsland()",
       "size": "780x430",
       "format": "webp",
       "transparent": false,
@@ -266,14 +266,14 @@
         390,
         340
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-in-student-edition",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v03.md; export only resized/encoded",
       "bytes": 107326
     },
     {
       "file": "characters/ma-expressions.webp",
       "use": "模型繪製角色三表情圖集",
-      "replaces": "v0.3 art-preview only; formal game integration pending",
+      "replaces": "face() via paintedFace(); title, citizens, referendum and results",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -284,7 +284,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-in-student-edition",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v03.md; export only resized/encoded",
       "bytes": 66618,
       "frames": {
@@ -302,7 +302,7 @@
     {
       "file": "characters/ati-expressions.webp",
       "use": "模型繪製角色三表情圖集",
-      "replaces": "v0.3 art-preview only; formal game integration pending",
+      "replaces": "face() via paintedFace(); title, citizens, referendum and results",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -313,7 +313,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-in-student-edition",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v03.md; export only resized/encoded",
       "bytes": 59346,
       "frames": {
@@ -331,7 +331,7 @@
     {
       "file": "scenes/services-painted.webp",
       "use": "模型繪製八類服務物件圖集",
-      "replaces": "v0.3 art-preview only; formal game integration pending",
+      "replaces": "paintedIsland(): active policy service layers",
       "size": "780x390",
       "format": "webp",
       "transparent": true,
@@ -342,7 +342,7 @@
         97.5,
         180
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-in-student-edition",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v03.md; export only resized/encoded",
       "bytes": 116116,
       "frames": {
@@ -365,7 +365,7 @@
     {
       "file": "characters/chen-expressions.webp",
       "use": "小陳三表情模型插畫",
-      "replaces": "face('chen', score) integration pending; art-preview only",
+      "replaces": "face() via paintedFace(); title, citizens, referendum and results",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -376,7 +376,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-in-student-edition",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 71288,
       "frames": {
@@ -394,7 +394,7 @@
     {
       "file": "characters/ling-expressions.webp",
       "use": "美玲三表情模型插畫",
-      "replaces": "face('ling', score) integration pending; art-preview only",
+      "replaces": "face() via paintedFace(); title, citizens, referendum and results",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -405,7 +405,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-in-student-edition",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 62676,
       "frames": {
@@ -423,7 +423,7 @@
     {
       "file": "characters/xiang-expressions.webp",
       "use": "宇翔三表情模型插畫",
-      "replaces": "face('xiang', score) integration pending; art-preview only",
+      "replaces": "face() via paintedFace(); title, citizens, referendum and results",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -434,7 +434,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-in-student-edition",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 67020,
       "frames": {
@@ -452,7 +452,7 @@
     {
       "file": "characters/kevin-expressions.webp",
       "use": "Kevin三表情模型插畫",
-      "replaces": "face('kevin', score) integration pending; art-preview only",
+      "replaces": "face() via paintedFace(); title, citizens, referendum and results",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -463,7 +463,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-in-student-edition",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 61608,
       "frames": {
@@ -481,7 +481,7 @@
     {
       "file": "characters/wang-expressions.webp",
       "use": "王董三表情模型插畫",
-      "replaces": "face('wang', score) integration pending; art-preview only",
+      "replaces": "face() via paintedFace(); title, citizens, referendum and results",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -492,7 +492,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-in-student-edition",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 71116,
       "frames": {
@@ -510,7 +510,7 @@
     {
       "file": "characters/de-expressions.webp",
       "use": "阿德三表情模型插畫",
-      "replaces": "face('de', score) integration pending; art-preview only",
+      "replaces": "face() via paintedFace(); title, citizens, referendum and results",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -521,7 +521,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-in-student-edition",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 66208,
       "frames": {
@@ -539,7 +539,7 @@
     {
       "file": "characters/yuma-expressions.webp",
       "use": "尤瑪三表情模型插畫",
-      "replaces": "face('yuma', score) integration pending; art-preview only",
+      "replaces": "face() via paintedFace(); title, citizens, referendum and results",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -550,7 +550,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-in-student-edition",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 66168,
       "frames": {
@@ -568,7 +568,7 @@
     {
       "file": "characters/liu-expressions.webp",
       "use": "劉伯伯三表情模型插畫",
-      "replaces": "face('liu', score) integration pending; art-preview only",
+      "replaces": "face() via paintedFace(); title, citizens, referendum and results",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -579,7 +579,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-in-student-edition",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 74560,
       "frames": {
@@ -597,7 +597,7 @@
     {
       "file": "characters/zhen-expressions.webp",
       "use": "小禎三表情模型插畫",
-      "replaces": "face('zhen', score) integration pending; art-preview only",
+      "replaces": "face() via paintedFace(); title, citizens, referendum and results",
       "size": "780x260",
       "format": "webp",
       "transparent": true,
@@ -608,7 +608,7 @@
         130,
         230
       ],
-      "status": "artwork-ready-integration-pending",
+      "status": "integrated-in-student-edition",
       "source": "Generated with built-in imagegen; exact prompts in docs/art-prompts-v04.md; export only resized/encoded",
       "bytes": 80028,
       "frames": {
