@@ -5,7 +5,7 @@
 玩家策略（模擬「很會算票」的學生）：
 - 每屆試低、中、高三種稅率，逐張加入最能提高自己得票率的卡，最多 4 張；赤字不超過 2。
 - 質詢回答第一個選項；公投支持、不花宣傳費；制度改革照預設；其餘照預設按鈕。
-輸出每個觀點的：最終第 1 名比例、平均執政屆數、平均名次。
+輸出每個觀點的：最終第 1 名比例、平均執政屆數、平均名次、平均達成目標數（共 2 項）、五屆累計得票率。
 這是比較用的粗估，不代表真實學生的勝率。
 """
 import sys, json, pathlib, statistics
@@ -46,7 +46,7 @@ with sync_playwright() as p:
     errs = []
     page.on('pageerror', lambda e: errs.append(str(e)))
     for party in PARTIES:
-        firsts, govs, ranks = 0, [], []
+        firsts, govs, ranks, mss, vts = 0, [], [], [], []
         for g in range(N):
             page.goto(target.as_uri())
             page.wait_for_function('typeof S!=="undefined"&&S.phase==="title"')
@@ -84,10 +84,10 @@ with sync_playwright() as p:
                     click(page, '[data-a=tofinal]')
                 else:
                     break
-            r = page.evaluate('(()=>{const sc=scores(),rank=[...sc].sort((a,b)=>b.total-a.total).findIndex(s=>s.g===ME)+1;return {rank,gov:sc[ME].gov,phase:S.phase}})()')
+            r = page.evaluate('(()=>{const sc=scores(),rank=[...sc].sort((a,b)=>b.total-a.total).findIndex(s=>s.g===ME)+1;return {rank,gov:sc[ME].gov,phase:S.phase,ms:sc[ME].ms.filter(Boolean).length,votes:sc[ME].votes}})()')
             if r['phase'] != 'final': errs.append(f'{party} game {g} stuck at {r["phase"]}')
-            ranks.append(r['rank']); govs.append(r['gov']); firsts += r['rank'] == 1
-        out[party] = {'first%': round(firsts / N * 100), 'avgGov': round(statistics.mean(govs), 2), 'avgRank': round(statistics.mean(ranks), 2)}
+            ranks.append(r['rank']); govs.append(r['gov']); mss.append(r['ms']); vts.append(r['votes']); firsts += r['rank'] == 1
+        out[party] = {'first%': round(firsts / N * 100), 'avgGov': round(statistics.mean(govs), 2), 'avgRank': round(statistics.mean(ranks), 2), 'avgGoals': round(statistics.mean(mss), 2), 'avgVotes': round(statistics.mean(vts), 1)}
         print(party, out[party], flush=True)
     b.close()
 print(json.dumps({'n': N, 'result': out, 'errors': errs[:5]}, ensure_ascii=False))

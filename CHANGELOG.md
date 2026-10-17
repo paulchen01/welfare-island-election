@@ -1,5 +1,13 @@
 # CHANGELOG — 版本紀錄
 
+## world-2026-10-17 — 2026-10-17
+
+- 來源：Claude（分支 `claude/world-policies`）
+- 新增 19 張世界各國政策卡（w1–w19），每個觀點至少 19 張符合理念的一般政策卡
+- 政策詳情顯示「現實案例」連結；政策資料升級為 `policy_meta_v0.3.json`（97 張）
+- `tests/balance_sim.py` 增加目標達成數與累計得票統計
+- 測試：七觀點五屆、破產分支、每觀點 25 局模擬皆無錯誤
+
 ## fit-2026-10-17 — 2026-10-17
 
 - 來源：Claude（分支 `claude/data-driven-fit`）
