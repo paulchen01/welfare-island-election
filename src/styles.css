@@ -240,6 +240,15 @@ details.card>summary::-webkit-details-marker{display:none}
 .mlegend{display:flex;justify-content:space-between;gap:8px;font-size:11.5px;max-width:1080px;margin:0 auto;width:100%}
 @media (min-width:700px){.mi .mf{max-width:48px}.mv{font-size:12px}}
 /* v2 */
+/* 政策詳情：責任分工與觀點（立場標籤刻意不用紅綠，避免暗示對錯） */
+.roles{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;margin:0;font-size:14px;line-height:1.5;background:var(--soft);border-radius:10px;padding:10px 12px}
+.roles dt{font-weight:700;color:var(--muted);white-space:nowrap}
+.roles dd{margin:0;min-width:0}
+.views{border:1.5px solid var(--hair);border-radius:10px;padding:8px 12px}
+.views summary{cursor:pointer;font-weight:700;font-size:14px;min-height:32px;display:flex;align-items:center}
+.views ul{list-style:none;margin:6px 0 4px;padding:0;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.5}
+.vst{display:inline-block;font-size:11.5px;font-weight:700;border:1.5px solid var(--ink);border-radius:4px;padding:0 5px;margin-right:6px;background:var(--surface)}
+.vst.mid{border-style:dashed}.vst.dn{background:var(--soft)}
 .pk{--pc:var(--ink);display:inline-block;font-size:11px;font-weight:700;border-radius:4px;padding:0 6px;margin:0 3px 3px 0;color:#fff;background:var(--pc);border:1px solid var(--ink)}
 .cinfo{grid-column:1/-1;display:flex;flex-direction:column;gap:2px;border-top:1.5px dashed var(--hair);padding-top:6px;margin-top:2px}
 .pcard .rule{font-size:12.5px;font-weight:700;background:var(--soft);border-radius:6px;padding:3px 8px;align-self:flex-start}
