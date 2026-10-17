@@ -339,7 +339,7 @@ const AV={
  zhen:{bg:'#A9E0CE',skin:'#F2CBA8',hair:'pony',hc:'#53372A',shirt:'#239A8A'}
 };
 let FID=0;
-function face(id,mood=0,x,y,s){const a=AV[id],K='#3B2B28',u='f'+(FID++);
+function face(id,mood=0,x,y,s){const pf=paintedFace(id,mood,x,y,s);if(pf)return pf;const a=AV[id],K='#3B2B28',u='f'+(FID++);
   const m=mood>1.5?'happy':mood<-1?'sad':'flat';
   const hl=shade(a.hc,.45),hd=shade(a.hc,-.3),st=`stroke="${K}" stroke-width="1.1" stroke-linejoin="round"`;
   let back='',front='';
@@ -396,7 +396,7 @@ const SCENE={
  ref:{sky:['#A9D8F0','#FFF0D6'],sun:'#FFD27A',weather:'flags'},
  demo:{sky:['#F7B985','#FDE6C6'],sun:'#FF9F64',weather:''}
 };
-function landscape(key='hero',withFaces=false){const sc=SCENE[key]||SCENE.hero,u='ls'+(FID++),H=withFaces?310:230,night=sc.weather==='night';
+function landscape(key='hero',withFaces=false){const painted=withFaces?heroArt():paintedLandscape(key);if(painted)return painted;const sc=SCENE[key]||SCENE.hero,u='ls'+(FID++),H=withFaces?310:230,night=sc.weather==='night';
   const dark=['gloom','storm','night'].includes(sc.weather);
   const win=night?'#FFD66B':'#FFE7A3';
   const clouds=(c,o)=>`<g filter="url(#rough)" fill="${c}" opacity="${o}"><ellipse cx="70" cy="52" rx="34" ry="12"/><ellipse cx="92" cy="44" rx="22" ry="12"/><ellipse cx="54" cy="46" rx="16" ry="9"/><ellipse cx="236" cy="34" rx="30" ry="10"/><ellipse cx="256" cy="28" rx="18" ry="10"/></g>`;
@@ -450,7 +450,7 @@ if(typeof document!=='undefined')document.body.insertAdjacentHTML('afterbegin',A
 // 島嶼：assets/scenes/island-painted.webp（底圖）＋ services-painted.webp（4×2 服務圖集）。
 // 素材載入成功才使用；載入失敗（離線、Artifact 未附檔）時沿用下方原本的 SVG 繪圖。
 const ART={base:'assets/',ok:{}};
-const ART_FILES=()=>[...CIT.map(c=>`characters/${c.id}-expressions.webp`),'scenes/island-painted.webp','scenes/services-painted.webp'];
+const ART_FILES=()=>[...CIT.map(c=>`characters/${c.id}-expressions.webp`),'scenes/island-painted.webp','scenes/services-painted.webp','scenes/newsroom-painted-v1.webp','scenes/events-painted-v1.webp'];
 function preloadArt(ms=2500){return Promise.race([
   Promise.all(ART_FILES().map(f=>new Promise(res=>{const im=new Image();im.onload=()=>{ART.ok[f]=1;res()};im.onerror=()=>res();im.src=ART.base+f}))),
   new Promise(res=>setTimeout(res,ms))])}
@@ -466,19 +466,29 @@ if(typeof WORLD_LAYERS!=='undefined')Object.entries(WORLD_LAYERS).forEach(([id,k
 const ISLE_POS=[[29,58,15],[39,74,12],[55,60,16],[72,42,12],[25,78,15],[73,65,14],[52,83,16],[73,83,14]];// x、地面 y、寬度（場景百分比，取自 Codex art-preview.js）
 function paintedIsland(){if(!ART.ok['scenes/island-painted.webp']||!ART.ok['scenes/services-painted.webp'])return null;
   const live=S.enacted.filter(x=>P[x.id]&&!P[x.id].custom&&isActive(x)),bld=S.enacted.filter(x=>P[x.id]&&!P[x.id].custom&&!isActive(x));
-  const on=ISLE_ORDER.map(([id,name],i)=>({id,name,i,pols:live.map(x=>x.id).filter(pid=>ISLE_LAYERS[id].split(' ').includes(pid))})).filter(l=>l.pols.length);
+  // Buildings are the island's accumulated construction, while policies decide whether services are operating.
+  const past=S.history.map(h=>h.islandBefore||[]);
+  const on=ISLE_ORDER.map(([id,name],i)=>{const ids=ISLE_LAYERS[id].split(' '),pols=live.map(x=>x.id).filter(pid=>ids.includes(pid)),pending=bld.map(x=>x.id).filter(pid=>ids.includes(pid));
+    const peak=Math.max(pols.length,...past.map(frame=>new Set(frame.filter(pid=>ids.includes(pid))).size));
+    return {id,name,i,pols,pending,peak,state:pols.length?'active':pending.length?'building':'paused'};
+  }).filter(l=>l.peak||l.pending.length);
   const inst=live.filter(x=>!ISLE_ORDER.some(([id])=>ISLE_LAYERS[id].split(' ').includes(x.id)));
+  const bldInst=bld.filter(x=>!ISLE_ORDER.some(([id])=>ISLE_LAYERS[id].split(' ').includes(x.id)));
   const b=ART.base+'scenes/';
-  return `<div class="isle"><div class="isle-scene" role="img" aria-label="福利島現況：${on.length?on.map(l=>l.name).join('、'):'尚未設置服務據點'}"><img class="isle-base" src="${b}island-painted.webp" alt="">
-   ${on.map(l=>{const [px,py,w]=ISLE_POS[l.i];return `<span class="isle-bld" style="left:${px}%;top:${py}%;width:${w}%"><img src="${b}services-painted.webp" alt="" style="transform:translate(-${(l.i%4)*25}%,-${Math.floor(l.i/4)*50}%)"></span><span class="isle-pin" style="left:${px}%;top:${py-w*780/430+5}%" aria-hidden="true">${l.i+1}</span>`}).join('')}</div>
-   <div class="isle-legend">${on.length?on.map(l=>`<div><b>${l.i+1}</b><span><strong>${l.name}</strong>　${l.pols.map(pid=>P[pid].name).join('、')}</span></div>`).join(''):`<p class="small muted">島上還沒有實施任何服務方案。你的政見通過後，對應的設施會出現在這裡。</p>`}
-   ${bld.length?`<div class="inst"><b>建</b><span><strong>建置中</strong>　${bld.map(x=>P[x.id].name).join('、')}（下屆開始服務）</span></div>`:''}
+  return `<div class="isle"><div class="isle-scene" role="img" aria-label="福利島現況：${on.length?on.map(l=>l.name+(l.state==='paused'?'（服務暫停）':l.state==='building'?'（建置中）':'')).join('、'):'尚未設置服務據點'}"><img class="isle-base" src="${b}island-painted.webp" alt="">
+   ${on.map(l=>{const [px,py,base]=ISLE_POS[l.i],w=base*(1+Math.min(Math.max(0,l.peak-1),2)*.08);return `<span class="isle-bld is-${l.state}" data-layer="${l.id}" style="left:${px}%;top:${py}%;width:${w}%"><img src="${b}services-painted.webp" alt="" style="transform:translate(-${(l.i%4)*25}%,-${Math.floor(l.i/4)*50}%)">${l.state!=='active'?`<span class="isle-state">${l.state==='paused'?'暫停':'建置中'}</span>`:''}</span><span class="isle-pin" style="left:${px}%;top:${py-w*780/430+5}%" aria-hidden="true">${l.i+1}</span>`}).join('')}</div>
+   <div class="isle-legend">${on.length?on.map(l=>`<div><b>${l.i+1}</b><span><strong>${l.name}</strong>　${l.state==='paused'?'服務暫停，建物保留':l.pols.map(pid=>P[pid].name).join('、')}${l.pending.length?` <span class="muted">建置中：${l.pending.map(pid=>P[pid].name).join('、')}</span>`:''}</span></div>`).join(''):`<p class="small muted">島上還沒有實施任何服務方案。你的政見通過後，對應的設施會出現在這裡。</p>`}
+   ${bldInst.length?`<div class="inst"><b>建</b><span><strong>建置中</strong>　${bldInst.map(x=>P[x.id].name).join('、')}（下屆開始服務）</span></div>`:''}
    ${inst.length?`<div class="inst"><b>制</b><span><strong>制度與給付</strong>　${inst.map(x=>P[x.id].name).join('、')}</span></div>`:''}</div>
-   <p class="small muted isle-note">圖示代表島上已有這類服務，不代表由誰經營或成效好壞。</p></div>`}
+   <p class="small muted isle-note">建物保留，服務停辦則標示暫停；圖示不代表經營者或成效。</p></div>`}
 
 function islandCard(title){const h=paintedIsland();return h?`<div class="card"><h3 style="margin-bottom:8px">${title||'福利島現況'}</h3>${h}</div>`:''}
 function heroArt(){if(!ART.ok['scenes/island-painted.webp'])return null;
   return `<div class="hero-isle"><img src="${ART.base}scenes/island-painted.webp" alt="福利島"><div class="hero-faces">${CIT.map((c,i)=>`<span>${face(c.id,i%3===1?0:2)}</span>`).join('')}</div></div>`}
+// 新聞、公投與人口變遷共用粉彩底圖；事件氣氛以 CSS 疊色呈現，政策設施仍由 paintedIsland() 依實施紀錄繪製。
+function paintedLandscape(key){if(!ART.ok['scenes/island-painted.webp'])return null;
+  const weather=(SCENE[key]||SCENE.hero).weather;
+  return `<div class="painted-landscape" data-weather="${weather}"><img src="${ART.base}scenes/island-painted.webp" width="780" height="430" alt="福利島粉彩風景"></div>`}
 // ---------- STATE ----------
 const ME=0;
 const NP=7,GS=[0,1,2,3,4,5,6],RIV=[1,2,3,4,5,6];
@@ -800,29 +810,60 @@ function rSetup(st){const ks=Object.keys(PARTIES);
     <p class="small muted">計分：五屆累計得票率＋每屆執政 10 分＋每達成一項政黨目標 15 分。國家破產時所有人歸零。</p></div>`;
   bar(`<button class="btn" data-a="rand">隨機</button><span class="grow small" style="text-align:right">${S.choice?`已選：<b style="color:${PARTIES[S.choice].color}">${PARTIES[S.choice].name}</b>`:'<span class="muted">點一張卡片</span>'}</span><button class="btn primary" data-a="start" ${S.choice?'':'disabled'}>出發</button>`);
 }
-function wheelSVG(){const n=EVENTS.length,R=136,cx=150,cy=150,cols=['--yellow','--pink','--teal','--blue'];let out='';
-  EVENTS.forEach((e,i)=>{const a0=i*360/n*Math.PI/180,a1=(i+1)*360/n*Math.PI/180,am=(a0+a1)/2;
-   const x0=cx+R*Math.sin(a0),y0=cy-R*Math.cos(a0),x1=cx+R*Math.sin(a1),y1=cy-R*Math.cos(a1);
+function wheelSVG(){const n=EVENTS.length,R=167,cx=200,cy=200,cols=['#f3dfb5','#e8c5c5','#bcd9d5','#c8d5e9','#e0d1e4','#f1ddc5','#c6dedb','#d4dce9'],art='scenes/events-painted-v1.webp';let out='';
+  EVENTS.forEach((e,i)=>{const a0=i*2*Math.PI/n,a1=(i+1)*2*Math.PI/n,am=(a0+a1)/2;
+   const x0=cx+R*Math.sin(a0),y0=cy-R*Math.cos(a0),x1=cx+R*Math.sin(a1),y1=cy-R*Math.cos(a1),tx=cx+117*Math.sin(am),ty=cy-117*Math.cos(am);
    const used=S.used.includes(e.id)&&S.event!==e.id;
-   const fill=used?'var(--soft)':`color-mix(in srgb,var(${cols[i%4]}) ${i%4===0?85:55}%,var(--surface))`;
-   const tx=cx+92*Math.sin(am),ty=cy-92*Math.cos(am),deg=am*180/Math.PI;
-   out+=`<path d="M${cx},${cy} L${x0},${y0} A${R},${R} 0 0 1 ${x1},${y1} Z" style="fill:${fill}" stroke="var(--ink)" stroke-width="2"/>
-    <text x="${tx}" y="${ty}" transform="rotate(${deg} ${tx} ${ty})" text-anchor="middle" dominant-baseline="middle" font-size="15" font-weight="900" fill="var(--ink)" opacity="${used?.35:1}" font-family="Noto Serif TC,serif">${e.short}</text>`});
-  return `<svg viewBox="0 0 300 300" role="img" aria-label="事件輪盤"><circle cx="155" cy="155" r="146" fill="var(--ink)"/><circle cx="150" cy="150" r="146" fill="var(--ink)"/>${Array.from({length:16},(_,i)=>{const a=i/16*2*Math.PI;return `<circle cx="${150+141*Math.sin(a)}" cy="${150-141*Math.cos(a)}" r="3" fill="var(--yellow)"/>`}).join('')}<g id="wheelg" style="transform:rotate(${S.rot}deg)">${out}</g><circle cx="150" cy="150" r="26" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5"/><text x="150" y="159" text-anchor="middle" font-size="24" font-weight="900" fill="var(--stamp)" font-family="Noto Sans TC,sans-serif">卜</text></svg>`}
+   out+=`<g class="wheel-segment${used?' is-used':''}" data-event="${e.id}"><path class="wheel-slice" d="M${cx},${cy} L${x0},${y0} A${R},${R} 0 0 1 ${x1},${y1} Z" fill="${used?'#e3e1d7':cols[i%cols.length]}"/>
+    <g transform="translate(${tx} ${ty})"><g class="wheel-upright" style="transform:rotate(${-S.rot}deg)">
+     ${ART.ok[art]?`<svg class="wheel-art" x="-34" y="-38" width="68" height="68" viewBox="${i%4*400} ${Math.floor(i/4)*400} 400 400" overflow="hidden"><image href="${ART.base+art}" width="1600" height="800"/></svg>`:`<circle cy="-7" r="19" fill="#fff8e7"/><text y="0" text-anchor="middle" font-size="20" fill="#536e79">${i+1}</text>`}
+     <text class="wheel-label" y="42" text-anchor="middle">${e.short}</text>
+     ${used?'<g class="wheel-used-stamp"><rect x="-27" y="-13" width="54" height="22" rx="4"/><text y="2" text-anchor="middle">已播報</text></g>':''}
+    </g></g></g>`});
+  return `<svg viewBox="0 0 400 404" role="img" aria-label="八種新聞事件轉盤，已播報的事件不再抽出"><defs>
+   <linearGradient id="wheel-ivory" x2=".2" y2="1"><stop stop-color="#fffdf3"/><stop offset=".5" stop-color="#eee5cf"/><stop offset="1" stop-color="#c6baa0"/></linearGradient>
+   <linearGradient id="wheel-metal" x2=".7" y2="1"><stop stop-color="#d8bd82"/><stop offset=".45" stop-color="#f3e5bf"/><stop offset="1" stop-color="#9e7e50"/></linearGradient>
+   <radialGradient id="wheel-hub" cx=".35" cy=".2" r=".85"><stop stop-color="#fffef5"/><stop offset="1" stop-color="#e7dbc0"/></radialGradient>
+   </defs><circle cx="200" cy="206" r="191" fill="#183a4b" opacity=".18"/><circle cx="200" cy="200" r="190" fill="url(#wheel-ivory)" stroke="#9e885f" stroke-width="2"/>
+   <circle cx="200" cy="200" r="182" fill="none" stroke="url(#wheel-metal)" stroke-width="3"/><circle cx="200" cy="200" r="173" fill="#48707c"/>
+   ${Array.from({length:8},(_,i)=>{const a=i*Math.PI/4;return `<circle cx="${200+182*Math.sin(a)}" cy="${200-182*Math.cos(a)}" r="2.7" fill="#aa8954"/>`}).join('')}
+   <g id="wheelg" style="transform:rotate(${S.rot}deg)">${out}</g>
+   <circle cx="201" cy="204" r="43" fill="#254756" opacity=".22"/><circle cx="200" cy="200" r="42" fill="url(#wheel-hub)" stroke="url(#wheel-metal)" stroke-width="3"/>
+   <g transform="translate(178 172) scale(1.1)" opacity=".93"><ellipse cx="20" cy="13" rx="6" ry="9" fill="#77a99f"/><ellipse cx="27" cy="20" rx="9" ry="6" fill="#dfbb72"/><ellipse cx="20" cy="27" rx="6" ry="9" fill="#cf928e"/><ellipse cx="13" cy="20" rx="9" ry="6" fill="#829bbb"/><circle cx="20" cy="20" r="3" fill="#fff6e2"/></g>
+   <text x="200" y="226" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="2" fill="#45616c">福利島</text></svg>`}
+function wheelProp(){return `<section class="wheel-prop" aria-label="棚內事件轉盤"><div class="wheel-topline"><span><i></i>棚內現場</span><span>第 ${S.round+1} 屆</span></div>
+  <div class="wheelwrap"><svg class="pointer" viewBox="0 0 40 52" aria-hidden="true"><path d="M20 49L7 22C-2 1 42 1 33 22Z" fill="#d7806b" stroke="#8f5746" stroke-width="1.5"/><path d="M20 41L12 22C5 8 17 6 20 7" fill="#f2b09a"/><circle cx="20" cy="16" r="5" fill="#f5e7c9" stroke="#a78858" stroke-width="2"/></svg>${wheelSVG()}</div>
+  <svg class="wheel-pedestal" viewBox="0 0 360 66" aria-hidden="true"><defs><linearGradient id="stand-ivory" x2=".2" y2="1"><stop stop-color="#fbf5e4"/><stop offset="1" stop-color="#cebea2"/></linearGradient></defs><ellipse cx="180" cy="59" rx="154" ry="6" fill="#315369" opacity=".12"/><path d="M145 0H215L231 29H129Z" fill="#d4c4a3"/><path d="M81 27Q180 9 279 27L307 49Q180 69 53 49Z" fill="url(#stand-ivory)" stroke="#aa9267"/><path d="M58 44Q180 58 302 44L307 49Q180 69 53 49Z" fill="#527984"/><rect x="115" y="32" width="130" height="20" rx="5" fill="#375d6e"/><text x="180" y="46" text-anchor="middle" font-size="11" letter-spacing="2" fill="#fff0d3">福利島新聞台</text></svg>
+  <div class="wheel-readout" role="status" aria-live="polite" aria-atomic="true"><span>本屆焦點</span><strong class="wheel-result">下一則新聞，會是什麼？</strong></div>
+  <button class="wheel-draw" data-a="spin">揭曉本屆新聞 <span aria-hidden="true">↻</span></button><p class="wheel-caption">每屆一則新聞 · 已播報事件不再抽出</p></section>`}
 function paper(r){const g=r.gov,pl=r.platforms[g],first=pl.add[0]?P[pl.add[0]].name:null;
   const hl=g===ME?`${pname(g)}勝選！${first?`「${first}」即將上路`:'承諾穩健施政'}`:`${pname(g)}拿下執政權${first?`，「${first}」將上路`:''}`;
   const sub=pl.cut.length?`同時刪減「${P[pl.cut[0]].name}」，受影響民眾揚言抗議。`:r.bals[g]<0?`新政府預算赤字 ${-r.bals[g]}，國債持續攀升。`:'新政府預算收支平衡，財政部鬆一口氣。';
   return `<div class="paper"><div class="mast"><b>福利島日報</b><span class="small muted num">第 ${r.round+1} 屆</span></div><div class="hl">${hl}</div><p class="small muted">${sub}</p></div>`}
+let tickerPaused=false;
+function newsTicker(active){const items=`<span>國債 <strong class="num">${r1(S.debt)} / ${DEBT_LINE}</strong></span><span>已生效 <strong class="num">${active}</strong> 項政策</span><span>移工阿蒂在島上工作第 6 年，仍沒有投票權</span>`;
+  return `<div class="broadcast-ticker${tickerPaused?' is-paused':''}"><b>島上動態</b><div class="broadcast-ticker-window"><div class="broadcast-ticker-track"><p class="broadcast-ticker-copy">${items}</p><p class="broadcast-ticker-copy" aria-hidden="true">${items}</p></div></div><button class="ticker-toggle" data-a="ticker" aria-pressed="${tickerPaused}" aria-label="${tickerPaused?'繼續':'暫停'}島上動態跑馬燈">${tickerPaused?'繼續':'暫停'}</button></div>`}
+function newsBroadcast(e){const studio='scenes/newsroom-painted-v1.webp',ready=ART.ok[studio];
+  const active=S.enacted.filter(x=>P[x.id]&&isActive(x)).length;
+  return `<section class="broadcast" aria-label="福利島新聞台">
+   <div class="broadcast-stage ${ready?'':'is-fallback'}">
+    ${ready?`<img class="broadcast-studio" src="${ART.base+studio}" width="1440" height="810" alt="粉彩插畫主播坐在新聞棚播報桌前，右側是新聞大螢幕">`:''}
+    <div class="broadcast-brand"><b>福利島新聞台</b><span>WELFARE ISLAND NEWS</span></div>
+    <div class="broadcast-live"><i aria-hidden="true"></i>LIVE<span>第 ${S.round+1} 屆</span></div>
+    <div class="broadcast-screen">
+     <div class="broadcast-screen-art" aria-hidden="true" ${ART.ok['scenes/island-painted.webp']?`style="background-image:url('${ART.base}scenes/island-painted.webp')"`:''}></div>
+     <div class="broadcast-screen-copy"><span>${e?'本屆焦點':'關心島上的每一個人'}</span><strong class="broadcast-screen-title">${e?e.short:'今日焦點'}</strong><em>福利島 · 民生現場</em></div>
+    </div>
+   </div>
+   <div class="broadcast-lower-third"><span class="broadcast-flash">${e?'焦點':'新聞'}<br>快報</span><h3 class="broadcast-headline">${e?e.name:'福利島今日焦點'}</h3></div>
+   ${newsTicker(active)}
+   <div class="broadcast-copy">${e?`<p class="broadcast-lead">${e.d}</p><div class="fx">${e.fxt.map(t=>`<span class="chip">${t}</span>`).join('')}</div><p class="broadcast-question">想一想：這則新聞讓誰的處境變差了？你的政見要怎麼回應？</p>`:`<p class="broadcast-lead">主播已就位，下一則新聞將影響島上的生活。</p><p class="small muted">轉動輪盤，揭曉本屆事件。每屆一則重大事件，會改變稅收和島民的需要；轉過的事件不會再出現。</p>`}</div>
+   </section>`}
 function rNews(st){const e=S.event?ev():null,last=S.history[S.history.length-1];
   st.innerHTML=`<div class="stack"><div><p class="eyebrow">第 ${S.round+1} 屆 · 共 ${ROUNDS} 屆</p><h2>新聞快報</h2></div>
    ${last?paper(last):''}
    ${!e&&S.round>0?islandCard():''}${!e&&S.round>0?thermo():''}${!e?storyFeed():''}
-   <div class="news ${e?'one':''}">${e?'':`<div class="wheelwrap"><svg class="pointer" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 32 L3 10 Q3 2 15 2 Q27 2 27 10Z" fill="var(--stamp)" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="15" cy="11" r="3.5" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/></svg>${wheelSVG()}</div>`}
-   <div class="bulletin"><div class="bar"><span>福利島新聞台</span><span class="live">LIVE</span></div><div class="vign">${landscape(e?e.id:'hero')}</div><div class="body">
-   ${e?`<div class="headline">${e.name}</div><p>${e.d}</p><div class="fx">${e.fxt.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
-     <p class="small muted">想一想：這則新聞讓誰的處境變差了？你的政見要怎麼回應？</p>`
-     :`<div class="headline muted">今天會發生什麼事？</div><p class="muted">每屆一則重大事件，會改變稅收和島民的需要。轉過的事件不會再出現。</p>`}
-   </div><div class="ticker"><span>國債 ${r1(S.debt)}，破產紅線 ${DEBT_LINE}　·　目前實施 ${S.enacted.length} 項福利方案　·　移工阿蒂在島上工作第 6 年，仍沒有投票權</span></div></div></div>
+   <div class="news ${e?'one':''}">${newsBroadcast(e)}${e?'':wheelProp()}</div>
    ${e?cqPanel()+demoPreview():''}
    <div><h3 style="margin-bottom:8px">島民現況</h3>${citStrip(islandMood(),false)}</div></div>`;
   const cqWait=S.cq&&S.cq.pick==null;
@@ -1003,12 +1044,16 @@ addEventListener('scroll',()=>hideTip(),{passive:true,capture:true});
 
 // ---------- ACTIONS ----------
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function spin(){const pool=EVENTS.filter(e=>!S.used.includes(e.id)),src=pool.length?pool:EVENTS,pick=src[Math.floor(Math.random()*src.length)],i=EVENTS.indexOf(pick);
-  const c=i*45+22.5,cur=((S.rot%360)+360)%360,target=S.rot+360*5+((360-c)-cur+720)%360;
-  const g=$('wheelg'),btn=$('spinbtn');if(btn)btn.disabled=true;
-  S.rot=target;const done=()=>{S.event=pick.id;S.used.push(pick.id);S.povShock=r1(S.povShock*.5+(pick.pov||0));buzz(25);render()};
-  if(!g||matchMedia('(prefers-reduced-motion: reduce)').matches){done();return}
-  g.style.transform=`rotate(${target}deg)`;setTimeout(done,3500)}
+function spin(){const g=$('wheelg'),prop=document.querySelector('.wheel-prop');if(S.event||prop?.classList.contains('is-spinning'))return;
+  const pool=EVENTS.filter(e=>!S.used.includes(e.id)),src=pool.length?pool:EVENTS,pick=src[Math.floor(Math.random()*src.length)],i=EVENTS.indexOf(pick);
+  const c=(i+.5)*360/EVENTS.length,cur=((S.rot%360)+360)%360,target=S.rot+360*5+((360-c)-cur+720)%360,reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('[data-a="spin"]').forEach(btn=>btn.disabled=true);prop?.classList.add('is-spinning');
+  const result=prop?.querySelector('.wheel-result');if(result)result.textContent='正在揭曉…';
+  prop?.scrollIntoView({behavior:reduced?'auto':'smooth',block:'center'});
+  S.rot=target;const done=()=>{S.event=pick.id;S.used.push(pick.id);S.povShock=r1(S.povShock*.5+(pick.pov||0));buzz(25);render();document.querySelector('.broadcast')?.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'})};
+  if(!g||reduced){done();return}
+  g.style.transform=`rotate(${target}deg)`;g.querySelectorAll('.wheel-upright').forEach(el=>el.style.transform=`rotate(${-target}deg)`);
+  setTimeout(()=>{g.querySelector(`[data-event="${pick.id}"]`)?.classList.add('is-selected');if(result)result.textContent=pick.short;prop?.classList.add('is-revealed');setTimeout(done,850)},3450)}
 function confirmGov(){const v=VOTES||votes(),gov=v.pct.indexOf(Math.max(...v.pct)),ms=GS.map(money),pl=S.platforms[gov];
   S.lastProbs=v.probs;S.history.push({round:S.round,event:S.event,platforms:JSON.parse(JSON.stringify(S.platforms)),sats:v.sats,pct:v.pct,bals:ms.map(m=>m.bal),gov});
   const once=pl.add.filter(id=>P[id].once);S.onceUsed.push(...once);
@@ -1031,6 +1076,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t
    case'rand':S.choice=shuffle(Object.keys(PARTIES))[0];break;
    case'start':S.assign=[S.choice,...shuffle(Object.keys(PARTIES).filter(k=>k!==S.choice))];S.pets=shuffle(PETS.map(t=>t.who)).slice(0,ROUNDS);return go('news');
    case'spin':spin();return;
+   case'ticker':{tickerPaused=!tickerPaused;t.closest('.broadcast-ticker').classList.toggle('is-paused',tickerPaused);t.textContent=tickerPaused?'繼續':'暫停';t.setAttribute('aria-pressed',String(tickerPaused));t.setAttribute('aria-label',`${tickerPaused?'繼續':'暫停'}島上動態跑馬燈`);return}
    case'tobudget':prevSat=null;if(S.round===2&&!S.ref){S.ref={topic:pickRef(),stance:'yes',spend:0,result:null};return go('ref')}if(S.round===3&&!S.reformDone){S.platforms[ME].adj={};return go('reform')}if(S.round===4&&!S.demoDone)return go('demo');deal();return go('budget');
    case'stance':S.ref.stance=t.dataset.v;break;
    case'spend':S.ref.spend=+t.dataset.v;break;
@@ -1177,7 +1223,7 @@ function pickQ(){const pl=S.platforms[ME],m=money(ME),s=sat(ME),me=key(ME);
 
 // ---- government formation with implementation timing, amendments, labor power ----
 function confirmGov(){const v=VOTES||votes(),gov=v.pct.indexOf(Math.max(...v.pct)),ms=GS.map(money),pl=S.platforms[gov];
-  S.lastProbs=v.probs;S.history.push({round:S.round,event:S.event,issue:S.round===1?S.issue:null,platforms:JSON.parse(JSON.stringify(S.platforms)),sats:v.sats,pct:v.pct,bals:ms.map(m=>m.bal),gov});
+  S.lastProbs=v.probs;S.history.push({round:S.round,event:S.event,issue:S.round===1?S.issue:null,platforms:JSON.parse(JSON.stringify(S.platforms)),sats:v.sats,pct:v.pct,bals:ms.map(m=>m.bal),gov,islandBefore:S.enacted.filter(isActive).map(x=>x.id)});
   const once=pl.add.filter(id=>P[id].once);S.onceUsed.push(...once);
   if(gov===ME&&pl.adj)S.enacted.forEach(x=>{const a=pl.adj[x.id];if(a){x.mul=(x.mul||1)*a;x.cost=r1(x.cost*a)}});
   const newIds=pl.add.filter(id=>!P[id].once);
