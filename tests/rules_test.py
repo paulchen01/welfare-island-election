@@ -48,6 +48,15 @@ CASES = {
    const v2=CIT.filter(c=>Wt(c)>0).reduce((a,c)=>a+WtPct(c),0);S.wmod={};return {sum:v,sumAfterDemo:v2}}""",
  # 稅率預覽與實際預算一致（危機時稅收打折）
  'tax_preview_matches_budget': """()=>{S.crisis=2;S.platforms[ME].tax='中';const real=money(ME).rev,pre=taxRev('中');S.crisis=0;return {real,pre}}""",
+ # 質詢沒有在「得票、國債」都較好的優勢答案（勞工力量等實質後果也算一種取捨）
+ 'no_dominant_answers': """()=>{const D=[];QS.forEach(q=>{const o=q.opts;for(const a of o)for(const b of o){if(a===b)continue;const ad=a.debt||0,bd=b.debt||0;
+   if(a.vote>=b.vote&&ad<=bd&&(a.vote>b.vote||ad<bd)&&!(b.labor>0)&&!(q.id==='ati'))D.push(q.id)}});return {dominated:[...new Set(D)]}}""",
+ # 運動型、倡議型的成功判定看目標，不看名次
+ 'role_success_modes': """()=>{S.assign=['mx','sd','nr','tw','fe','ns','gr'];S.history=[];S.labor=7;S.bankrupt=false;
+   const a=success(0);S.labor=2;const b=success(0);S.adopt=[0,0,0,0,0,5,0];const c=success(5);return {a:a.label,b:b.label,ns:c.label,mode:a.mode}}""",
+ # 執政政績：自己實施且已運作的政策，受益島民小幅加分，且有上限
+ 'performance_feedback': """()=>{S.round=2;S.enacted=[{id:'p7',cost:4,start:1,by:ME},{id:'p6',cost:5,start:3,by:ME}];const pf=perf(ME);
+   S.enacted.push({id:'p1',cost:4,start:0,by:1});const other=perf(ME);return {ling:pf.ling||0,ma:pf.ma||0,max:Math.max(...Object.values(pf)),otherLing:other.ling}}""",
  # 馬克思主義目標門檻為 6
  'marxist_goal_six': """()=>{S.labor=6;const h=[];return {text:PARTIES.mx.miss[0].t,ok:PARTIES.mx.miss[0].f(h,0)}}""",
 }
@@ -62,6 +71,9 @@ CHECK = {
  'voter_share_normalized': lambda r: 98 <= r['sum'] <= 102 and 98 <= r['sumAfterDemo'] <= 102,
  'tax_preview_matches_budget': lambda r: abs(r['real'] - r['pre']) < 0.01,
  'marxist_goal_six': lambda r: '6' in r['text'] and r['ok'],
+ 'no_dominant_answers': lambda r: not r['dominated'],
+ 'role_success_modes': lambda r: r['mode'] == 'movement' and r['a'] == '使命達成' and r['b'] == '部分達成' and r['ns'] == '部分達成',
+ 'performance_feedback': lambda r: 0 < r['ling'] <= 1.5 and r['ma'] == 0 and r['max'] <= 1.5 and r['otherLing'] == r['ling'],
 }
 
 out, ok = {}, True
