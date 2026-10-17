@@ -507,3 +507,8 @@ textarea{width:100%;min-height:88px;font:inherit;font-size:15px;color:var(--ink)
 /* 標題副標與製作署名（只出現在標題與結局畫面） */
 .hero .subt{margin:-2px 0 0;font-size:17px;font-weight:700;letter-spacing:.12em;color:var(--ink)}
 .credit{margin:6px 0 0;text-align:center;font-size:12px;letter-spacing:.08em;color:var(--muted,#6b6257);opacity:.85}
+/* 成功判定（三種角色各自的標準） */
+.verdict{display:flex;flex-direction:column;gap:2px;border:2px solid var(--ink);border-radius:10px;padding:8px 12px;background:var(--soft)}
+.verdict b{font-size:20px;font-family:var(--f-display)}
+.verdict.lv2{background:color-mix(in srgb,var(--teal) 16%,var(--surface))}
+.verdict.lv1{background:color-mix(in srgb,var(--yellow) 22%,var(--surface))}

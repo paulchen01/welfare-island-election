@@ -51,7 +51,7 @@ const REFS=[
  {id:'migrant',pid:'p13',title:'家事移工保障公投',q:'你是否同意將家事移工納入勞動基準法，保障休假與最低工資？',pro:'家事移工長時間工作卻沒有休假，這是基本人權與勞動正義。',con:'照顧費用會大幅上升，許多失能家庭將負擔不起，應先建立替代照顧人力。'},
  {id:'ubi',pid:'p31',title:'全民基本收入公投',q:'你是否同意每位國民每月領取一筆無條件的基本收入？',pro:'AI 與零工經濟讓工作越來越不穩定，基本收入給每個人底線保障，也沒有資格審查的汙名。',con:'財政負擔極重，可能削弱工作意願，錢也會發給不需要的人。'}
 ];
-const DEMO=[
+const DEMO_MOD={};const DEMO=[
  {id:'ma',to:24,why:'高齡化：65 歲以上選民比例持續上升。'},
  {id:'ling',to:9,why:'少子化：育兒家庭在選民中的比例下降。'},
  {id:'chen',to:14,why:'平台經濟擴張：零工與外送工作者越來越多。'},
@@ -59,6 +59,7 @@ const DEMO=[
  {id:'liu',to:6,why:'世代交替：戰後來台的第一、二代外省族群逐漸凋零。'}
 ];
 const ECO={p7:.8,p9:.6,p10:.3,p17:1,p20:.5,p21:.6,p28:.8,p15:.5,p19:.2,p11:.2,p14:.3,p24:.3};
+DEMO.forEach(d=>DEMO_MOD[d.id]=d.to);
 POL.push({id:'p32',name:'部落文化健康站擴點',tags:['civ','care'],cost:2,d:'補助原住民族部落設置文化健康站，由族人用族語照顧族人。',fx:{def:1,stg:-1},cit:{yuma:5,ma:1,zhen:1},say:{yuma:'用族語陪 yaki（祖母）唱歌、吃飯，長輩笑得比較多。',zhen:'在地人照顧在地人，服務才接得住。'}});
 const EXTRA={
  p1:{cit:{yuma:1}},p2:{cit:{yuma:1,liu:0}},
@@ -295,14 +296,14 @@ const PARTIES={
    rule:'選舉型：靠選票執政，用社會投資讓人回到工作。',
    miss:[{t:'累計提出 3 項以上社會投資政策',f:h=>cnt(h,'inv')>=3},{t:'每屆提案的赤字都不超過 2',f:h=>h.length>0&&h.every(r=>r.bal>=-2)}]},
  mx:{name:'馬克思主義',color:'var(--p-mx)',slogan:'福利只是讓資本主義喘口氣，真正的改變是讓勞工有力量。',ability:'危機動員：島上出現抗議或罷工時，勞工族群反而更支持你',
-   rule:'運動型：累積「勞工力量」比贏選舉更重要。',
-   miss:[{t:'島上「勞工力量」達到 8',f:h=>(S.labor||0)>=8},{t:'從未提出成長型減稅政策',f:h=>cnt(h,'growth')===0}]},
- fe:{name:'女性主義',color:'var(--p-fe)',slogan:'照顧是公共責任，不該只落在女人身上。',ability:'照顧公共化：照顧類政策成本 −1，效果 ×1.25',
+   mode:'movement',rule:'運動型：累積「勞工力量」比贏選舉更重要。成功與否看兩項目標，不看名次。',
+   miss:[{t:'島上「勞工力量」達到 6',f:h=>(S.labor||0)>=6},{t:'從未提出成長型減稅政策',f:h=>cnt(h,'growth')===0}]},
+ fe:{name:'女性主義',color:'var(--p-fe)',slogan:'照顧是公共責任，不該只落在女人身上。',ability:'照顧公共化：照顧類政策成本 −1，競選支持效果 ×1.25',
    rule:'選舉型：靠選票執政，讓照顧從家裡走向公共。',
    miss:[{t:'累計提出 3 項以上照顧類政策',f:h=>cnt(h,'care')>=3},{t:'從未提出家庭類政策（把照顧推回家庭）',f:h=>cnt(h,'fam')===0}]},
  ns:{name:'新社會運動',color:'var(--p-ns)',slogan:'被看見、被承認、一起參與決定，權利是爭取來的。',ability:'倡議：就算落選，你的權利或公私協力政策仍有機會被執政黨採納',
-   rule:'倡議型：不必執政，政策被實施就算成功。',
-   miss:[{t:'你提出的政策中，有 4 項最後被實施（不論誰執政）',f:h=>(S.nsWins||0)>=4},{t:'回應 3 次島民陳情',f:h=>h.filter(r=>r.pl.add.some(id=>P[id].pet)).length>=3}]},
+   mode:'advocacy',rule:'倡議型：不必執政，政策被實施就算成功。成功與否看兩項目標，不看名次。',
+   miss:[{t:'你提出的政策中，有 4 項最後被實施（不論誰執政）',f:(h,g)=>((S.adopt||[])[g]||0)>=4},{t:'回應 3 次島民陳情',f:h=>h.filter(r=>r.pl.add.some(id=>P[id].pet)).length>=3}]},
  gr:{name:'綠色主義',color:'var(--p-gr)',slogan:'沒有永續的地球，就沒有福利國家。',ability:'碳稅：可額外開徵碳稅，收入 +3（王董不滿）；綠色政策成本 −1',
    rule:'選舉型：靠選票執政，讓福利與生態一起永續。',
    miss:[{t:'至少三屆提案包含綠色政策',f:h=>h.filter(r=>r.pl.add.some(id=>P[id].tags.includes('green'))).length>=3},{t:'從未提出成長型減稅政策',f:h=>cnt(h,'growth')===0}]}
@@ -493,7 +494,7 @@ function paintedLandscape(key){if(!ART.ok['scenes/island-painted.webp'])return n
 const ME=0;
 const NP=7,GS=[0,1,2,3,4,5,6],RIV=[1,2,3,4,5,6];
 const blank=(tax='中')=>Array.from({length:NP},()=>({tax,add:[],cut:[],carbon:false}));
-const fresh=()=>({phase:'title',round:0,choice:null,assign:null,event:null,used:[],rot:0,platforms:blank(),adj:GS.map(()=>0),q:null,qPick:null,qDebt:0,history:[],enacted:[],debt:0,govTax:'中',bankrupt:false,refl:['','',''],eco:0,onceUsed:[],hand:[],redrawn:false,unrest:0,povShock:0,crisis:0,unrestLog:[],pets:[],pet:null,lastProbs:null,wmod:{},ref:null,refAlign:{},refSpend:0,demoDone:false,lastGov:null,filter:'all',labor:0,nsWins:0,nsCounted:[],qUsed:[],cq:null,cqLog:[],cqUsed:[],issue:null,amend:null,storySeen:[],hints:true,reasons:[],reformDone:false,customN:0});
+const fresh=()=>({phase:'title',round:0,choice:null,assign:null,event:null,used:[],rot:0,platforms:blank(),adj:GS.map(()=>0),q:null,qPick:null,qDebt:0,history:[],enacted:[],debt:0,govTax:'中',bankrupt:false,refl:['','',''],eco:0,onceUsed:[],hand:[],redrawn:false,unrest:0,povShock:0,crisis:0,unrestLog:[],pets:[],pet:null,lastProbs:null,wmod:{},ref:null,refAlign:{},refSpend:0,demoDone:false,lastGov:null,filter:'all',labor:0,nsWins:0,nsCounted:[],adopt:GS.map(()=>0),adoptSeen:GS.map(()=>[]),qUsed:[],cq:null,cqLog:[],cqUsed:[],issue:null,amend:null,storySeen:[],hints:true,reasons:[],reformDone:false,customN:0});
 let S;
 const ev=()=>EVENTS.find(e=>e.id===S.event)||{rev:1,boost:{},cit:{},oneoff:0};
 const key=g=>S.assign[g];
@@ -513,6 +514,8 @@ const ideo=(id,k)=>{const v=ideoTag(id,k),s=stanceOf(id,k);
 const fit=(id,k)=>{const v=ideo(id,k);return v>=2?1:v<0?-1:0};
 const evHit=id=>{const b=ev().boost||{};return P[id].tags.some(t=>b[t])};
 const special=p=>p.refOnly||p.ev||p.pet;
+const wShare=(c,mod)=>{const w=x=>(mod&&mod[x.id]!=null)?mod[x.id]:x.w;return Math.round(w(c)/CIT.reduce((a,x)=>a+w(x),0)*100)};
+const WtPct=c=>wShare(c,S.wmod);
 const Wt=c=>S.wmod[c.id]!=null?S.wmod[c.id]:c.w;
 function costOf(id,k){const p=P[id];let c=p.cost;if(c<=0)return c;const t=p.tags;if(k==='nr'&&t.includes('mkt')&&t.length<=2)c--;if(k==='tw'&&t.includes('sel'))c--;if(k==='ns'&&(t.includes('rights')||t.includes('civ')))c--;if(k==='gr'&&t.includes('green'))c--;if(k==='fe'&&t.includes('care'))c--;return Math.max(1,c)}
 function money(g){const pl=S.platforms[g],e=ev(),k=key(g);
@@ -522,6 +525,12 @@ function money(g){const pl=S.platforms[g],e=ev(),k=key(g);
   const spend=BASE+exist+adds+(e.oneoff||0)+(g===ME?S.refSpend:0);
   return {rev,exist,adds,spend,bal:r1(rev-spend)}}
 function mult(p,k){let m=1;const b=ev().boost||{};p.tags.forEach(t=>{if(b[t])m*=b[t]});if(k==='fe'&&p.tags.includes('care'))m*=1.25;return m}
+// 執政政績：這個政黨實施、已經開始服務的政策，讓受益島民小幅更支持它。
+// 每項政策效果為原本支持度的 1/4，每過一屆打七折；每位島民最多 ±1.5；民怨升高時減半。
+function perf(g){const out={};if(!S.enacted)return out;
+  S.enacted.forEach(x=>{if(x.by!==g||!isActive(x)||!P[x.id]||P[x.id].custom)return;const p=P[x.id],d=Math.pow(.7,Math.max(0,S.round-(x.start||0)))*.25*(x.mul||1);
+    for(const c in p.cit)out[c]=(out[c]||0)+p.cit[c]*d});
+  const half=S.crisis>=1&&S.lastGov===g?.5:1;for(const c in out)out[c]=Math.max(-1.5,Math.min(1.5,out[c]))*half;return out}
 function sat(g){const pl=S.platforms[g],k=key(g),e=ev(),s={};
   CIT.forEach(c=>s[c.id]=(TAX[pl.tax].cit[c.id]||0)+((e.cit||{})[c.id]||0));
   pl.add.forEach(id=>{const p=P[id],m=mult(p,k);for(const c in p.cit)s[c]+=p.cit[c]*m;if(k==='sd'&&p.tags.includes('univ'))CIT.forEach(c=>s[c.id]+=.5)});
@@ -534,6 +543,7 @@ function sat(g){const pl=S.platforms[g],k=key(g),e=ev(),s={};
   if(S.lastGov===g&&S.streak>1)CIT.forEach(c=>s[c.id]-=.7*(S.streak-1));
   if(S.lastGov===g){const pv=island().poverty;VULN.forEach(c=>{s[c]-=Math.max(0,pv-12)*.35+[0,1.5,2.5,4][S.crisis];if(pv<10)s[c]+=.8});if(S.crisis===3)CIT.forEach(c=>s[c.id]-=2)}
   if(g===ME&&S.pet){const t=PETS.find(x=>x.who===S.pet);if(t&&!pl.add.includes(t.card.id))s[S.pet]-=2}
+  {const pf=perf(g);for(const c in pf)s[c]+=pf[c]}
   const bal=money(g).bal;if(bal<-1){const pen=(-bal-1)*.35;CIT.forEach(c=>s[c.id]-=pen*(c.id==='kevin'||c.id==='wang'?1.8:1))}
   for(const c in s)s[c]=r1(s[c]);return s}
 function votes(){const sats=GS.map(sat),raw=GS.map(()=>0),voters=CIT.filter(c=>Wt(c)>0),W=voters.reduce((a,c)=>a+Wt(c),0);
@@ -560,6 +570,7 @@ function aiPlatform(g){const k=key(g),pr=PREF[k],pl={tax:pr.tax,add:[],cut:[],ca
   const cand=POL.filter(p=>(!S.enacted.some(x=>x.id===p.id)&&!S.onceUsed.includes(p.id)&&!special(p)||(p.ev===S.event&&!S.enacted.some(x=>x.id===p.id)&&!S.onceUsed.includes(p.id)))&&!(pr.avoid||[]).includes(p.id))
     .map(p=>({p,s:ideo(p.id,k)+Math.random()*1.5-(S.round===1&&issueOf(p.id)?9:0)})).filter(c=>c.s>1).sort((a,b)=>b.s-a.s);
   if(S.round===1&&S.issue){const I=ISSUES.find(i=>i.id===S.issue),os=I.opts.map(o=>o.id).filter(id=>P[id]&&!S.enacted.some(x=>x.id===id)).sort((x,y)=>ideo(y,k)-ideo(x,k));if(os[0])pl.add.push(os[0])}
+  if(k==='ns'&&S.pet){const t=PETS.find(x=>x.who===S.pet);if(t&&P[t.card.id]&&!S.enacted.some(x=>x.id===t.card.id)&&!pl.add.includes(t.card.id))pl.add.push(t.card.id)}
   for(const c of cand){if(pl.add.length>=MAXADD)break;const left=money(g).bal;if(costOf(c.p.id,k)<=left+pr.tol)pl.add.push(c.p.id)}
 }
 
@@ -570,11 +581,11 @@ const QS=[
   opts:[{t:'先舉債，照顧人民比較要緊。',vote:2,debt:1,i:'支持者認為，景氣差時政府舉債支出可以穩定社會；批評者認為，債務會轉嫁給下一代，形成世代不公。'},
         {t:'坦白說，下一屆我們會提出加稅方案。',vote:-3,debt:0,i:'誠實面對財源會流失選票，但福利支出和租稅負擔本來就是同一件事的兩面。'}]},
  {id:'univ',when:pl=>pl.add.includes('p1')||pl.add.includes('p3'),q:()=>`記者追問：連年薪三百萬的 Kevin 也能領，這樣不是在浪費稅金嗎？`,
-  opts:[{t:'普及發放，才不會有人被貼上「窮人」的標籤。',vote:0,debt:0,i:'普及主義者認為，人人都領可以避免汙名、降低行政成本，也讓中產階級願意支持福利。'},
-        {t:'我們會對高所得者加稅，把錢收回來。',vote:1,debt:-.5,i:'選擇主義者則認為，有限資源應集中在最需要的人身上。「普及給付＋累進稅」是常見的折衷做法。'}]},
+  opts:[{t:'普及發放，才不會有人被貼上「窮人」的標籤。',vote:1,debt:0,i:'普及主義者認為，人人都領可以避免汙名、降低行政成本，也讓中產階級願意支持福利。'},
+        {t:'我們會對高所得者加稅，把錢收回來。',vote:-1,debt:-0.5,i:'選擇主義者則認為，有限資源應集中在最需要的人身上。「普及給付＋累進稅」是常見的折衷做法。'}]},
  {id:'public',when:pl=>pl.add.includes('p6')||pl.add.includes('p7')||pl.add.includes('p14'),q:()=>`審計部報告：公辦服務排隊要半年，單位成本比民間高。你們怎麼回應？`,
-  opts:[{t:'公共服務重視品質與勞動條件，不能只看成本。',vote:-1,debt:0,i:'支持公辦的人認為，政府直接提供可以確保普及、穩定和服務人員的勞動條件。'},
-        {t:'我們會引進民間業者，用契約管理品質。',vote:2,debt:-.5,i:'福利多元主義主張由政府、市場、非營利組織與家庭共同提供服務。批評者則擔心品質與勞動條件被壓低。'}]},
+  opts:[{t:'公共服務重視品質與勞動條件，不能只看成本。',vote:1,debt:0.5,i:'支持公辦的人認為，政府直接提供可以確保普及、穩定和服務人員的勞動條件。'},
+        {t:'我們會引進民間業者，用契約管理品質。',vote:0,debt:-0.5,i:'福利多元主義主張由政府、市場、非營利組織與家庭共同提供服務。批評者則擔心品質與勞動條件被壓低。'}]},
  {id:'tax',when:pl=>pl.tax==='高',q:()=>`工商團體記者會：加稅會讓企業出走，工作機會也會消失！`,
   opts:[{t:'企業也受惠於公共建設，應負擔社會責任。',vote:-1,debt:0,i:'支持者認為，健全的福利與教育能提升勞動力品質，對企業長期有利。'},
         {t:'我們會搭配產業投資抵減，留住企業。',vote:1,debt:1,i:'減稅配套能降低反彈，但實際稅收會打折扣。租稅競爭是全球化下每個福利國家都面對的壓力。'}]},
@@ -696,21 +707,21 @@ const STORY={p7:['ling','小女兒進了公托，我回到原本的工作了。'
 // ---- Extra interpellations: value conflicts specific to each perspective ----
 QS.push(
  {id:'mx1',when:()=>key(ME)==='mx',q:()=>`左派評論員：你的福利只是讓資本主義喘口氣，勞工還是沒有真正的權力，不是嗎？`,
-  opts:[{t:'先改善勞工的生活，力量才能慢慢累積。',vote:1,debt:0,i:'改良主義認為福利是勞工鬥爭的成果，能逐步改變權力關係。'},{t:'所以我們要推動勞工參與企業決策。',vote:0,debt:0,i:'產業民主（如勞工董事）主張把權力帶進職場，而不只是事後補償。'}]},
+  opts:[{t:'先改善勞工的生活，力量才能慢慢累積。',vote:1,debt:0,i:'改良主義認為福利是勞工鬥爭的成果，能逐步改變權力關係。'},{t:'所以我們要推動勞工參與企業決策。',vote:0,debt:0,labor:1,i:'產業民主（如勞工董事）主張把權力帶進職場，而不只是事後補償。'}]},
  {id:'ns1',when:()=>key(ME)==='ns',q:()=>`政論節目：你們只會街頭倡議，真的有執政能力嗎？`,
-  opts:[{t:'改變不一定要執政，讓政府聽見才是關鍵。',vote:0,debt:0,i:'新社會運動重視公民社會的力量，透過倡議、參與和抗爭影響政策。'},{t:'我們會和其他政黨合作，把議題寫進法律。',vote:1,debt:0,i:'運動與政黨結盟能讓議題制度化，但也可能被收編。'}]},
+  opts:[{t:'改變不一定要執政，讓政府聽見才是關鍵。',vote:0,debt:0,i:'新社會運動重視公民社會的力量，透過倡議、參與和抗爭影響政策。'},{t:'我們會和其他政黨合作，把議題寫進法律。',vote:0,debt:0,i:'運動與政黨結盟能讓議題制度化，但也可能被收編。'}]},
  {id:'sd1',when:()=>key(ME)==='sd',q:()=>`年輕人在網路上留言：稅這麼高，我乾脆出國工作好了。`,
-  opts:[{t:'高稅換來的是你生病、失業、老了都有保障。',vote:0,debt:0,i:'社會民主認為普及保障是一種社會契約，人人繳稅、人人受益。'},{t:'我們會讓年輕人先看到托育和住宅的好處。',vote:1,debt:0,i:'普及式福利要讓中產階級也受益，才能維持對高稅負的支持。'}]},
+  opts:[{t:'高稅換來的是你生病、失業、老了都有保障。',vote:0,debt:0,i:'社會民主認為普及保障是一種社會契約，人人繳稅、人人受益。'},{t:'我們會讓年輕人先看到托育和住宅的好處。',vote:0,debt:0,i:'普及式福利要讓中產階級也受益，才能維持對高稅負的支持。'}]},
  {id:'nr1',when:()=>key(ME)==='nr',q:()=>`社工團體質詢：市場化之後，沒錢買服務的人怎麼辦？`,
-  opts:[{t:'政府會保留最基本的安全網。',vote:0,debt:0,i:'新右派主張國家只負責最低保障，其他交給市場和個人。'},{t:'經濟成長會讓大家都買得起。',vote:-1,debt:0,i:'「涓滴效應」常被批評實證支持有限，分配不均可能擴大。'}]},
+  opts:[{t:'政府會保留最基本的安全網。',vote:0,debt:0,i:'新右派主張國家只負責最低保障，其他交給市場和個人。'},{t:'經濟成長會讓大家都買得起。',vote:0,debt:0,i:'「涓滴效應」常被批評實證支持有限，分配不均可能擴大。'}]},
  {id:'tw1',when:()=>key(ME)==='tw',q:()=>`婦女團體質詢：要求工作才給福利，那在家照顧失能家人的人怎麼辦？`,
-  opts:[{t:'照顧也是一種貢獻，可以算進參與條件。',vote:1,debt:0,i:'擴大「參與」的定義，是第三條路面對照顧者批評時的修正方向。'},{t:'我們會先讓照顧服務足夠，讓照顧者能回到職場。',vote:0,debt:.5,i:'社會投資觀點認為，公共照顧是讓人能工作的前提。'}]},
+  opts:[{t:'照顧也是一種貢獻，可以算進參與條件。',vote:0,debt:0,i:'擴大「參與」的定義，是第三條路面對照顧者批評時的修正方向。'},{t:'我們會先讓照顧服務足夠，讓照顧者能回到職場。',vote:1,debt:0.5,i:'社會投資觀點認為，公共照顧是讓人能工作的前提。'}]},
  {id:'fe1',when:()=>key(ME)==='fe',q:()=>`保守派立委：照顧公共化很貴，家人親自照顧不是更溫暖嗎？`,
-  opts:[{t:'溫暖不該建立在女兒和媳婦的犧牲上。',vote:0,debt:0,i:'女性主義指出，「家庭照顧」常常意味著女性的無酬勞動與職涯中斷。'},{t:'我們會讓家庭可以選擇，公共服務是後盾。',vote:1,debt:0,i:'提供選擇權，是降低反彈、同時推動去家庭化的折衷做法。'}]},
+  opts:[{t:'溫暖不該建立在女兒和媳婦的犧牲上。',vote:0,debt:0,i:'女性主義指出，「家庭照顧」常常意味著女性的無酬勞動與職涯中斷。'},{t:'我們會讓家庭可以選擇，公共服務是後盾。',vote:0,debt:0,i:'提供選擇權，是降低反彈、同時推動去家庭化的折衷做法。'}]},
  {id:'gr1',when:()=>key(ME)==='gr',q:()=>`消費者團體：綠色轉型讓電價上漲，弱勢家庭誰來顧？`,
-  opts:[{t:'我們會把碳費收入退還給每個家庭。',vote:1,debt:0,i:'「碳費退還」是環境正義的常見設計，避免轉型成本落在弱勢身上。'},{t:'短期辛苦，是為了下一代的地球。',vote:-1,debt:0,i:'世代正義是綠色主義的核心，但當下的分配問題也需要回應。'}]},
+  opts:[{t:'我們會把碳費收入退還給每個家庭。',vote:1,debt:0.5,i:'「碳費退還」是環境正義的常見設計，避免轉型成本落在弱勢身上。'},{t:'短期辛苦，是為了下一代的地球。',vote:-1,debt:0,i:'世代正義是綠色主義的核心，但當下的分配問題也需要回應。'}]},
  {id:'cross',when:pl=>pl.add.some(id=>fit(id,key(ME))<0),q:()=>`記者追問：你們提出的政策跟你們的理念好像不太一樣，是在討好選民嗎？`,
-  opts:[{t:'理念要能解決真實問題，必要時要借用別人的好方法。',vote:1,debt:0,i:'政策學習與跨觀點借用很常見，但要能說明為什麼。'},{t:'我們會回到原本的路線。',vote:-1,debt:0,i:'堅持理念能鞏固基本盤，但可能錯過解決問題的工具。'}]},
+  opts:[{t:'理念要能解決真實問題，必要時要借用別人的好方法。',vote:0,debt:0,i:'政策學習與跨觀點借用很常見，但要能說明為什麼。'},{t:'我們會回到原本的路線。',vote:0,debt:0,i:'堅持理念能鞏固基本盤，但可能錯過解決問題的工具。'}]},
  {id:'debate2',when:()=>true,q:()=>`電視辯論：如果只能選一件事，你們最想改變島上的什麼？`,
   opts:[{t:'讓每個人生活都有基本保障。',vote:1,debt:0,i:'這是「需要」原則：依照人的需要分配資源。'},{t:'讓努力工作的人得到回報。',vote:1,debt:0,i:'這是「貢獻」原則：依照工作與付出分配資源。'}]},
  {id:'debate3',when:()=>true,q:()=>`主持人：福利應該由誰來負責，政府、市場、家庭，還是社區？`,
@@ -729,7 +740,7 @@ function bubble(c,g){const pl=S.platforms[g],k=key(g);let best=null,bv=0;
   if(any>0)return {t:'嗯，有照顧到我一點。',m:'happy'};
   if(any<0)return {t:'這些政策對我沒好處。',m:'mad'};
   return {t:'你的政見跟我沒什麼關係。',m:''}}
-function regime(){const f=island(),tc=t=>S.enacted.filter(x=>P[x.id].tags.includes(t)).length;
+function regime(){const f=island(),tc=t=>S.enacted.filter(x=>P[x.id]&&isActive(x)&&P[x.id].tags.includes(t)).length;
   const sc={sd:f.dec+f.def*.8-f.str*.6-f.stg*.6+tc('univ'),cons:f.str*1.2+tc('ins')*2+tc('fam')*1.6+tc('civ')*.8+(f.def<=1?2:0)+1,
    lib:tc('mkt')*2+tc('reform')*1.5+f.stg*.8+(f.dec<=3?3:0),eap:tc('growth')*2.5+f.emp*.6+(f.def<=1?2:0)+(f.dec>=2&&f.dec<=6?2:0)};
   return {k:Object.keys(sc).reduce((a,b)=>sc[b]>sc[a]?b:a),f}}
@@ -740,8 +751,21 @@ function radar(f){const ax=[['去商品化',f.dec],['去家庭化',f.def],['就�
   const poly=ax.map((a,i)=>pt(i,R*n(a[1])).join(',')).join(' ');
   return `<svg viewBox="0 0 380 340" role="img" aria-label="福利島體制雷達圖">${g}<polygon points="${poly}" fill="var(--sea)" fill-opacity=".28" stroke="var(--sea)" stroke-width="2.5"/>${ax.map((a,i)=>{const [x,y]=pt(i,R*n(a[1]));return `<circle cx="${x}" cy="${y}" r="4.5" fill="var(--sea)"/>`}).join('')}</svg>`}
 function scores(){return GS.map(g=>{const h=S.history.map(r=>({pl:r.platforms[g],sat:r.sats[g],bal:r.bals[g]})),p=PARTIES[key(g)];
-  const ms=p.miss.map(m=>m.f(h)),vs=S.history.reduce((a,r)=>a+r.pct[g],0),gov=S.history.filter(r=>r.gov===g).length;
-  return {g,ms,votes:r1(vs),gov,total:r1(S.bankrupt?0:vs+gov*10+ms.filter(Boolean).length*15)}})}
+  const ms=p.miss.map(m=>m.f(h,g)),vs=S.history.reduce((a,r)=>a+r.pct[g],0),gov=S.history.filter(r=>r.gov===g).length;
+  // 運動型與倡議型：超過目標的成果也有分數，讓「做得更多」被看見
+  const k=key(g),extra=k==='mx'?Math.min(15,Math.max(0,(S.labor||0)-6)*3):k==='ns'?Math.min(16,Math.max(0,((S.adopt||[])[g]||0)-4)*4):0;
+  return {g,ms,votes:r1(vs),gov,extra,total:r1(S.bankrupt?0:vs+gov*10+ms.filter(Boolean).length*15+extra)}})}
+// 成功判定：選舉型看名次或執政屆數；運動型、倡議型看自己的兩項目標
+function success(g){const sc=scores(),me=sc[g],k=key(g),mode=PARTIES[k].mode||'election',n=me.ms.filter(Boolean).length;
+  if(S.bankrupt)return {mode,lv:0,label:'國家破產',why:'國家破產時，所有觀點都沒有達成使命。'};
+  if(mode==='election'){const rank=[...sc].sort((a,b)=>b.total-a.total).findIndex(s=>s.g===g)+1;
+    return rank===1||me.gov>=3?{mode,lv:2,label:'使命達成',why:rank===1?'選舉型觀點：你拿下總分第一。':'選舉型觀點：你執政 '+me.gov+' 屆，把政策真正落實。'}
+     :me.gov>=1||rank<=3?{mode,lv:1,label:'部分達成',why:'選舉型觀點：成功標準是總分第一或執政 3 屆以上；你'+(me.gov?'執政 '+me.gov+' 屆':'排名第 '+rank)+'。'}
+     :{mode,lv:0,label:'未達成',why:'選舉型觀點：成功標準是總分第一或執政 3 屆以上。'}}
+  const what=mode==='movement'?`勞工力量 ${S.labor||0}`:`被實施的倡議 ${((S.adopt||[])[g]||0)} 項`;
+  return n===2?{mode,lv:2,label:'使命達成',why:`${mode==='movement'?'運動型':'倡議型'}觀點：兩項目標都達成（${what}）。名次不影響你的成功。`}
+   :n===1?{mode,lv:1,label:'部分達成',why:`${mode==='movement'?'運動型':'倡議型'}觀點：達成一項目標（${what}）。名次不影響你的成功。`}
+   :{mode,lv:0,label:'未達成',why:`${mode==='movement'?'運動型':'倡議型'}觀點：成功看兩項目標，不看名次（${what}）。`}}
 const myAdds=()=>S.history.flatMap(r=>r.platforms[ME].add);
 const myTag=t=>myAdds().filter(id=>P[id].tags.includes(t)).length;
 const ACH=[
@@ -785,7 +809,7 @@ function render(){
 function citStrip(mood,showDelta,prev){return `<div class="cits">${CIT.map(c=>{const v=mood[c.id],ch=prev&&prev[c.id]!==v;
   return `<div class="cit" data-cid="${c.id}" tabindex="0"><div class="ava ${ch?'bump':''}">${face(c.id,v)}</div><div class="nm">${c.name}</div>
    ${showDelta?`<div class="dv ${v>0?'up':v<0?'down':'zero'}">${v===0?'±0':sign(r1(v))}</div>`:''}
-   ${Wt(c)?`<div class="badge-vote">${Wt(c)}% 選民</div>`:'<span class="novote">無投票權</span>'}</div>`}).join('')}</div>`}
+   ${Wt(c)?`<div class="badge-vote">${WtPct(c)}% 選民</div>`:'<span class="novote">無投票權</span>'}</div>`}).join('')}</div>`}
 function islandSVG(){return heroArt()||landscape('hero',true)}
 const CREDIT='<p class="credit">飽螺的社工甘苦便條紙 製作</p>';
 function rTitle(st){
@@ -799,7 +823,8 @@ function rTitle(st){
      <li><span>第 3 屆起，你實施過的政策會帶來成果，也會帶來新問題，要在檢討會議上表態。還有公投。</span></li>
      <li><span>第 4 屆可以改革既有政策；第 5 屆選民結構改變。落選了也能提修正案。</span></li>
      <li><span>貧窮會累積成民怨，太高會抗議、罷工甚至倒閣。最後揭曉你們打造的福利體制。</span></li></ul></div>${CREDIT}</div>`;
-  bar(`<span class="grow small muted">約 20 分鐘 · 建議直向持手機</span><button class="btn primary" data-a="totitle">開始遊戲</button>`);
+  const sv=typeof loadSave==='function'?loadSave():null;
+  bar(`${sv?`<button class="btn" data-a="resume">繼續上次（${sv.S.phase==='final'||sv.S.phase==='imf'?'結局':'第 '+(sv.S.round+1)+' 屆'}）</button>`:'<span class="grow small muted">約 20 分鐘 · 建議直向持手機</span>'}<span class="grow"></span><button class="btn primary" data-a="totitle">${sv?'新遊戲':'開始遊戲'}</button>`);
 }
 function rSetup(st){const ks=Object.keys(PARTIES);
   st.innerHTML=`<div class="stack"><div><p class="eyebrow">第一步</p><h2>選擇你的政黨</h2><p class="muted small" style="margin-top:4px">另外六個觀點由電腦扮演，跟你競爭島民的選票。</p></div>
@@ -941,7 +966,7 @@ function rRef(st){const R=REFS.find(f=>f.id===S.ref.topic),res=S.ref.result,p=P[
 function rDemo(st){
   st.innerHTML=`<div class="stack"><div><p class="eyebrow">第 5 屆 · 最終選戰</p><h2>人口變遷：選民變了</h2></div>
    <div class="bulletin"><div class="vign">${landscape('demo')}</div><div class="body"><p>十幾年過去，福利島的人口結構改變了。這一屆的選票，會用新的比例計算。</p></div></div>
-   <div class="card stack" style="gap:12px">${DEMO.map(dm=>{const c=CIT.find(x=>x.id===dm.id);return `<div class="say"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,0)}</div><div class="bub" style="flex:1"><b>${c.name}</b>代表 <span class="num">${c.w}%</span> → <b class="num" style="color:${dm.to>c.w?'var(--good)':'var(--bad)'}">${dm.to}%</b> 選民<br><span class="small muted">${dm.why}</span></div></div>`}).join('')}
+   <div class="card stack" style="gap:12px">${DEMO.map(dm=>{const c=CIT.find(x=>x.id===dm.id);return `<div class="say"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,0)}</div><div class="bub" style="flex:1"><b>${c.name}</b>代表 <span class="num">${wShare(c)}%</span> → <b class="num" style="color:${wShare(c,DEMO_MOD)>wShare(c)?'var(--good)':'var(--bad)'}">${wShare(c,DEMO_MOD)}%</b> 選民<br><span class="small muted">${dm.why}</span></div></div>`}).join('')}
     <div class="say"><div class="ava">${face('ati',-2)}</div><div class="bub mad" style="flex:1"><b>阿蒂</b>仍然沒有投票權<br><span class="small">在台灣，移工的工作年資不能計入歸化所需的居住期間，所以即使阿蒂在島上工作了十幾年，依然無法成為公民。</span></div></div></div>
    <p class="insight">選民結構會改變政治人物的誘因：高齡選民增加，回應長者需求的政策更容易拿到選票；但年輕世代也可能更在意財政負擔與世代公平。</p></div>`;
   S.wmod=Object.fromEntries(DEMO.map(dm=>[dm.id,dm.to]));
@@ -1028,7 +1053,7 @@ function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)re
 // ---------- CITIZEN TOOLTIP ----------
 function tipHTML(id){const c=CIT.find(x=>x.id===id);if(!c)return '';const w=Wt(c);
   return `<span class="tg">${c.grp}</span><br><b>${c.name}</b>　<span class="muted">${c.age} 歲</span><br>${c.role}<span class="need">${c.need}</span>
-   <span class="wt">${w?`<b class="num" style="font-size:13px">${w}%</b> 選民：島上每 100 位選民中，約有 ${w} 位屬於「${c.grp}」，他們的滿意度決定這部分選票投給誰。`:'沒有投票權：再怎麼照顧或忽略她，都不會改變選票。'}</span>`}
+   <span class="wt">${w?`<b class="num" style="font-size:13px">${WtPct(c)}%</b> 選民：島上每 100 位選民中，約有 ${WtPct(c)} 位屬於「${c.grp}」，他們的滿意度決定這部分選票投給誰。`:'沒有投票權：再怎麼照顧或忽略她，都不會改變選票。'}</span>`}
 let tipEl=null,tipFor=null;
 function showTip(el){const id=el.dataset.cid;if(!tipEl){tipEl=document.createElement('div');tipEl.id='ctip';tipEl.setAttribute('role','tooltip');document.body.appendChild(tipEl)}
   tipEl.innerHTML=tipHTML(id);tipEl.hidden=false;tipFor=el;const r=el.getBoundingClientRect(),tw=tipEl.offsetWidth,th=tipEl.offsetHeight;
@@ -1059,7 +1084,7 @@ function confirmGov(){const v=VOTES||votes(),gov=v.pct.indexOf(Math.max(...v.pct
   const once=pl.add.filter(id=>P[id].once);S.onceUsed.push(...once);
   S.enacted=S.enacted.filter(x=>!pl.cut.includes(x.id)).concat(pl.add.filter(id=>!P[id].once).map(id=>({id,cost:costOf(id,key(gov))})));
   S.lastEco=S.eco;S.eco=r1(S.eco*.4+S.enacted.reduce((a,x)=>a+(P[x.id].fx.eco||0),0)+once.reduce((a,id)=>a+P[id].fx.eco,0));
-  S.debt=r1(Math.max(0,S.debt-ms[gov].bal+(gov===ME?S.qDebt:0)));
+  S.debt=r1(Math.max(0,S.debt-ms[gov].bal+amendCost(gov)+(gov===ME?S.qDebt:0)));
   {const pv=island().poverty,cuts=pl.cut.length,prev=S.unrest;S.unrest=Math.round(Math.max(0,Math.min(100,prev*.45+Math.max(0,pv-10)*6.5+cuts*9)));
    const lvl=UNREST.filter(u=>S.unrest>=u.min).pop();S.crisis=lvl.lv;if(lvl.lv===3)S.debt=r1(S.debt+1);if(lvl.lv>=2)S.eco=r1(Math.max(0,S.eco-1));
    S.unrestLog.push({round:S.round,pov:r1(pv),unrest:S.unrest,lv:lvl.lv,gov,cuts});}S.govTax=pl.tax;S.lastGov=gov;S.adj=GS.map(()=>0);S.q=null;S.qPick=null;S.qDebt=0;prevSat=null;
@@ -1090,7 +1115,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t
    case'pol':{const id=t.dataset.id;if(pl.add.includes(id))pl.add=pl.add.filter(x=>x!==id);else if(pl.add.length>=MAXADD){toast('最多 4 項，先點上方政見列的 × 移除一項');return}else{pl.add=pl.add.concat(id);if(pl.add.length===MAXADD)toast('已選滿 4 項，可以在上方政見列移除')}buzz(8);break}
    case'rm':{const id=t.dataset.id;pl.add=pl.add.filter(x=>x!==id);buzz(8);break}
    case'count':RIV.forEach(aiPlatform);S.q=pickQ();S.qPick=null;return go('results');
-   case'answer':{const i=+t.dataset.i,o=QS.find(q=>q.id===S.q.id).opts[i];S.qPick=i;S.adj[ME]+=o.vote;S.qDebt=o.debt;render();
+   case'answer':{const i=+t.dataset.i,o=QS.find(q=>q.id===S.q.id).opts[i];S.qPick=i;S.adj[ME]+=o.vote;S.qDebt=o.debt;if(o.labor)S.labor=(S.labor||0)+o.labor;render();
      const v=votes(),lead=v.pct.indexOf(Math.max(...v.pct));buzz(lead===ME?[30,60,30]:40);if(lead===ME)setTimeout(confetti,500);return}
    case'confirm':confirmGov();return;
    case'tofinal':return go('final');
@@ -1161,7 +1186,7 @@ function applyCq(i){const C=CONSEQ.find(c=>c.pid===S.cq.pid),gk=S.lastGov==null?
   S.cq.pick=i;const mineOpt=C.opts[i];
   for(const c in mineOpt.cit){if(CIT.find(x=>x.id===c)&&Wt(CIT.find(x=>x.id===c)))S.refAlign[c]=(S.refAlign[c]||0)+(mineOpt.cit[c]>0?1.2:-1.2)}
   let ai=i;if(S.lastGov!==ME&&gk){const sc=C.opts.map(o=>(o.k.includes(gk)?3:0)+Object.values(o.cit).reduce((a,b)=>a+b,0)*.1);ai=sc.indexOf(Math.max(...sc))}
-  const o=C.opts[ai],id='cx'+(S.customN++);P[id]={id,name:o.t,tags:[],cost:o.cost,custom:true,d:o.t,fx:{},cit:o.cit,say:{}};POL.length;
+  const o=C.opts[ai],id='cx'+(S.customN++);P[id]={id,name:o.t,tags:[],cost:o.cost,custom:true,parent:C.pid,d:o.t,fx:{},cit:o.cit,say:{}};S.customP=(S.customP||[]).concat(P[id]);
   if(o.cost!==0||Object.keys(o.cit).length)S.enacted.push({id,cost:o.cost,start:S.round});if(o.debt)S.debt=r1(S.debt+o.debt);
   S.cq.applied=ai;S.cqLog.push({round:S.round,title:C.title,mine:mineOpt.t,mineAp:mineOpt.ap,mineK:mineOpt.k,did:o.t,byMe:ai===i&&S.lastGov===ME,gov:S.lastGov})}
 function cqPanel(){if(!S.cq)return '';const C=CONSEQ.find(c=>c.pid===S.cq.pid),p=P[C.pid],picked=S.cq.pick!=null,gov=S.lastGov;
@@ -1186,7 +1211,7 @@ function storyFeed(){const out=[];
    ${building.length?`<p class="small"><span class="tag once">建置中</span>　${building.map(x=>P[x.id].name).join('、')}：已經通過，下屆才會開始服務。</p>`:''}
    ${lost.length?`<p class="small muted">你上屆提出的 ${lost.slice(0,3).map(id=>P[id].name).join('、')}：因為你沒有執政，沒有實施。政見不等於政策。</p>`:''}</div>`}
 function markStories(){S.enacted.forEach(x=>{if(STORY[x.id]&&isActive(x)&&!S.storySeen.includes(x.id))S.storySeen.push(x.id)})}
-function demoPreview(){if(S.round!==2&&S.round!==3)return '';return `<div class="card small"><b>人口推估：第 5 屆的選民結構會改變</b><br>${DEMO.map(dm=>{const c=CIT.find(x=>x.id===dm.id);return `${c.grp} ${c.w}% → ${dm.to}%`}).join('、')}。現在就可以開始準備。</div>`}
+function demoPreview(){if(S.round!==2&&S.round!==3)return '';return `<div class="card small"><b>人口推估：第 5 屆的選民結構會改變</b><br>${DEMO.map(dm=>{const c=CIT.find(x=>x.id===dm.id);return `${c.grp} ${wShare(c)}% → ${wShare(c,DEMO_MOD)}%`}).join('、')}。現在就可以開始準備。</div>`}
 
 // ---- round 4: reform existing policies ----
 const REASONS=['財政壓力','島民需要','堅持理念','借用其他觀點的做法'];
@@ -1222,22 +1247,32 @@ function pickQ(){const pl=S.platforms[ME],m=money(ME),s=sat(ME),me=key(ME);
   const q=ok[Math.floor(Math.random()*ok.length)];S.qUsed.push(q.id);return {id:q.id,text:q.q(m,pl)}}
 
 // ---- government formation with implementation timing, amendments, labor power ----
-function confirmGov(){const v=VOTES||votes(),gov=v.pct.indexOf(Math.max(...v.pct)),ms=GS.map(money),pl=S.platforms[gov];
+// 稅率按鈕預覽：直接用 money() 算，與實際預算一致
+function taxRev(t){const pl=S.platforms[ME],o=pl.tax;pl.tax=t;const r=money(ME).rev;pl.tax=o;return r}
+// 在野修正案通過時，當屆就要支付它的成本（與其他新政策一致）
+function perfNote(){const pf=perf(ME),up=Object.entries(pf).filter(([c,v])=>v>=.2).map(([c])=>CIT.find(x=>x.id===c)).filter(c=>c&&Wt(c));
+  const n=S.enacted.filter(x=>x.by===ME&&isActive(x)&&P[x.id]&&!P[x.id].custom).length;
+  return n&&up.length?`<p class="small"><b>政績：</b>你實施的 ${n} 項政策正在運作，${up.slice(0,4).map(c=>c.name).join('、')}${up.length>4?' 等人':''}因此更支持你。效果會隨時間淡化。</p>`:''}
+function amendCost(gov){const A=S.amend;if(!A||!A.ok||S.platforms[gov].add.includes(A.id)||S.enacted.some(x=>x.id===A.id))return 0;return costOf(A.id,key(gov))}
+function confirmGov(){markStories();const v=VOTES||votes(),gov=v.pct.indexOf(Math.max(...v.pct)),ms=GS.map(money),pl=S.platforms[gov],aCost=amendCost(gov);
   S.lastProbs=v.probs;S.history.push({round:S.round,event:S.event,issue:S.round===1?S.issue:null,platforms:JSON.parse(JSON.stringify(S.platforms)),sats:v.sats,pct:v.pct,bals:ms.map(m=>m.bal),gov,islandBefore:S.enacted.filter(isActive).map(x=>x.id)});
   const once=pl.add.filter(id=>P[id].once);S.onceUsed.push(...once);
   if(gov===ME&&pl.adj)S.enacted.forEach(x=>{const a=pl.adj[x.id];if(a){x.mul=(x.mul||1)*a;x.cost=r1(x.cost*a)}});
   const newIds=pl.add.filter(id=>!P[id].once);
   if(S.amend&&S.amend.ok&&!newIds.includes(S.amend.id))newIds.push(S.amend.id);
-  S.enacted=S.enacted.filter(x=>!pl.cut.includes(x.id)).concat(newIds.map(id=>({id,cost:costOf(id,key(gov)),start:S.round+(DELAYED(P[id])?1:0)})));
-  ME===ME&&S.platforms[ME].add.forEach(id=>{if((gov===ME||(S.amend&&S.amend.ok&&S.amend.id===id))&&!S.nsCounted.includes(id)){S.nsCounted.push(id);S.nsWins++}});
+  S.enacted=S.enacted.filter(x=>!pl.cut.includes(x.id)&&!(P[x.id]&&P[x.id].parent&&pl.cut.includes(P[x.id].parent))).concat(newIds.map(id=>({id,cost:costOf(id,key(gov)),start:S.round+(DELAYED(P[id])?1:0),by:(S.amend&&S.amend.ok&&S.amend.id===id&&!pl.add.includes(id))?ME:gov})));
+  // 「提出的政策被實施」：每個政黨分開計算；別黨執政時實施了同一政策，也算提出者的成果
+  {const done=new Set([...newIds,...once]);S.adopt=S.adopt||GS.map(()=>0);S.adoptSeen=S.adoptSeen||GS.map(()=>[]);
+   GS.forEach(g=>S.platforms[g].add.forEach(id=>{if(done.has(id)&&!S.adoptSeen[g].includes(id)){S.adoptSeen[g].push(id);S.adopt[g]++}}));
+   S.nsWins=S.adopt[ME];S.nsCounted=S.adoptSeen[ME];}
   newIds.forEach(id=>{const t=P[id].tags;S.labor+=(t.includes('rights')?2:0)+(t.includes('ins')?1:0)});if(S.crisis>=1)S.labor+=1;
   S.lastEco=S.eco;S.eco=r1(S.eco*.4+S.enacted.filter(isActive).reduce((a,x)=>a+(P[x.id].fx.eco||0)*(x.mul||1),0)+once.reduce((a,id)=>a+(P[id].fx.eco||0),0));
-  S.debt=r1(Math.max(0,S.debt-ms[gov].bal+(gov===ME?S.qDebt:0)));
+  S.debt=r1(Math.max(0,S.debt-ms[gov].bal+aCost+(gov===ME?S.qDebt:0)));
   {const pv=island().poverty,cuts=pl.cut.length,prev=S.unrest;S.unrest=Math.round(Math.max(0,Math.min(100,prev*.45+Math.max(0,pv-10)*6.5+cuts*9)));
    const lvl=UNREST.filter(u=>S.unrest>=u.min).pop();S.crisis=lvl.lv;if(lvl.lv===3)S.debt=r1(S.debt+1);if(lvl.lv>=2)S.eco=r1(Math.max(0,S.eco-1));
    S.unrestLog.push({round:S.round,pov:r1(pv),unrest:S.unrest,lv:lvl.lv,gov,cuts});}
   if(S.reasonNow){S.reasons.push({round:S.round,r:S.reasonNow,gov});S.reasonNow=null}
-  S.streak=S.lastGov===gov?(S.streak||1)+1:1;S.govTax=pl.tax;S.lastGov=gov;S.adj=GS.map(()=>0);S.q=null;S.qPick=null;S.qDebt=0;S.amend=null;prevSat=null;markStories();
+  S.streak=S.lastGov===gov?(S.streak||1)+1:1;S.govTax=pl.tax;S.lastGov=gov;S.adj=GS.map(()=>0);S.q=null;S.qPick=null;S.qDebt=0;S.amend=null;prevSat=null;
   if(S.debt>DEBT_LINE){S.bankrupt=true;S.phase='imf'}
   else if(S.round>=ROUNDS-1){S.phase='final'}
   else{S.round++;S.platforms=S.platforms.map(p=>({tax:p.tax,add:[],cut:[],carbon:p.carbon}));S.event=null;S.filter='all';S.refAlign={};S.refSpend=0;S.redrawn=false;S.hints=S.round<2;
@@ -1251,16 +1286,18 @@ function profile(){const ids=S.history.flatMap(r=>r.platforms[ME].add).filter(id
 function rFinal(st){const {k,f}=regime(),R=REG[k],sc=scores(),rank=[...sc].sort((a,b)=>b.total-a.total),me=sc[ME],myRank=rank.findIndex(s=>s.g===ME)+1;
   const prof=profile(),bor=borrowed(),pv=r1(island().poverty);
   st.innerHTML=`<div class="stack">
-   <div class="card stack" style="gap:10px"><p class="eyebrow">${S.bankrupt?'破產後的福利島':'五屆結束'} · 福利島最後變成了</p><div class="regime"><span>${R.name}</span></div>
+   <div class="card stack" style="gap:10px"><p class="eyebrow">${S.bankrupt?'破產後的福利島':'五屆結束'} · 福利島最後最接近</p><div class="regime"><span>${R.name}</span></div>
+     <p class="small muted">真實國家多半是混合型，這裡只是依本局已生效的政策，找出最接近的類型。</p>
      <p><b>現實中的例子：</b>${R.eg}</p><p>${R.d}</p><div class="radar">${radar(f)}</div>
-     <p class="small">實施中的方案：${S.enacted.filter(x=>P[x.id]&&!P[x.id].custom).map(x=>P[x.id].name).join('、')||'（無）'}</p></div>
+     <p class="small"><b>已生效：</b>${S.enacted.filter(x=>P[x.id]&&!P[x.id].custom&&isActive(x)).map(x=>P[x.id].name).join('、')||'（無）'}</p>
+     ${S.enacted.some(x=>P[x.id]&&!P[x.id].custom&&!isActive(x))?`<p class="small"><b>已通過、尚未開始服務：</b>${S.enacted.filter(x=>P[x.id]&&!P[x.id].custom&&!isActive(x)).map(x=>P[x.id].name).join('、')}<br><span class="muted">任期在這裡結束，這些政策還在建置，沒有算進上面的福利體制。</span></p>`:''}</div>
    ${islandCard('五屆後的福利島')}
    <div class="grid2">
-    <div class="card stack" style="gap:10px;border-left:5px solid ${pcolor(ME)}"><span class="kicker" style="align-self:flex-start">A　遊戲表現</span>
-     <div style="display:flex;align-items:baseline;gap:10px"><span class="regime" style="color:${pcolor(ME)}">第 ${myRank} 名</span><span class="num muted">${me.total} 分</span></div>
+    <div class="card stack" style="gap:10px;border-left:5px solid ${pcolor(ME)}"><span class="kicker" style="align-self:flex-start">A　遊戲表現</span>${(()=>{const v=success(ME);return `<div class="verdict lv${v.lv}"><b>${v.label}</b><span class="small">${v.why}</span></div>`})()}
+     <div style="display:flex;align-items:baseline;gap:10px"><span class="regime" style="color:${pcolor(ME)}">${S.bankrupt?'共同失敗':'第 '+myRank+' 名'}</span><span class="num muted">${me.total} 分</span></div>${S.bankrupt?'<p class="small">國家破產，所有觀點都歸零，不排名。</p>':''}
      <p class="small">執政 ${me.gov} 屆　·　累計得票 <span class="num">${me.votes}%</span>　·　國債 <span class="num">${r1(S.debt)}</span>　·　貧窮率 <span class="num">${pv}%</span>　·　最終民怨 <span class="num">${S.unrest}</span></p>
      <ul class="small" style="margin:0;padding-left:18px">${PARTIES[key(ME)].miss.map((m,i)=>`<li>${me.ms[i]?'達成':'未達成'}：${m.t}</li>`).join('')}</ul>
-     <div style="overflow-x:auto"><table><thead><tr><th>名次</th><th>觀點</th><th>執政</th><th>總分</th></tr></thead><tbody>${rank.map((s,i)=>`<tr><td class="num">${i+1}</td><td><b style="color:${pcolor(s.g)}">${who(s.g)}</b></td><td class="num">${s.gov}</td><td class="num">${s.total}</td></tr>`).join('')}</tbody></table></div></div>
+     <p class="small muted" style="margin:0">選舉排行${PARTIES[key(ME)].mode?'（你的觀點不以名次判定成功）':''}</p><div style="overflow-x:auto"><table><thead><tr><th>名次</th><th>觀點</th><th>執政</th><th>總分</th></tr></thead><tbody>${rank.map((s,i)=>`<tr><td class="num">${S.bankrupt?'—':i+1}</td><td><b style="color:${pcolor(s.g)}">${who(s.g)}</b></td><td class="num">${s.gov}</td><td class="num">${s.total}</td></tr>`).join('')}</tbody></table></div></div>
     <div class="card stack" style="gap:10px"><span class="kicker" style="align-self:flex-start;background:var(--teal)">B　政策回顧</span>
      <p class="small muted">這是你這一局的政策選擇，不代表你的政治立場，也沒有標準答案。</p>
      <b style="font-size:14px">你的政策最常和哪些觀點一致</b>
@@ -1278,7 +1315,7 @@ function rFinal(st){const {k,f}=regime(),R=REG[k],sc=scores(),rank=[...sc].sort(
 }
 function summaryText(){const {k}=regime(),sc=scores(),me=sc[ME],rank=[...sc].sort((a,b)=>b.total-a.total).findIndex(s=>s.g===ME)+1,got=ACH.filter(a=>a.f()).map(a=>a.n),prof=profile();
   return [`【誰來照顧誰：社會福利政策體驗遊戲 紀錄】`,`我扮演的觀點：${pname(ME)}`,
-   `A 遊戲表現：第 ${rank} 名，${me.total} 分（執政 ${me.gov} 屆，累計得票 ${me.votes}%），國債 ${r1(S.debt)}，最終民怨 ${S.unrest}`,
+   `使命判定：${success(ME).label}｜${success(ME).why}`,`A 遊戲表現：${S.bankrupt?'國家破產，共同失敗、不排名':'第 '+rank+' 名'}，${me.total} 分（執政 ${me.gov} 屆，累計得票 ${me.votes}%），國債 ${r1(S.debt)}，最終民怨 ${S.unrest}`,
    `目標：${PARTIES[key(ME)].miss.map((m,i)=>`${m.t}（${me.ms[i]?'達成':'未達成'}）`).join('；')}`,`成就：${got.join('、')||'無'}`,
    `B 政策回顧：我的政策最常和 ${prof.slice(0,3).map(x=>AP_LABEL[x.k]+' '+x.v+'%').join('、')} 一致；借用其他觀點 ${borrowed().length} 次`,
    ...S.cqLog.map(c=>`兩難：${c.title}｜我選 ${c.mineAp}：${c.mine}`),
@@ -1365,12 +1402,14 @@ function rBudget(st){const g=ME,k=key(g),pt=PARTIES[k],pl=S.platforms[g],m=money
    ${task}
    ${S.pet?(()=>{const c=CIT.find(x=>x.id===S.pet),t=PETS.find(x=>x.who===S.pet),done=pl.add.includes(t.card.id);return `<div class="petition ${done?'ok':''}"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,done?2:-2)}</div><div class="pin"><p class="eyebrow">陳情・${c.grp}</p><b>${c.name}：「${t.story}」</b><span class="small">${done?'你回應了，'+c.name+'很感動。':'手牌裡的「'+t.card.name+'」可以回應。'}</span></div></div>`})():''}
 
-   ${S.enacted.length?`<details class="fold"><summary>既有方案 ${S.enacted.filter(x=>P[x.id]&&!P[x.id].custom).length} 項・每屆花費 ${m.exist}（可刪減）</summary><div class="stack" style="gap:6px;margin-top:6px">${S.enacted.filter(x=>P[x.id]&&!P[x.id].custom).map(x=>`<div class="exi ${pl.cut.includes(x.id)?'cut':''}"><span>${P[x.id].name} <span class="num muted">${r1(x.cost)}</span></span><button class="btn sm" data-a="cut" data-id="${x.id}">${pl.cut.includes(x.id)?'恢復':'刪減'}</button></div>`).join('')}</div></details>`:''}
+   ${S.enacted.length?`<details class="fold"><summary>既有方案 ${S.enacted.filter(x=>P[x.id]&&!P[x.id].custom).length} 項・每屆花費 ${m.exist}（可刪減）</summary><div class="stack" style="gap:6px;margin-top:6px">${S.enacted.filter(x=>P[x.id]&&!P[x.id].custom).map(x=>{const sub=S.enacted.filter(y=>P[y.id]&&P[y.id].parent===x.id);
+     return `<div class="exi ${pl.cut.includes(x.id)?'cut':''}"><span>${P[x.id].name} <span class="num muted">${r1(x.cost)}</span>${sub.map(y=>`<br><small class="muted">＋配套：${P[y.id].name}（每屆 ${r1(y.cost)}）</small>`).join('')}</span><button class="btn sm" data-a="cut" data-id="${x.id}">${pl.cut.includes(x.id)?'恢復':'刪減'}</button></div>`}).join('')}
+     ${S.enacted.filter(x=>P[x.id]&&P[x.id].custom&&!S.enacted.some(y=>y.id===P[x.id].parent)).map(x=>`<div class="exi ${pl.cut.includes(x.id)?'cut':''}"><span>配套：${P[x.id].name} <span class="num muted">${r1(x.cost)}</span></span><button class="btn sm" data-a="cut" data-id="${x.id}">${pl.cut.includes(x.id)?'恢復':'刪減'}</button></div>`).join('')}</div></details>`:''}
   </div>`;
   prevSat=now;restoreCar('hcar','handIdx','hdots');
-  const over=m.spend>m.rev,w=Math.min(100,m.spend/Math.max(m.rev,m.spend)*100),n=pl.add.length+pl.cut.length;
+  const over=m.spend>m.rev,w=Math.min(100,m.spend/Math.max(m.rev,m.spend)*100);
   bar(`<div class="grow wallet"><div class="t"><span class="bal ${m.bal<0?'neg':'pos'}">${m.bal<0?'赤字 ':'結餘 '}${sign(m.bal)}</span><span>收 ${m.rev}・支 ${m.spend}</span></div><div class="meter"><i class="${over?'over':''}" style="width:${w}%"></i></div><div class="t"><span>國債 ${r1(S.debt)}/${DEBT_LINE}</span><span>民怨 ${S.unrest}</span></div></div>
-   <button class="btn traybtn" data-a="tray">政見 <b class="num">${pl.add.length}/${MAXADD}</b>${pl.cut.length?`<small>刪${pl.cut.length}</small>`:''} ▴</button><button class="btn primary" data-a="count" ${n?'':'disabled'}>公布</button>`);
+   <button class="btn traybtn" data-a="tray">政見 <b class="num">${pl.add.length}/${MAXADD}</b>${pl.cut.length?`<small>刪${pl.cut.length}</small>`:''} ▴</button><button class="btn primary" data-a="count">公布</button>`);
 }
 
 // ---- bottom sheet ----
@@ -1412,9 +1451,9 @@ function mineSheet(){const k=key(ME),pt=PARTIES[k];
 
 // ---- results: one step per screen ----
 function rResults(st){const v=votes();VOTES=v;const lead=v.pct.indexOf(Math.max(...v.pct)),answered=S.qPick!==null;S.rstep=S.rstep||0;if(!answered)S.rstep=0;
-  const ms=GS.map(money),after=r1(Math.max(0,S.debt-ms[lead].bal+(lead===ME?S.qDebt:0))),Q=QS.find(q=>q.id===S.q.id),mine=sat(ME);
+  const ms=GS.map(money),after=r1(Math.max(0,S.debt-ms[lead].bal+amendCost(lead)+(lead===ME?S.qDebt:0))),Q=QS.find(q=>q.id===S.q.id),mine=sat(ME);
   const order=answered?GS.slice().sort((a,b)=>v.pct[b]-v.pct[a]):GS;const step=S.rstep;
-  const steps=['開票','當選','民意','島民'];
+  const steps=[answered?'開票':'選前民調','當選','民意','島民'];
   let body='';
   if(step===0)body=`<div class="card"><div class="vlist">${order.map(g=>`<div class="vrow ${g===ME?'me':''}" style="--pc:${pcolor(g)}"><span class="who">${who(g)}</span><span class="pct" data-to="${v.pct[g]}">0.0%</span>
      <div class="vtrack"><i data-w="${v.pct[g]}"></i>${answered&&g===lead?`<svg class="stampmark" viewBox="0 0 40 40" aria-label="當選"><circle cx="20" cy="20" r="16" fill="var(--surface)" stroke="var(--stamp)" stroke-width="3"/><text x="20" y="27" text-anchor="middle" font-size="19" fill="var(--stamp)" font-weight="700" font-family="Noto Sans TC,sans-serif">卜</text></svg>`:''}</div></div>`).join('')}</div></div>
@@ -1424,7 +1463,7 @@ function rResults(st){const v=votes();VOTES=v;const lead=v.pct.indexOf(Math.max(
   if(step===1)body=`<div class="reveal" style="--pc:${pcolor(lead)}"><div class="top">${lead===ME?'你的政黨贏得執政！':`${pname(lead)}贏得執政`}</div><div class="bd">
       <p>${lead===ME?'你的政見將會實施。':'你成為在野黨。'}</p>${statusNote(lead)}
       <p class="small">國債 <span class="num">${r1(S.debt)} → <b style="color:${after>DEBT_LINE?'var(--bad)':'inherit'}">${after}</b></span>${after>DEBT_LINE?'　超過破產紅線！':''}</p>
-      <p class="small muted">服務類政策要先蓋起來，下屆才看得到成果。</p></div></div>${amendPanel(lead)}${issueCompare()}`;
+      <p class="small muted">服務類政策要先蓋起來，下屆才看得到成果。</p>${perfNote()}</div></div>${amendPanel(lead)}${issueCompare()}`;
   if(step===2){const rows=CIT.filter(c=>v.probs[c.id]).map(c=>{const pr=v.probs[c.id],mi=pr[ME]*100,prev=S.lastProbs&&S.lastProbs[c.id]?S.lastProbs[c.id][ME]*100:null;return {c,pr,mi,dl:prev==null?0:r1(mi-prev)}});
     const show=S.flowAll?rows:rows.slice().sort((a,b)=>Math.abs(b.dl)-Math.abs(a.dl)||b.mi-a.mi).slice(0,4);
     body=`<div class="card"><h3 style="margin-bottom:4px">選民流向</h3><p class="small muted" style="margin-bottom:10px">${S.flowAll?'全部族群':'變化最大的族群'}</p><div class="flow">${show.map(({c,pr,mi,dl})=>{const top=pr.indexOf(Math.max(...pr));
@@ -1439,6 +1478,16 @@ function rResults(st){const v=votes();VOTES=v;const lead=v.pct.indexOf(Math.max(
   bar(!answered?`<span class="grow small muted">先回答質詢</span><button class="btn" disabled>等待質詢</button>`
    :`${step>0?'<button class="btn" data-a="rback">上一步</button>':''}<span class="grow small muted">${lead===ME?'恭喜當選！':'下屆再接再厲'}</span>${last?`<button class="btn primary" data-a="confirm">${S.round>=ROUNDS-1||after>DEBT_LINE?'看最後結果':'進入下一屆'}</button>`:'<button class="btn primary" data-a="rnext">下一步</button>'}`)}
 
+// ---- 續玩：瀏覽器本機存檔（只存在這台裝置，失敗時不影響遊戲）----
+const SAVE_KEY='whocares-save-v1';
+function saveGame(){try{if(S.phase==='title'||S.phase==='setup')return;localStorage.setItem(SAVE_KEY,JSON.stringify({t:Date.now(),S}))}catch(e){}}
+function loadSave(){try{const d=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');return d&&d.S&&d.S.phase&&d.S.assign?d:null}catch(e){return null}}
+function clearSave(){try{localStorage.removeItem(SAVE_KEY)}catch(e){}}
+function resumeGame(){const d=loadSave();if(!d)return false;S=Object.assign(fresh(),d.S);(S.customP||[]).forEach(p=>{P[p.id]=p});prevSat=null;VOTES=null;render();window.scrollTo({top:0});return true}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t||t.disabled)return;
+  if(t.dataset.a==='resume'){resumeGame();e.stopImmediatePropagation()}
+  else if(t.dataset.a==='restart'||t.dataset.a==='start')clearSave()},true);
+
 // ---- render: add a phase class so the budget screen can drop the top HUD ----
 function render(){
   const R=ROUNDS,done=S.history.length;document.body.dataset.phase=S.phase;
@@ -1449,6 +1498,7 @@ function render(){
    <div class="hstat pov"><span class="l">貧窮率</span><span class="v">${r1(isl.poverty)}%</span></div>
    <div class="hstat"><span class="l">民怨</span><span class="v ${S.unrest>=60?'hot':''}">${S.unrest}</span><span class="debtmini"><i style="width:${S.unrest}%;background:${S.unrest>=80?'var(--stamp)':S.unrest>=35?'var(--orange)':'var(--teal)'}"></i></span></div>`;
   ({title:rTitle,setup:rSetup,news:rNews,ref:rRef,demo:rDemo,reform:rReform,budget:rBudget,results:rResults,final:rFinal,imf:rImf})[S.phase]($('stage'));
+  saveGame();
 }
 
 // ---- actions for the new UI (capture phase so sheet buttons close before re-render) ----
