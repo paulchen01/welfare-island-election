@@ -1563,13 +1563,19 @@ window.claude?.hot?.ready?window.claude.hot.ready(boot):boot(window.claude?.hot?
 
 // ---- 字體大小：標準／大／特大（存在這台裝置；老花或看不清楚時可以放大）----
 var FS=[['標準',1],['大',1.15],['特大',1.3]];
-function fsLabel(){return '字 '+(FS?FS[fsIdx()][0]:'標準')}
+const FS_SHORT=['字','大字','特大'];
+function fsLabel(){return FS_SHORT[fsIdx()]||'字'}
 function fsIdx(){try{const v=+localStorage.getItem('whocares-fs');return FS&&v>=0&&v<FS.length?v:0}catch(e){return 0}}
 function applyFs(i){document.documentElement.style.zoom=FS[i][1];document.documentElement.dataset.fs=i;try{localStorage.setItem('whocares-fs',String(i))}catch(e){}
-  document.querySelectorAll('.fsbtn').forEach(b=>{b.textContent='字 '+FS[i][0];b.setAttribute('aria-label','字體大小：'+FS[i][0]+'，點一下切換')});
+  document.querySelectorAll('.fsbtn').forEach(b=>{b.textContent=FS_SHORT[i];b.setAttribute('aria-label','字體大小：'+FS[i][0]+'，點一下切換')});
   document.querySelectorAll('.fsseg button').forEach(b=>b.classList.toggle('on',+b.dataset.i===i))}
 function fsSeg(){const i=fsIdx();return `<div class="fsseg" role="group" aria-label="字體大小"><b>字體大小</b>${FS.map(([n],k)=>`<button data-a="fsset" data-i="${k}" class="${k===i?'on':''}" aria-pressed="${k===i}">${n}</button>`).join('')}</div>`}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;
   if(t.dataset.a==='fs'){applyFs((fsIdx()+1)%FS.length);e.stopImmediatePropagation()}
   if(t.dataset.a==='fsset'){applyFs(+t.dataset.i);e.stopImmediatePropagation()}},true);
 applyFs(fsIdx());
+
+// ---- 底部操作列：依實際高度保留頁面底部空間，放大字級時內容不會被擋住 ----
+(function(){const bar=document.querySelector('.actionbar');if(!bar||typeof ResizeObserver==='undefined')return;
+  const set=()=>document.documentElement.style.setProperty('--barpad',Math.ceil(bar.getBoundingClientRect().height/(parseFloat(document.documentElement.style.zoom)||1))+'px');
+  new ResizeObserver(set).observe(bar);set()})();

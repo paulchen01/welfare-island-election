@@ -23,7 +23,7 @@
 html{-webkit-text-size-adjust:100%}
 body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.6;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:0 calc(var(--barh) + 28px + env(safe-area-inset-bottom,0px))}
+  padding-block:0 calc(var(--barpad,calc(var(--barh) + env(safe-area-inset-bottom,0px))) + 28px)}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:60;opacity:var(--grain);mix-blend-mode:multiply;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .wrap{max-width:1080px;margin:0 auto}
@@ -519,9 +519,14 @@ textarea{width:100%;min-height:88px;font:inherit;font-size:16.5px;color:var(--in
 .fsseg button{min-height:44px;padding:0 14px;border:2px solid var(--ink);border-radius:10px;background:var(--surface);font-weight:700}
 .fsseg button.on{background:var(--yellow);color:#1C2040}
 /* 放大字級時，底部操作列改成兩排：上排財政、下排按鈕 */
-html[data-fs="1"],html[data-fs="2"]{--barh:128px}
 html[data-fs="1"] .actionbar .in,html[data-fs="2"] .actionbar .in{flex-wrap:wrap;row-gap:6px}
 html[data-fs="1"] .actionbar .wallet,html[data-fs="2"] .actionbar .wallet{flex:1 1 100%}
 html[data-fs="1"] .actionbar .grow:not(.wallet),html[data-fs="2"] .actionbar .grow:not(.wallet){flex:1 1 auto}
 html[data-fs="1"] .hero h1{font-size:min(48px,15vw)}
 html[data-fs="2"] .hero h1{font-size:min(44px,12vw)}
+
+/* 頂端列：手機上隱藏遊戲名稱文字、縮小字級按鈕；放大字級時只留國債與民怨，避免右側數字被切掉 */
+@media (max-width:480px){.hud .brand b{display:none}.hud .in{gap:8px}.hstats{gap:10px}.hud .fsbtn{min-width:40px;padding:0 6px;font-size:14px}}
+html[data-fs="1"] .hstat:nth-child(2),html[data-fs="2"] .hstat:nth-child(2){display:none}
+html[data-fs="2"] .hud .brand svg{width:24px;height:24px}
+html[data-fs="2"] .debtmini{width:44px}
