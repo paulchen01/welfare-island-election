@@ -800,7 +800,7 @@ function render(){
   const R=ROUNDS,done=S.history.length;
   $('pips').innerHTML=['title','setup'].includes(S.phase)?'':Array.from({length:R},(_,i)=>`<span class="pip ${i<done?'done':i===S.round&&!['final','imf'].includes(S.phase)?'now':''}" title="第 ${i+1} 屆"></span>`).join('');
   const isl=island(),dp=Math.min(100,S.debt/DEBT_LINE*100);
-  $('hstats').innerHTML=S.phase==='title'?'':`<div class="hstat"><span class="l">國債</span><span class="v ${dp>66?'hot':''}">${r1(S.debt)}<small class="muted" style="font-size:11px">/${DEBT_LINE}</small></span><span class="debtmini"><i class="${dp>66?'hot':''}" style="width:${dp}%"></i></span></div>
+  $('hstats').innerHTML=S.phase==='title'?'':`<div class="hstat"><span class="l">國債</span><span class="v ${dp>66?'hot':''}">${r1(S.debt)}<small class="muted" style="font-size:13px">/${DEBT_LINE}</small></span><span class="debtmini"><i class="${dp>66?'hot':''}" style="width:${dp}%"></i></span></div>
    <div class="hstat"><span class="l">經濟</span><span class="v" style="color:var(--teal)">+${r1(S.eco)}</span></div>
    <div class="hstat pov"><span class="l">貧窮率</span><span class="v">${r1(isl.poverty)}%</span></div>
    <div class="hstat"><span class="l">民怨</span><span class="v ${S.unrest>=60?'hot':''}">${S.unrest}</span><span class="debtmini"><i class="${S.unrest>=60?'hot':''}" style="width:${S.unrest}%;background:${S.unrest>=80?'var(--stamp)':S.unrest>=35?'var(--orange)':'var(--teal)'}"></i></span></div>`;
@@ -822,7 +822,8 @@ function rTitle(st){
      <li><span>第 1 屆認識你的觀點，第 2 屆用不同觀點解同一個難題。</span></li>
      <li><span>第 3 屆起，你實施過的政策會帶來成果，也會帶來新問題，要在檢討會議上表態。還有公投。</span></li>
      <li><span>第 4 屆可以改革既有政策；第 5 屆選民結構改變。落選了也能提修正案。</span></li>
-     <li><span>貧窮會累積成民怨，太高會抗議、罷工甚至倒閣。最後揭曉你們打造的福利體制。</span></li></ul></div>${CREDIT}</div>`;
+     <li><span>貧窮會累積成民怨，太高會抗議、罷工甚至倒閣。最後揭曉你們打造的福利體制。</span></li></ul></div>
+   <div class="card">${typeof fsSeg==='function'?fsSeg():''}<p class="small muted" style="margin-top:6px">看不清楚可以放大，遊戲中點頂端的「字」也能切換。</p></div>${CREDIT}</div>`;
   const sv=typeof loadSave==='function'?loadSave():null;
   bar(`${sv?`<button class="btn" data-a="resume">繼續上次（${sv.S.phase==='final'||sv.S.phase==='imf'?'結局':'第 '+(sv.S.round+1)+' 屆'}）</button>`:'<span class="grow small muted">約 20 分鐘 · 建議直向持手機</span>'}<span class="grow"></span><button class="btn primary" data-a="totitle">${sv?'新遊戲':'開始遊戲'}</button>`);
 }
@@ -904,11 +905,11 @@ function rBudget(st){const g=ME,k=key(g),pt=PARTIES[k],pl=S.platforms[g],m=money
    ${S.round===1&&S.issue?(()=>{const I=ISSUES.find(i=>i.id===S.issue);return `<div class="card issue"><p class="eyebrow">第 2 屆任務：比較解法</p><h3 style="margin:4px 0">共同難題：${I.title}</h3><p class="small">${I.d}手牌裡有幾張不同的解法，選一張你認為最好的。開票後會看到其他觀點怎麼解。</p><div class="row" style="margin-top:8px">${I.opts.map(o=>`<span class="tag">${o.ap}</span>`).join('')}</div></div>`})():''}
    <details class="card mine" style="--pc:${pt.color}" ${S.round===0?'open':''}><summary><span class="pn">${pt.name}</span><span class="small">能力與目標 ▾</span></summary>
      <div class="small inside" style="display:flex;flex-direction:column;gap:6px"><span><b>特殊能力</b>　${pt.ability}</span><span><b>基本盤</b>　${BASEC[k].map(id=>CIT.find(c=>c.id===id).name).join('、')}：提出「符合理念」的政策會更支持你，「違背理念」會流失他們。</span><ul style="margin:0;padding-left:18px">${pt.miss.map(x=>`<li>${x.t}</li>`).join('')}</ul></div></details>
-   <div class="stack" style="gap:8px"><b style="font-size:14px">稅率</b><div class="seg">${['低','中','高'].map(t=>`<button class="${pl.tax===t?'on':''}" data-a="tax" data-t="${t}" aria-pressed="${pl.tax===t}">${t}稅<small>收入 ${r1((TAX[t].rev+GROWTH*S.round+S.eco)*ev().rev)}</small></button>`).join('')}</div>
+   <div class="stack" style="gap:8px"><b style="font-size:15.5px">稅率</b><div class="seg">${['低','中','高'].map(t=>`<button class="${pl.tax===t?'on':''}" data-a="tax" data-t="${t}" aria-pressed="${pl.tax===t}">${t}稅<small>收入 ${r1((TAX[t].rev+GROWTH*S.round+S.eco)*ev().rev)}</small></button>`).join('')}</div>
     ${k==='gr'?`<label class="row small" style="min-height:40px"><input type="checkbox" id="carbon" ${pl.carbon?'checked':''} style="width:20px;height:20px"> 開徵碳稅（收入 +3，王董不開心）</label>`:''}</div>
    ${S.enacted.length?`<details class="fold" ${pl.cut.length?'open':''}><summary>既有方案 ${S.enacted.length} 項（花費 ${m.exist}，可以刪減）</summary><div class="stack" style="gap:6px;margin-top:6px">${S.enacted.map(x=>`<div class="exi ${pl.cut.includes(x.id)?'cut':''}"><span>${P[x.id].name} <span class="num muted">${x.cost}</span></span><button class="btn sm" data-a="cut" data-id="${x.id}">${pl.cut.includes(x.id)?'恢復':'刪減'}</button></div>`).join('')}</div></details>`:''}
    ${S.pet?(()=>{const c=CIT.find(x=>x.id===S.pet),t=PETS.find(x=>x.who===S.pet),done=pl.add.includes(t.card.id);return `<div class="petition ${done?'ok':''}"><div class="ava" data-cid="${c.id}" tabindex="0">${face(c.id,done?2:-2)}</div><div class="pin"><p class="eyebrow">本屆陳情　${c.grp}</p><b>${c.name}：「${t.story}」</b><span class="small">${done?'你已經把「'+t.card.name+'」放進政見，'+c.name+'很感動。':'回應陳情：把手牌裡的「'+t.card.name+'」放進政見。不回應，'+c.name+'會對你失望。'}</span></div></div>`})():''}
-   <div class="stack" style="gap:8px"><div class="row" style="justify-content:space-between"><b style="font-size:14px">本屆手牌　<span class="num muted">${S.hand.length} 張</span></b><button class="btn sm" data-a="hints">${S.hints?'隱藏觀點提示':'顯示觀點提示'}</button><button class="btn sm" data-a="redraw" ${S.redrawn?'disabled':''}>${S.redrawn?'本屆已重抽':'重抽未選的牌'}</button></div>
+   <div class="stack" style="gap:8px"><div class="row" style="justify-content:space-between"><b style="font-size:15.5px">本屆手牌　<span class="num muted">${S.hand.length} 張</span></b><button class="btn sm" data-a="hints">${S.hints?'隱藏觀點提示':'顯示觀點提示'}</button><button class="btn sm" data-a="redraw" ${S.redrawn?'disabled':''}>${S.redrawn?'本屆已重抽':'重抽未選的牌'}</button></div>
     <div class="cards">${list.map(p=>{const on=pl.add.includes(p.id),en=S.enacted.some(x=>x.id===p.id),c=costOf(p.id,k),used=S.onceUsed.includes(p.id),dis=en||used,full=!on&&pl.add.length>=MAXADD;
       return `<button class="pol ${on?'on':''} ${full?'full':''} ${p.pet?'petc':''} ${p.ev?'evc':''} ${issueOf(p.id)&&S.round===1?'isc':''}" style="--pc:${pt.color}" data-a="pol" data-id="${p.id}" ${dis?'disabled':''} aria-pressed="${on}">
        <span class="pt">${p.name}</span><span class="coin ${c<0?'save':''}">${c<0?'省'+(-c):c}${c<p.cost&&c>0||(c===0&&p.cost>0)?`<s>${p.cost}</s>`:''}</span>
@@ -961,7 +962,7 @@ function rRef(st){const R=REFS.find(f=>f.id===S.ref.topic),res=S.ref.result,p=P[
      <p class="insight">${S.ref.stance==='none'?'你選擇不表態，島民對你的看法不受影響。':'跟你立場相同的島民，這屆會更支持你；立場相反的會扣分。'}${res.pass?`「${p.name}」已列入實施中的方案，成本 ${p.cost<0?'省 '+(-p.cost):p.cost}。`:''}</p></div>`
    :`<div class="card stack" style="gap:12px"><b>你的政黨立場</b><div class="seg">${[['yes','支持'],['no','反對'],['none','不表態']].map(([v,n])=>`<button class="${S.ref.stance===v?'on':''}" data-a="stance" data-v="${v}">${n}</button>`).join('')}</div>
      <b>投入宣傳經費（會從本屆預算扣除）</b><div class="seg">${[0,1,2].map(v=>`<button class="${S.ref.spend===v?'on':''}" data-a="spend" data-v="${v}" ${S.ref.stance==='none'&&v?'disabled':''}>${v?v+' 點':'不宣傳'}<small>${v?'說服立場不堅定的人':''}</small></button>`).join('')}</div>
-     <div><b style="font-size:14px">島民目前的看法</b>${citStrip(Object.fromEntries(CIT.map(c=>[c.id,(p.cit[c.id]||0)*1.2])),true)}</div></div>`}</div>`;
+     <div><b style="font-size:15.5px">島民目前的看法</b>${citStrip(Object.fromEntries(CIT.map(c=>[c.id,(p.cit[c.id]||0)*1.2])),true)}</div></div>`}</div>`;
   bar(res?`<span class="grow small muted">${res.pass?'公投通過':'公投未通過'}</span><button class="btn primary" data-a="refdone">開始編預算</button>`:`<span class="grow small muted">選好立場後開票</span><button class="btn stamp" data-a="refvote">公投開票</button>`)}
 function rDemo(st){
   st.innerHTML=`<div class="stack"><div><p class="eyebrow">第 5 屆 · 最終選戰</p><h2>人口變遷：選民變了</h2></div>
@@ -1053,7 +1054,7 @@ function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)re
 // ---------- CITIZEN TOOLTIP ----------
 function tipHTML(id){const c=CIT.find(x=>x.id===id);if(!c)return '';const w=Wt(c);
   return `<span class="tg">${c.grp}</span><br><b>${c.name}</b>　<span class="muted">${c.age} 歲</span><br>${c.role}<span class="need">${c.need}</span>
-   <span class="wt">${w?`<b class="num" style="font-size:13px">${WtPct(c)}%</b> 選民：島上每 100 位選民中，約有 ${WtPct(c)} 位屬於「${c.grp}」，他們的滿意度決定這部分選票投給誰。`:'沒有投票權：再怎麼照顧或忽略她，都不會改變選票。'}</span>`}
+   <span class="wt">${w?`<b class="num" style="font-size:15px">${WtPct(c)}%</b> 選民：島上每 100 位選民中，約有 ${WtPct(c)} 位屬於「${c.grp}」，他們的滿意度決定這部分選票投給誰。`:'沒有投票權：再怎麼照顧或忽略她，都不會改變選票。'}</span>`}
 let tipEl=null,tipFor=null;
 function showTip(el){const id=el.dataset.cid;if(!tipEl){tipEl=document.createElement('div');tipEl.id='ctip';tipEl.setAttribute('role','tooltip');document.body.appendChild(tipEl)}
   tipEl.innerHTML=tipHTML(id);tipEl.hidden=false;tipFor=el;const r=el.getBoundingClientRect(),tw=tipEl.offsetWidth,th=tipEl.offsetHeight;
@@ -1300,10 +1301,10 @@ function rFinal(st){const {k,f}=regime(),R=REG[k],sc=scores(),rank=[...sc].sort(
      <p class="small muted" style="margin:0">選舉排行${PARTIES[key(ME)].mode?'（你的觀點不以名次判定成功）':''}</p><div style="overflow-x:auto"><table><thead><tr><th>名次</th><th>觀點</th><th>執政</th><th>總分</th></tr></thead><tbody>${rank.map((s,i)=>`<tr><td class="num">${S.bankrupt?'—':i+1}</td><td><b style="color:${pcolor(s.g)}">${who(s.g)}</b></td><td class="num">${s.gov}</td><td class="num">${s.total}</td></tr>`).join('')}</tbody></table></div></div>
     <div class="card stack" style="gap:10px"><span class="kicker" style="align-self:flex-start;background:var(--teal)">B　政策回顧</span>
      <p class="small muted">這是你這一局的政策選擇，不代表你的政治立場，也沒有標準答案。</p>
-     <b style="font-size:14px">你的政策最常和哪些觀點一致</b>
+     <b style="font-size:15.5px">你的政策最常和哪些觀點一致</b>
      <div class="stack" style="gap:6px">${prof.map(x=>`<div class="pbar"><span>${AP_LABEL[x.k]}</span><i style="--w:${x.v}%;--pc:${PARTIES[x.k].color}"></i><b class="num">${x.v}%</b></div>`).join('')}</div>
      <p class="small">你扮演<b style="color:${pcolor(ME)}">${pname(ME)}</b>，有 <b class="num">${bor.length}</b> 項政策借用了其他觀點的做法${bor.length?'：'+[...new Set(bor)].slice(0,5).map(id=>P[id].name).join('、'):''}。借用不是錯，值得想想當時為什麼這樣選。</p>
-     ${S.cqLog.length?`<b style="font-size:14px">兩難時刻</b>${S.cqLog.map(c=>`<div class="tl"><span class="h">${c.title}</span><span>你選：<b>${c.mineAp}</b>｜${c.mine}</span>${c.byMe?'':`<span class="small muted">實際採用：${c.did}</span>`}</div>`).join('')}`:''}
+     ${S.cqLog.length?`<b style="font-size:15.5px">兩難時刻</b>${S.cqLog.map(c=>`<div class="tl"><span class="h">${c.title}</span><span>你選：<b>${c.mineAp}</b>｜${c.mine}</span>${c.byMe?'':`<span class="small muted">實際採用：${c.did}</span>`}</div>`).join('')}`:''}
      ${S.reasons.length?`<p class="small">改革時你的考量：${S.reasons.map(x=>x.r).join('、')}</p>`:''}</div></div>
    <div class="card stack" style="gap:10px"><p class="eyebrow">五屆紀錄</p>${S.history.map(r=>`<div class="tl" style="border-color:${pcolor(r.gov)}"><span class="h">第 ${r.round+1} 屆　${EVENTS.find(e=>e.id===r.event).name}</span>
       <span>你：${r.platforms[ME].tax}稅，${r.platforms[ME].add.map(id=>P[id].name).join('、')||'無新方案'}</span>
@@ -1385,7 +1386,7 @@ function rBudget(st){const g=ME,k=key(g),pt=PARTIES[k],pl=S.platforms[g],m=money
   st.innerHTML=`<div class="stack bstack">
    <div class="dock">${moodBar(now,prevSat)}${spotlight(now,prevSat)}</div>
    <div class="row" style="justify-content:space-between;align-items:baseline"><h2 style="font-size:22px">第 ${S.round+1} 屆政見</h2><span class="small muted">${ev().name}</span></div>
-   <div class="row" style="justify-content:space-between"><b style="font-size:15px">手牌 <span class="num muted">${(S.handIdx||0)+1}/${S.hand.length}</span>　<span class="small muted">左右滑動</span></b><div class="row" style="gap:6px"><button class="btn sm" data-a="mine">目標</button><button class="btn sm" data-a="redraw" ${S.redrawn?'disabled':''}>${S.redrawn?'已重抽':'重抽'}</button></div></div>
+   <div class="row" style="justify-content:space-between"><b style="font-size:16.5px">手牌 <span class="num muted">${(S.handIdx||0)+1}/${S.hand.length}</span>　<span class="small muted">左右滑動</span></b><div class="row" style="gap:6px"><button class="fsbtn" data-a="fs">${fsLabel()}</button><button class="btn sm" data-a="mine">目標</button><button class="btn sm" data-a="redraw" ${S.redrawn?'disabled':''}>${S.redrawn?'已重抽':'重抽'}</button></div></div>
    <div class="carwrap"><button class="carbtn prev" data-a="hstep" data-d="-1" aria-label="上一張">‹</button>
    <div class="carousel" id="hcar">${list.map((p,i)=>{const on=pl.add.includes(p.id),en=S.enacted.some(x=>x.id===p.id),c=costOf(p.id,k),used=S.onceUsed.includes(p.id),dis=en||used,full=!on&&pl.add.length>=MAXADD;
      return `<div class="slide pol hc ${on?'on':''} ${dis?'dis':''} ${p.pet?'petc':''} ${p.ev?'evc':''} ${I&&issueOf(p.id)?'isc':''}" style="--pc:${pt.color}" data-i="${i}">
@@ -1396,7 +1397,7 @@ function rBudget(st){const g=ME,k=key(g),pt=PARTIES[k],pl=S.platforms[g],m=money
        <div class="hc-act"><button class="btn sm ghost" data-a="det" data-id="${p.id}">詳情</button><button class="btn ${on?'primary':''} add" data-a="pol" data-id="${p.id}" ${dis||full?'disabled':''} aria-pressed="${on}">${dis?(en?'已實施':'已用過'):on?'✓ 已加入政見':full?'政見已滿 4 項':'＋ 加入政見'}</button></div></div>`}).join('')}</div>
    <button class="carbtn next" data-a="hstep" data-d="1" aria-label="下一張">›</button></div>
    <div class="cdots" id="hdots">${list.map((p,i)=>`<button class="cd ${i===(S.handIdx||0)?'cur':''} ${pl.add.includes(p.id)?'got':''}" data-a="hgo" data-i="${i}" aria-label="第 ${i+1} 張：${p.name}"></button>`).join('')}</div>
-   <b style="font-size:15px">稅率</b>
+   <b style="font-size:16.5px">稅率</b>
    <div class="seg tax">${['低','中','高'].map(t=>`<button class="${pl.tax===t?'on':''}" data-a="tax" data-t="${t}" aria-pressed="${pl.tax===t}">${t}稅<small>收入 ${r1((TAX[t].rev+GROWTH*S.round+S.eco)*ev().rev)}</small></button>`).join('')}</div>
    ${k==='gr'?`<label class="row small" style="min-height:40px"><input type="checkbox" id="carbon" ${pl.carbon?'checked':''} style="width:22px;height:22px"> 開徵碳稅（收入 +3，王董不開心）</label>`:''}
    ${task}
@@ -1493,7 +1494,7 @@ function render(){
   const R=ROUNDS,done=S.history.length;document.body.dataset.phase=S.phase;
   $('pips').innerHTML=['title','setup'].includes(S.phase)?'':Array.from({length:R},(_,i)=>`<span class="pip ${i<done?'done':i===S.round&&!['final','imf'].includes(S.phase)?'now':''}" title="第 ${i+1} 屆"></span>`).join('');
   const isl=island(),dp=Math.min(100,S.debt/DEBT_LINE*100);
-  $('hstats').innerHTML=S.phase==='title'?'':`<div class="hstat"><span class="l">國債</span><span class="v ${dp>66?'hot':''}">${r1(S.debt)}<small class="muted" style="font-size:11px">/${DEBT_LINE}</small></span><span class="debtmini"><i class="${dp>66?'hot':''}" style="width:${dp}%"></i></span></div>
+  $('hstats').innerHTML=S.phase==='title'?'':`<div class="hstat"><span class="l">國債</span><span class="v ${dp>66?'hot':''}">${r1(S.debt)}<small class="muted" style="font-size:13px">/${DEBT_LINE}</small></span><span class="debtmini"><i class="${dp>66?'hot':''}" style="width:${dp}%"></i></span></div>
    <div class="hstat"><span class="l">經濟</span><span class="v" style="color:var(--teal)">+${r1(S.eco)}</span></div>
    <div class="hstat pov"><span class="l">貧窮率</span><span class="v">${r1(isl.poverty)}%</span></div>
    <div class="hstat"><span class="l">民怨</span><span class="v ${S.unrest>=60?'hot':''}">${S.unrest}</span><span class="debtmini"><i style="width:${S.unrest}%;background:${S.unrest>=80?'var(--stamp)':S.unrest>=35?'var(--orange)':'var(--teal)'}"></i></span></div>`;
@@ -1559,3 +1560,16 @@ document.addEventListener('click',e=>{const s=e.target.closest('#scar .slide');i
 // boot after the painted art has loaded (falls back to drawn SVG after 2.5 s or on error)
 const boot=d=>preloadArt().then(()=>start(d));
 window.claude?.hot?.ready?window.claude.hot.ready(boot):boot(window.claude?.hot?.data??{});
+
+// ---- 字體大小：標準／大／特大（存在這台裝置；老花或看不清楚時可以放大）----
+var FS=[['標準',1],['大',1.15],['特大',1.3]];
+function fsLabel(){return '字 '+(FS?FS[fsIdx()][0]:'標準')}
+function fsIdx(){try{const v=+localStorage.getItem('whocares-fs');return FS&&v>=0&&v<FS.length?v:0}catch(e){return 0}}
+function applyFs(i){document.documentElement.style.zoom=FS[i][1];document.documentElement.dataset.fs=i;try{localStorage.setItem('whocares-fs',String(i))}catch(e){}
+  document.querySelectorAll('.fsbtn').forEach(b=>{b.textContent='字 '+FS[i][0];b.setAttribute('aria-label','字體大小：'+FS[i][0]+'，點一下切換')});
+  document.querySelectorAll('.fsseg button').forEach(b=>b.classList.toggle('on',+b.dataset.i===i))}
+function fsSeg(){const i=fsIdx();return `<div class="fsseg" role="group" aria-label="字體大小"><b>字體大小</b>${FS.map(([n],k)=>`<button data-a="fsset" data-i="${k}" class="${k===i?'on':''}" aria-pressed="${k===i}">${n}</button>`).join('')}</div>`}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;
+  if(t.dataset.a==='fs'){applyFs((fsIdx()+1)%FS.length);e.stopImmediatePropagation()}
+  if(t.dataset.a==='fsset'){applyFs(+t.dataset.i);e.stopImmediatePropagation()}},true);
+applyFs(fsIdx());
